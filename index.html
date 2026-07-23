@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frutas y Verduras — H-E-B</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plp.css">
+</head>
+<body class="plp-body">
+
+<!-- ══ HEADER ══ -->
+<header class="plp-header">
+  <div class="plp-header-top">
+    <button class="plp-icon-btn plp-header-lead-btn" aria-label="Menú">
+      <span class="msi" aria-hidden="true">menu</span>
+    </button>
+
+    <a class="plp-logo-link" href="index.html" aria-label="H-E-B">
+      <img class="plp-logo" src="assets/logo-heb-blanco.png" alt="H-E-B">
+    </a>
+
+    <button class="plp-search-bar" aria-label="Buscar en H-E-B">
+      <span>Busca en H-E-B</span>
+      <span class="msi" aria-hidden="true">search</span>
+    </button>
+
+    <div class="plp-search-desktop">
+      <input type="text" placeholder="Busca productos" aria-label="Busca productos">
+      <span class="msi" aria-hidden="true">search</span>
+    </div>
+
+    <div class="plp-header-divider" aria-hidden="true"></div>
+
+    <button class="plp-delivery-pill">
+      <span class="msi" aria-hidden="true">location_on</span>
+      <span class="plp-delivery-text">Recibe en <strong>Zimapán #302, Mitr...</strong></span>
+      <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <div class="plp-header-actions">
+      <button class="plp-account-btn">
+        <span class="msi" aria-hidden="true">person</span>
+        <span>Mi cuenta</span>
+      </button>
+      <a class="plp-cart-btn" href="cart.html">
+        <span class="msi" aria-hidden="true">shopping_cart</span>
+        <span class="plp-cart-price">$0.00</span>
+        <span class="plp-cart-badge">0</span>
+      </a>
+    </div>
+
+    <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
+      <span class="msi" aria-hidden="true">shopping_cart</span>
+    </a>
+  </div>
+
+  <button class="plp-delivery-bar">
+    ¿Cómo quieres recibir tu pedido?
+    <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+  </button>
+
+  <nav class="plp-pleca" aria-label="Categorías">
+    <button class="plp-pleca-item active"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item">Nuestras marcas</button>
+    <button class="plp-pleca-item">Prime</button>
+    <button class="plp-pleca-item">Promociones</button>
+    <button class="plp-pleca-item">Vive Saludable</button>
+    <button class="plp-pleca-item">Mascotas</button>
+  </nav>
+</header>
+
+<!-- ══ BODY ══ -->
+<main class="plp-main">
+
+  <nav class="plp-breadcrumb" aria-label="Ruta de navegación">
+    <span>H-E-B</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px; color:#414142">chevron_right</span>
+    <strong>Frutas y Verduras</strong>
+  </nav>
+
+  <div class="plp-layout">
+
+    <!-- ── Desktop: filtros siempre visibles ── -->
+    <aside class="plp-filters-sidebar" aria-label="Filtros">
+      <div class="plp-filter-intro">
+        <h1 class="plp-filter-title">Frutas y Verduras</h1>
+        <p class="plp-filter-desc" id="filterDesc">Las frutas y verduras más frescas de temporada, seleccionadas por su sabor, textura y calidad. Encuentra variedades nacionales e importadas para toda ocasión, directo del campo a tu mesa.</p>
+        <button type="button" class="plp-leer-mas" onclick="toggleFilterDesc()">
+          <span id="filterDescLabel">Leer más</span>
+          <span class="msi" aria-hidden="true" style="font-size:16px" id="filterDescIcon">keyboard_arrow_down</span>
+        </button>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Ordenar por
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_up</span>
+        </button>
+        <div class="plp-filter-body">
+          <button type="button" class="plp-checkbox-row plp-sort-row checked" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Destacados
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Más vendido
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Más recientes
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Precio más alto
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Precio más bajo
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            De la A a la Z
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            De la Z a la A
+          </button>
+        </div>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">Precio</button>
+        <div class="plp-filter-body">
+          <div class="plp-price-slider">
+            <div class="plp-price-track"></div>
+            <div class="plp-price-track-fill"></div>
+            <div class="plp-price-handle" style="left:0"></div>
+            <div class="plp-price-handle" style="right:0"></div>
+          </div>
+          <div class="plp-price-labels">
+            <span>$0</span>
+            <span>$220</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Marca
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_down</span>
+        </button>
+        <div class="plp-filter-body" hidden>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>H-E-B<span class="plp-checkbox-count">38</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Golden Acres<span class="plp-checkbox-count">21</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Sunkist<span class="plp-checkbox-count">17</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Orgánico Certificado<span class="plp-checkbox-count">14</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Import USA<span class="plp-checkbox-count">12</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Rainier<span class="plp-checkbox-count">9</span></button>
+        </div>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Promociones
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_down</span>
+        </button>
+        <div class="plp-filter-body" hidden>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Llévate producto gratis<span class="plp-checkbox-count">45</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Quedan pocos<span class="plp-checkbox-count">27</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="plp-content">
+      <div class="plp-banner">
+        <img src="assets/banner-overlay.png" alt="Frutas y Verduras frescas todos los días">
+      </div>
+
+      <div class="plp-results-row">
+        <span class="plp-results-count">128 resultados</span>
+        <button class="plp-filtros-btn">
+          Filtros
+          <span class="msi" aria-hidden="true" style="font-size:16px">keyboard_arrow_down</span>
+        </button>
+      </div>
+
+      <div class="plp-grid" id="plpGrid"></div>
+
+      <nav class="plp-pagination" id="plpPagination" aria-label="Paginación de resultados"></nav>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ══ SUSTITUTE MODAL ══ -->
+<div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
+<div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
+  <div class="plp-modal-sheet">
+    <div class="plp-modal-header">
+      <button type="button" class="plp-modal-back" id="subBack" onclick="showMainView()" aria-label="Regresar" hidden>
+        <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+      </button>
+      <h2 class="plp-modal-title" id="subModalTitle">Sustitutos</h2>
+      <button type="button" class="plp-modal-close" onclick="closeSubstituteModal()" aria-label="Cerrar">
+        <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <div class="plp-modal-body">
+      <!-- Main view -->
+      <div class="plp-modal-view" id="subMainView">
+        <p class="plp-modal-desc">Cuando ves la etiqueta "Quedan pocos", existe la posibilidad de que ese producto se agote antes de recolectar tu pedido. Dinos qué prefieres como sustituto, por si es necesario.</p>
+
+        <div class="plp-sub-options">
+          <button type="button" class="plp-sub-option" data-choice="picker" onclick="selectChoice({type:'picker'})">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">person</span>
+            </span>
+            <span class="plp-sub-text">
+              <strong>Picker sugiere</strong>
+              <small>Si no contesto, que elijan por mi</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option" data-choice="contact" onclick="selectChoice({type:'contact'})">
+            <span class="plp-sub-icon">
+              <svg width="14" height="14" viewBox="0 0 12.0002 12.0831" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5.87335 0.00266294C6.56081 -0.0241561 7.55139 0.154553 8.18457 0.405423C9.70459 1.00769 10.978 2.25489 11.5839 3.7768C11.9359 4.66105 12.0873 5.80712 11.95 6.75021C11.7646 8.09592 11.1989 9.25462 10.2379 10.2127C9.22842 11.2191 8.04865 11.8051 6.62156 11.9346C5.90042 12.0001 5.4444 11.9569 4.72683 11.8348C4.4585 11.7849 4.19512 11.7113 3.9398 11.6148C3.79424 11.5582 3.27469 11.2928 3.14666 11.3057C2.39673 11.3816 1.66231 11.7034 0.913892 11.8378C0.832897 11.8523 0.680643 11.9049 0.611426 11.909C0.468513 11.9173 0.110114 12.083 0.0176404 12.0831C0.00253687 12.0493 -0.00680369 12.0276 0.0060992 11.9896C0.166158 11.5185 0.256352 11.0196 0.392996 10.5402C0.531824 10.053 0.739838 9.47618 0.803687 8.97552C0.694607 8.7092 0.529624 8.43401 0.434316 8.17858C-1.02124 4.278 1.67386 0.138563 5.87335 0.00266294ZM1.43023 10.6357C1.73395 10.57 2.04816 10.4926 2.35127 10.4132C2.62051 10.3427 2.96308 10.2066 3.23967 10.1823C3.41248 10.167 3.70679 10.4207 3.8969 10.4986C4.47662 10.7359 4.87994 10.8787 5.50822 10.9343C6.84498 11.0358 8.05853 10.7275 9.14516 9.8444C12.2246 7.3419 11.2694 2.42136 7.47833 1.23583C6.89383 1.05305 6.25353 1.01485 5.62878 1.04813C5.25308 1.093 4.82431 1.14315 4.46592 1.26783C3.33242 1.66215 2.41574 2.37193 1.78636 3.39058C1.18346 4.35815 0.936199 5.50545 1.08706 6.63547C1.16259 7.24596 1.29936 7.62289 1.54583 8.17991C1.57234 8.23983 1.60549 8.31822 1.6388 8.37035C1.71224 8.48531 1.91047 8.7028 1.89564 8.84999C1.86101 9.19382 1.7114 9.58663 1.61643 9.92159C1.54769 10.164 1.49601 10.4026 1.43023 10.6357Z" fill="white"/><path d="M3.90227 3.05696C4.02547 3.04353 4.17253 3.0545 4.28913 3.09782C4.44697 3.15646 4.50496 3.28476 4.57223 3.42847C4.63756 3.56799 5.01711 4.57885 5.01339 4.67599C5.00897 4.79079 4.85787 4.96527 4.7839 5.05002C4.6847 5.16367 4.53759 5.28211 4.48753 5.4259C4.46447 5.49217 4.46279 5.56761 4.49423 5.63149C4.54619 5.73707 4.63046 5.84708 4.69503 5.94659C5.08753 6.55141 5.53387 6.97258 6.15152 7.33804C6.27374 7.41036 6.39928 7.49609 6.53341 7.54295C6.61413 7.57116 6.71709 7.58677 6.79821 7.55047C7.05293 7.4365 7.23859 6.95262 7.54865 6.80625C7.84653 6.86513 8.89627 7.4263 9.09739 7.62524C9.09798 7.90575 9.01086 8.25674 8.84831 8.48781C7.90005 9.54136 6.59813 8.84779 5.56569 8.33913C5.37563 8.24548 4.68345 7.6878 4.52705 7.50809C3.63762 6.48618 2.21411 4.80907 3.26899 3.44933C3.45978 3.2034 3.60791 3.09001 3.90227 3.05696Z" fill="white"/></svg>
+            </span>
+            <span class="plp-sub-text">
+              <strong>Que me contacten</strong>
+              <small>Preguntar vía WhatsApp</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option" data-choice="none" onclick="selectChoice({type:'none'})">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">block</span>
+            </span>
+            <span class="plp-sub-text">
+              <strong>No reemplazar</strong>
+              <small>Eliminar producto del pedido</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option plp-sub-option-nav" id="subSearchNav" onclick="showSearchView()">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">search</span>
+            </span>
+            <span class="plp-sub-text"><strong>Buscar otro sustituto</strong></span>
+            <span class="plp-chevron">
+              <span class="msi" aria-hidden="true" style="font-size:18px">chevron_right</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="plp-similar">
+          <button type="button" class="plp-similar-header" id="subSimilarToggle" onclick="toggleSimilar()" aria-expanded="true" aria-controls="subCarousel">
+            <span class="plp-similar-header-title">Productos similares</span>
+            <span class="msi plp-similar-chevron" id="subSimilarChevron" aria-hidden="true">keyboard_arrow_up</span>
+          </button>
+          <div class="plp-similar-row" id="subCarousel"></div>
+        </div>
+      </div>
+
+      <!-- Search view -->
+      <div class="plp-modal-view" id="subSearchView" hidden>
+        <div class="plp-search-input-wrap">
+          <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+          <input type="text" id="subSearchInput" class="plp-search-input" placeholder="Busca cualquier producto para sustituir" oninput="renderSearchGrid()">
+          <button type="button" class="plp-search-clear" onclick="clearSubSearch()" aria-label="Limpiar búsqueda">
+            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
+          </button>
+        </div>
+        <div class="plp-search-grid" id="subSearchGrid"></div>
+      </div>
+    </div>
+
+    <div class="plp-modal-footer">
+      <p>Se te cobrará el precio del artículo que recibas.</p>
+      <button type="button" class="plp-modal-save" id="subSave" onclick="saveSelection()" disabled>Guardar selección</button>
+    </div>
+  </div>
+</div>
+
+<div class="plp-toast" id="subToast" role="status" aria-live="polite">
+  <span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#2a9f47">check_circle</span>
+  <span>Sustituto guardado con éxito.</span>
+</div>
+
+<script src="plp.js"></script>
+</body>
+</html>
