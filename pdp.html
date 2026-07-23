@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de producto — H-E-B</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plp.css">
+  <link rel="stylesheet" href="pdp.css">
+</head>
+<body class="plp-body">
+
+<!-- ══ HEADER ══ -->
+<header class="plp-header">
+  <div class="plp-header-top">
+    <button class="plp-icon-btn plp-header-lead-btn" onclick="location.href='index.html'" aria-label="Regresar">
+      <span class="msi" aria-hidden="true">arrow_back</span>
+    </button>
+
+    <a class="plp-logo-link" href="index.html" aria-label="H-E-B">
+      <img class="plp-logo" src="assets/logo-heb-blanco.png" alt="H-E-B">
+    </a>
+
+    <button class="plp-search-bar" aria-label="Buscar en H-E-B">
+      <span>Busca en H-E-B</span>
+      <span class="msi" aria-hidden="true">search</span>
+    </button>
+
+    <div class="plp-search-desktop">
+      <input type="text" placeholder="Busca productos" aria-label="Busca productos">
+      <span class="msi" aria-hidden="true">search</span>
+    </div>
+
+    <div class="plp-header-divider" aria-hidden="true"></div>
+
+    <button class="plp-delivery-pill">
+      <span class="msi" aria-hidden="true">location_on</span>
+      <span class="plp-delivery-text">Recibe en <strong>Zimapán #302, Mitr...</strong></span>
+      <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <div class="plp-header-actions">
+      <button class="plp-account-btn">
+        <span class="msi" aria-hidden="true">person</span>
+        <span>Mi cuenta</span>
+      </button>
+      <a class="plp-cart-btn" href="cart.html">
+        <span class="msi" aria-hidden="true">shopping_cart</span>
+        <span class="plp-cart-price">$0.00</span>
+        <span class="plp-cart-badge">0</span>
+      </a>
+    </div>
+
+    <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
+      <span class="msi" aria-hidden="true">shopping_cart</span>
+    </a>
+  </div>
+
+  <button class="plp-delivery-bar">
+    ¿Cómo quieres recibir tu pedido?
+    <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+  </button>
+
+  <nav class="plp-pleca" aria-label="Categorías">
+    <button class="plp-pleca-item active"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item">Nuestras marcas</button>
+    <button class="plp-pleca-item">Prime</button>
+    <button class="plp-pleca-item">Promociones</button>
+    <button class="plp-pleca-item">Vive Saludable</button>
+    <button class="plp-pleca-item">Mascotas</button>
+  </nav>
+</header>
+
+<!-- ══ BODY ══ -->
+<main class="pdp-main">
+
+  <nav class="plp-breadcrumb" aria-label="Ruta de navegación">
+    <span>H-E-B</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px; color:#414142">chevron_right</span>
+    <strong>Frutas y Verduras</strong>
+  </nav>
+
+  <div class="pdp-media">
+    <img id="pdpImg" class="pdp-media-img" src="" alt="">
+    <button class="pdp-prime-badge">
+      <span class="pdp-prime-pill">PRIME</span> -25%
+    </button>
+    <button class="plp-addlist-btn" aria-label="Agregar a lista">
+      <svg width="16" height="20" viewBox="0 0 16.0664 19.999" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12.0303 11.9229C12.5845 11.9231 13.0339 12.3725 13.0342 12.9268V14.957H15.0615C15.6164 14.957 16.0664 15.407 16.0664 15.9619C16.0662 16.5166 15.6163 16.9658 15.0615 16.9658H13.0342V18.9951C13.0341 19.5495 12.5846 19.9988 12.0303 19.999C11.4757 19.999 11.0254 19.5497 11.0254 18.9951V16.9658H8.99707C8.44234 16.9658 7.99243 16.5166 7.99219 15.9619C7.99219 15.407 8.44219 14.9571 8.99707 14.957H11.0254V12.9268C11.0256 12.3724 11.4758 11.9229 12.0303 11.9229ZM12.0586 0C13.6258 0.000141112 14.8787 1.28319 14.8789 2.84473V10.4219C14.8789 10.8821 14.5061 11.2559 14.0459 11.2559C13.5858 11.2557 13.2129 10.882 13.2129 10.4219V2.84473C13.2127 2.18468 12.6865 1.66616 12.0586 1.66602H2.82031C2.19264 1.66636 1.66619 2.18482 1.66602 2.84473V16.082C1.66605 16.7421 2.19255 17.2604 2.82031 17.2607H6.66797C7.1281 17.2607 7.50178 17.6337 7.50195 18.0938C7.50191 18.5539 7.12818 18.9268 6.66797 18.9268H2.82031C1.25324 18.9264 3.27789e-05 17.6436 0 16.082V2.84473C0.000174103 1.28331 1.25332 0.000345799 2.82031 0H12.0586ZM7.24023 8.0293C7.78507 8.0293 8.22656 8.47176 8.22656 9.0166C8.22636 9.56127 7.78495 10.0029 7.24023 10.0029H4.43262C3.8881 10.0027 3.44649 9.56112 3.44629 9.0166C3.44629 8.47191 3.88798 8.02953 4.43262 8.0293H7.24023ZM10.5752 4.16602C11.1198 4.16623 11.5615 4.60765 11.5615 5.15234C11.5615 5.69705 11.1199 6.13846 10.5752 6.13867H4.43262C3.88798 6.13843 3.44629 5.69703 3.44629 5.15234C3.4463 4.60766 3.88799 4.16625 4.43262 4.16602H10.5752Z" fill="#4A4741"/></svg>
+    </button>
+    <div class="pdp-dots">
+      <span class="pdp-dot"></span><span class="pdp-dot active"></span><span class="pdp-dot"></span><span class="pdp-dot"></span>
+    </div>
+  </div>
+
+  <div class="pdp-info">
+    <div class="pdp-title-row">
+      <h1 class="pdp-title" id="pdpName"></h1>
+      <button class="pdp-share-btn" aria-label="Compartir">
+        <span class="msi" aria-hidden="true">share</span>
+      </button>
+    </div>
+    <p class="pdp-sku">SKU 12345678</p>
+    <div class="pdp-price-row">
+      <span class="pdp-price" id="pdpPrice"></span>
+      <span class="pdp-price-old" id="pdpPriceOld"></span>
+    </div>
+    <span class="plp-badge plp-badge-gray" id="pdpBadgeGray"></span>
+
+    <!-- ══ Substitute notice (illustrated) ══ -->
+    <button type="button" class="pdp-sub-notice" id="pdpSubNotice" onclick="openSubstituteModal(pdpProductId)">
+      <div class="pdp-sub-notice-media" id="pdpSubNoticeMedia"></div>
+      <div class="pdp-sub-notice-text">
+        <strong id="pdpSubNoticeTitle"></strong>
+        <small id="pdpSubNoticeDesc"></small>
+      </div>
+      <span class="pdp-sub-notice-cta">Cambiar</span>
+    </button>
+
+    <div class="pdp-combo-banner">
+      <div class="pdp-combo-icon">
+        <span class="msi msi-fill" aria-hidden="true" style="font-size:30px; color:var(--plp-pink-txt, #ae1c71)">redeem</span>
+      </div>
+      <div class="pdp-combo-text">
+        <strong>Compra 1 mermelada y llévate chocolate GRATIS.</strong>
+        <small>Vigencia 20 de diciembre</small>
+      </div>
+    </div>
+
+    <!-- ══ FOOTER CTA ══ -->
+    <div class="pdp-footer">
+      <div class="pdp-footer-price">
+        <span class="pdp-footer-total" id="pdpFooterTotal"></span>
+        <span class="pdp-footer-unit" id="pdpUnitPrice"></span>
+      </div>
+      <button class="pdp-footer-btn" onclick="pdpAddToCart(this)">Agregar</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ SUSTITUTE MODAL (compartido con el PLP) ══ -->
+<div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
+<div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
+  <div class="plp-modal-sheet">
+    <div class="plp-modal-header">
+      <button type="button" class="plp-modal-back" id="subBack" onclick="showMainView()" aria-label="Regresar" hidden>
+        <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+      </button>
+      <h2 class="plp-modal-title" id="subModalTitle">Sustitutos</h2>
+      <button type="button" class="plp-modal-close" onclick="closeSubstituteModal()" aria-label="Cerrar">
+        <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <div class="plp-modal-body">
+      <div class="plp-modal-view" id="subMainView">
+        <p class="plp-modal-desc">Cuando ves la etiqueta "Quedan pocos", existe la posibilidad de que ese producto se agote antes de recolectar tu pedido. Dinos qué prefieres como sustituto, por si es necesario.</p>
+
+        <div class="plp-sub-options">
+          <button type="button" class="plp-sub-option" data-choice="picker" onclick="selectChoice({type:'picker'})">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">person</span>
+            </span>
+            <span class="plp-sub-text">
+              <strong>Picker sugiere</strong>
+              <small>Si no contesto, que elijan por mi</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option" data-choice="contact" onclick="selectChoice({type:'contact'})">
+            <span class="plp-sub-icon">
+              <svg width="14" height="14" viewBox="0 0 12.0002 12.0831" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5.87335 0.00266294C6.56081 -0.0241561 7.55139 0.154553 8.18457 0.405423C9.70459 1.00769 10.978 2.25489 11.5839 3.7768C11.9359 4.66105 12.0873 5.80712 11.95 6.75021C11.7646 8.09592 11.1989 9.25462 10.2379 10.2127C9.22842 11.2191 8.04865 11.8051 6.62156 11.9346C5.90042 12.0001 5.4444 11.9569 4.72683 11.8348C4.4585 11.7849 4.19512 11.7113 3.9398 11.6148C3.79424 11.5582 3.27469 11.2928 3.14666 11.3057C2.39673 11.3816 1.66231 11.7034 0.913892 11.8378C0.832897 11.8523 0.680643 11.9049 0.611426 11.909C0.468513 11.9173 0.110114 12.083 0.0176404 12.0831C0.00253687 12.0493 -0.00680369 12.0276 0.0060992 11.9896C0.166158 11.5185 0.256352 11.0196 0.392996 10.5402C0.531824 10.053 0.739838 9.47618 0.803687 8.97552C0.694607 8.7092 0.529624 8.43401 0.434316 8.17858C-1.02124 4.278 1.67386 0.138563 5.87335 0.00266294ZM1.43023 10.6357C1.73395 10.57 2.04816 10.4926 2.35127 10.4132C2.62051 10.3427 2.96308 10.2066 3.23967 10.1823C3.41248 10.167 3.70679 10.4207 3.8969 10.4986C4.47662 10.7359 4.87994 10.8787 5.50822 10.9343C6.84498 11.0358 8.05853 10.7275 9.14516 9.8444C12.2246 7.3419 11.2694 2.42136 7.47833 1.23583C6.89383 1.05305 6.25353 1.01485 5.62878 1.04813C5.25308 1.093 4.82431 1.14315 4.46592 1.26783C3.33242 1.66215 2.41574 2.37193 1.78636 3.39058C1.18346 4.35815 0.936199 5.50545 1.08706 6.63547C1.16259 7.24596 1.29936 7.62289 1.54583 8.17991C1.57234 8.23983 1.60549 8.31822 1.6388 8.37035C1.71224 8.48531 1.91047 8.7028 1.89564 8.84999C1.86101 9.19382 1.7114 9.58663 1.61643 9.92159C1.54769 10.164 1.49601 10.4026 1.43023 10.6357Z" fill="white"/><path d="M3.90227 3.05696C4.02547 3.04353 4.17253 3.0545 4.28913 3.09782C4.44697 3.15646 4.50496 3.28476 4.57223 3.42847C4.63756 3.56799 5.01711 4.57885 5.01339 4.67599C5.00897 4.79079 4.85787 4.96527 4.7839 5.05002C4.6847 5.16367 4.53759 5.28211 4.48753 5.4259C4.46447 5.49217 4.46279 5.56761 4.49423 5.63149C4.54619 5.73707 4.63046 5.84708 4.69503 5.94659C5.08753 6.55141 5.53387 6.97258 6.15152 7.33804C6.27374 7.41036 6.39928 7.49609 6.53341 7.54295C6.61413 7.57116 6.71709 7.58677 6.79821 7.55047C7.05293 7.4365 7.23859 6.95262 7.54865 6.80625C7.84653 6.86513 8.89627 7.4263 9.09739 7.62524C9.09798 7.90575 9.01086 8.25674 8.84831 8.48781C7.90005 9.54136 6.59813 8.84779 5.56569 8.33913C5.37563 8.24548 4.68345 7.6878 4.52705 7.50809C3.63762 6.48618 2.21411 4.80907 3.26899 3.44933C3.45978 3.2034 3.60791 3.09001 3.90227 3.05696Z" fill="white"/></svg>
+            </span>
+            <span class="plp-sub-text">
+              <strong>Que me contacten</strong>
+              <small>Preguntar vía WhatsApp</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option" data-choice="none" onclick="selectChoice({type:'none'})">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">block</span>
+            </span>
+            <span class="plp-sub-text">
+              <strong>No reemplazar</strong>
+              <small>Eliminar producto del pedido</small>
+            </span>
+            <span class="plp-radio"></span>
+          </button>
+
+          <button type="button" class="plp-sub-option plp-sub-option-nav" id="subSearchNav" onclick="showSearchView()">
+            <span class="plp-sub-icon">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:white">search</span>
+            </span>
+            <span class="plp-sub-text"><strong>Buscar otro sustituto</strong></span>
+            <span class="plp-chevron">
+              <span class="msi" aria-hidden="true" style="font-size:18px">chevron_right</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="plp-similar">
+          <button type="button" class="plp-similar-header" id="subSimilarToggle" onclick="toggleSimilar()" aria-expanded="true" aria-controls="subCarousel">
+            <span class="plp-similar-header-title">Productos similares</span>
+            <span class="msi plp-similar-chevron" id="subSimilarChevron" aria-hidden="true">keyboard_arrow_up</span>
+          </button>
+          <div class="plp-similar-row" id="subCarousel"></div>
+        </div>
+      </div>
+
+      <div class="plp-modal-view" id="subSearchView" hidden>
+        <div class="plp-search-input-wrap">
+          <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+          <input type="text" id="subSearchInput" class="plp-search-input" placeholder="Busca cualquier producto para sustituir" oninput="renderSearchGrid()">
+          <button type="button" class="plp-search-clear" onclick="clearSubSearch()" aria-label="Limpiar búsqueda">
+            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
+          </button>
+        </div>
+        <div class="plp-search-grid" id="subSearchGrid"></div>
+      </div>
+    </div>
+
+    <div class="plp-modal-footer">
+      <p>Se te cobrará el precio del artículo que recibas.</p>
+      <button type="button" class="plp-modal-save" id="subSave" onclick="saveSelection()" disabled>Guardar selección</button>
+    </div>
+  </div>
+</div>
+
+<div class="plp-toast" id="subToast" role="status" aria-live="polite">
+  <span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#2a9f47">check_circle</span>
+  <span>Sustituto guardado con éxito.</span>
+</div>
+
+<script src="plp.js"></script>
+<script src="pdp.js"></script>
+</body>
+</html>
