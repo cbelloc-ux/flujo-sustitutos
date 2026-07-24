@@ -84,16 +84,71 @@
     <strong>Frutas y Verduras</strong>
   </nav>
 
-  <div class="pdp-media">
-    <img id="pdpImg" class="pdp-media-img" src="" alt="">
-    <button class="pdp-prime-badge">
-      <span class="pdp-prime-pill">PRIME</span> -25%
-    </button>
-    <button class="plp-addlist-btn" aria-label="Agregar a lista">
-      <svg width="16" height="20" viewBox="0 0 16.0664 19.999" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12.0303 11.9229C12.5845 11.9231 13.0339 12.3725 13.0342 12.9268V14.957H15.0615C15.6164 14.957 16.0664 15.407 16.0664 15.9619C16.0662 16.5166 15.6163 16.9658 15.0615 16.9658H13.0342V18.9951C13.0341 19.5495 12.5846 19.9988 12.0303 19.999C11.4757 19.999 11.0254 19.5497 11.0254 18.9951V16.9658H8.99707C8.44234 16.9658 7.99243 16.5166 7.99219 15.9619C7.99219 15.407 8.44219 14.9571 8.99707 14.957H11.0254V12.9268C11.0256 12.3724 11.4758 11.9229 12.0303 11.9229ZM12.0586 0C13.6258 0.000141112 14.8787 1.28319 14.8789 2.84473V10.4219C14.8789 10.8821 14.5061 11.2559 14.0459 11.2559C13.5858 11.2557 13.2129 10.882 13.2129 10.4219V2.84473C13.2127 2.18468 12.6865 1.66616 12.0586 1.66602H2.82031C2.19264 1.66636 1.66619 2.18482 1.66602 2.84473V16.082C1.66605 16.7421 2.19255 17.2604 2.82031 17.2607H6.66797C7.1281 17.2607 7.50178 17.6337 7.50195 18.0938C7.50191 18.5539 7.12818 18.9268 6.66797 18.9268H2.82031C1.25324 18.9264 3.27789e-05 17.6436 0 16.082V2.84473C0.000174103 1.28331 1.25332 0.000345799 2.82031 0H12.0586ZM7.24023 8.0293C7.78507 8.0293 8.22656 8.47176 8.22656 9.0166C8.22636 9.56127 7.78495 10.0029 7.24023 10.0029H4.43262C3.8881 10.0027 3.44649 9.56112 3.44629 9.0166C3.44629 8.47191 3.88798 8.02953 4.43262 8.0293H7.24023ZM10.5752 4.16602C11.1198 4.16623 11.5615 4.60765 11.5615 5.15234C11.5615 5.69705 11.1199 6.13846 10.5752 6.13867H4.43262C3.88798 6.13843 3.44629 5.69703 3.44629 5.15234C3.4463 4.60766 3.88799 4.16625 4.43262 4.16602H10.5752Z" fill="#4A4741"/></svg>
-    </button>
-    <div class="pdp-dots">
-      <span class="pdp-dot"></span><span class="pdp-dot active"></span><span class="pdp-dot"></span><span class="pdp-dot"></span>
+  <div class="pdp-left">
+    <div class="pdp-media">
+      <img id="pdpImg" class="pdp-media-img" src="" alt="">
+      <button class="pdp-prime-badge">
+        <span class="pdp-prime-pill">PRIME</span> -25%
+      </button>
+      <button class="plp-addlist-btn" aria-label="Agregar a lista">
+        <svg width="16" height="20" viewBox="0 0 16.0664 19.999" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12.0303 11.9229C12.5845 11.9231 13.0339 12.3725 13.0342 12.9268V14.957H15.0615C15.6164 14.957 16.0664 15.407 16.0664 15.9619C16.0662 16.5166 15.6163 16.9658 15.0615 16.9658H13.0342V18.9951C13.0341 19.5495 12.5846 19.9988 12.0303 19.999C11.4757 19.999 11.0254 19.5497 11.0254 18.9951V16.9658H8.99707C8.44234 16.9658 7.99243 16.5166 7.99219 15.9619C7.99219 15.407 8.44219 14.9571 8.99707 14.957H11.0254V12.9268C11.0256 12.3724 11.4758 11.9229 12.0303 11.9229ZM12.0586 0C13.6258 0.000141112 14.8787 1.28319 14.8789 2.84473V10.4219C14.8789 10.8821 14.5061 11.2559 14.0459 11.2559C13.5858 11.2557 13.2129 10.882 13.2129 10.4219V2.84473C13.2127 2.18468 12.6865 1.66616 12.0586 1.66602H2.82031C2.19264 1.66636 1.66619 2.18482 1.66602 2.84473V16.082C1.66605 16.7421 2.19255 17.2604 2.82031 17.2607H6.66797C7.1281 17.2607 7.50178 17.6337 7.50195 18.0938C7.50191 18.5539 7.12818 18.9268 6.66797 18.9268H2.82031C1.25324 18.9264 3.27789e-05 17.6436 0 16.082V2.84473C0.000174103 1.28331 1.25332 0.000345799 2.82031 0H12.0586ZM7.24023 8.0293C7.78507 8.0293 8.22656 8.47176 8.22656 9.0166C8.22636 9.56127 7.78495 10.0029 7.24023 10.0029H4.43262C3.8881 10.0027 3.44649 9.56112 3.44629 9.0166C3.44629 8.47191 3.88798 8.02953 4.43262 8.0293H7.24023ZM10.5752 4.16602C11.1198 4.16623 11.5615 4.60765 11.5615 5.15234C11.5615 5.69705 11.1199 6.13846 10.5752 6.13867H4.43262C3.88798 6.13843 3.44629 5.69703 3.44629 5.15234C3.4463 4.60766 3.88799 4.16625 4.43262 4.16602H10.5752Z" fill="#4A4741"/></svg>
+      </button>
+      <div class="pdp-dots">
+        <span class="pdp-dot"></span><span class="pdp-dot active"></span><span class="pdp-dot"></span><span class="pdp-dot"></span>
+      </div>
+    </div>
+
+    <div class="pdp-accordions">
+      <section class="pdp-accordion">
+        <button type="button" class="pdp-accordion-header" onclick="toggleAccordion(this)" aria-expanded="true" aria-controls="pdpDescBody">
+          <span>Descripción</span>
+          <span class="msi pdp-accordion-chevron" aria-hidden="true">keyboard_arrow_up</span>
+        </button>
+        <div class="pdp-accordion-body" id="pdpDescBody">
+          <div class="pdp-desc-table">
+            <div class="pdp-desc-labels">
+              <p>Tipo de producto</p>
+              <p>Marca</p>
+              <p>Denominación/Variedad</p>
+              <p>Presentación</p>
+              <p>País de origen</p>
+              <p>Advertencias de almacenamiento</p>
+              <p>Ingredientes</p>
+              <p>Porción sugerida</p>
+              <p>Porciones por envase</p>
+            </div>
+            <div class="pdp-desc-values" id="pdpDescValues"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pdp-accordion">
+        <button type="button" class="pdp-accordion-header" onclick="toggleAccordion(this)" aria-expanded="true" aria-controls="pdpSpecsBody">
+          <span>Especificaciones</span>
+          <span class="msi pdp-accordion-chevron" aria-hidden="true">keyboard_arrow_up</span>
+        </button>
+        <div class="pdp-accordion-body" id="pdpSpecsBody">
+          <div class="pdp-nutrition">
+            <h3>Valor nutricional</h3>
+            <p class="pdp-nutrition-sub">Producto natural</p>
+            <div class="pdp-nutrition-serving"><span>Tamaño de la porción</span><span>1 pieza mediana (100 g)</span></div>
+            <p class="pdp-nutrition-cal-label">Cantidad por porción</p>
+            <div class="pdp-nutrition-cal"><span>Calorías</span><span>52</span></div>
+            <p class="pdp-nutrition-dv">% Valor Diario*</p>
+            <div class="pdp-nutrition-row bold"><span>Grasas totales 0.2 g</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row"><span>Sodio 1 mg</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row bold"><span>Carbohidratos totales 14 g</span><span class="val">5%</span></div>
+            <div class="pdp-nutrition-row"><span>Fibra dietética 2.4 g</span><span class="val">9%</span></div>
+            <div class="pdp-nutrition-row"><span>Azúcares totales 10 g</span><span class="val"></span></div>
+            <div class="pdp-nutrition-row bold"><span>Proteínas 0.3 g</span><span class="val"></span></div>
+            <div class="pdp-nutrition-row"><span>Vitamina C 4.6 mg</span><span class="val">5%</span></div>
+            <div class="pdp-nutrition-row"><span>Calcio 6 mg</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row"><span>Hierro 0.1 mg</span><span class="val">1%</span></div>
+            <div class="pdp-nutrition-row"><span>Potasio 107 mg</span><span class="val">2%</span></div>
+            <p class="pdp-nutrition-foot">* El % de Valor Diario (VD) indica cuánto contribuye un nutriente en una porción de alimento a la dieta diaria. 2,000 calorías al día se utilizan para propósitos de asesoramiento nutricional general.</p>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -139,7 +194,26 @@
       </div>
       <button class="pdp-footer-btn" onclick="pdpAddToCart(this)">Agregar</button>
     </div>
+
+    <div class="pdp-cashback-banner">
+      <span class="msi msi-fill pdp-cashback-icon" aria-hidden="true">sell</span>
+      <p>Obtén un <b>5% de cashback</b> en todas tus compras en heb.com.mx y nuestra app con la <b>tarjeta de crédito HEB Afirme.</b> <a href="#" onclick="return false">Solicítala aquí</a></p>
+    </div>
+
+    <div class="pdp-bank-promos">
+      <span class="pdp-bank-promos-label">Promociones bancarias</span>
+      <div class="pdp-bank-logos">
+        <span class="pdp-bank-logo">VISA</span>
+        <span class="pdp-bank-logo">Mastercard</span>
+        <span class="pdp-bank-logo">AMEX</span>
+      </div>
+    </div>
   </div>
+
+  <section class="pdp-recommended">
+    <h2>Productos recomendados</h2>
+    <div class="pdp-recommended-row" id="pdpRecommended"></div>
+  </section>
 
 </main>
 

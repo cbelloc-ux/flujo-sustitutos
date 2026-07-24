@@ -75,16 +75,6 @@
 }
 .sub-notice.disabled:hover { background: var(--subtle); }
 
-/* Toast anclado arriba en el carrito, como en la referencia */
-.plp-toast.plp-toast-top {
-  top: 24px;
-  bottom: auto;
-  transform: translateX(-50%) translateY(-16px);
-}
-.plp-toast.plp-toast-top.show {
-  transform: translateX(-50%) translateY(0);
-}
-
 /* ══ Mobile: hidden summary + bottom bar + savings sheet ══ */
 
 .cart-bottom-bar { display: none; }

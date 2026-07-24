@@ -210,7 +210,8 @@ body {
 .stepper {
   display: inline-flex;
   align-items: center;
-  border: 1.5px solid var(--border);
+  background: var(--subtle);
+  border: none;
   border-radius: 24px;
   overflow: hidden;
 }
@@ -218,11 +219,11 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--ink-2);
+  color: var(--red);
   width: 36px;
   height: 32px;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +231,7 @@ body {
   transition: background .1s;
   line-height: 1;
 }
-.st-btn:hover { background: var(--subtle); }
+.st-btn:hover { background: rgba(34,31,25,.06); }
 .st-val {
   font-size: 14px;
   font-weight: 800;

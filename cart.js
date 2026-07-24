@@ -65,7 +65,7 @@ function renderCartNotice(id) {
 
   media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
   title.textContent = 'Se sustituye por el siguiente:';
-  desc.innerHTML = `${label.title} · <s>${label.priceOld}</s> <b>${label.price}</b>`;
+  desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
 }
 
 const CART_ICON_CACHED = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">cached</span>';
@@ -174,7 +174,7 @@ function cartLineHtml(item) {
       </div>
       <div class="price-col">
         <span class="price-main">${money(lineTotal)}</span>
-        <span class="price-unit">${product.price} / ${product.unit === 'kg' ? 'kg' : 'Pza'}</span>
+        <span class="price-unit">${product.price} / Pza</span>
       </div>
       <button class="dots-btn" aria-label="Más opciones">
         <span class="msi" aria-hidden="true">more_horiz</span>

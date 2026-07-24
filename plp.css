@@ -1116,12 +1116,13 @@
 }
 .plp-modal-save:not(:disabled):hover { background: var(--red-dk); }
 
-/* ══ Toast ══ */
+/* ══ Toast (aparece arriba de la pantalla) ══ */
 .plp-toast {
   position: fixed;
   left: 50%;
-  bottom: 32px;
-  transform: translateX(-50%) translateY(16px);
+  top: 24px;
+  bottom: auto;
+  transform: translateX(-50%) translateY(-16px);
   background: var(--ink);
   color: white;
   font-size: 14px;

@@ -5,10 +5,22 @@
   min-width: 390px;
   margin: 0 auto;
   padding: 16px;
+  padding-bottom: 96px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
+/* En mobile/tablet, .pdp-left "desaparece" (sus hijos pasan a ser flex items
+   directos de .pdp-main) para poder reordenar Descripción/Especificaciones
+   después del bloque de info, sin duplicar marcado. */
+.pdp-left {
+  display: contents;
+}
+.pdp-media { order: 1; }
+.pdp-info { order: 2; }
+.pdp-accordions { order: 3; }
+.pdp-recommended { order: 4; }
 
 /* ── Media ── */
 .pdp-media {
@@ -221,12 +233,12 @@
   color: var(--ink-2);
 }
 
-/* ── Sticky footer CTA ── */
+/* ── Footer CTA: fijo en la parte inferior de la pantalla (mobile/tablet) ── */
 .pdp-footer {
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
-  margin: 8px -16px calc(-16px + env(safe-area-inset-bottom));
-  width: calc(100% + 32px);
   background: rgba(248,246,241,.92);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
@@ -267,6 +279,185 @@
 .pdp-footer-btn:hover { background: var(--red-dk); }
 .pdp-footer-btn.added { transform: scale(.96); }
 
+/* ── Cashback banner ── */
+.pdp-cashback-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 12px;
+}
+.pdp-cashback-icon {
+  flex-shrink: 0;
+  color: var(--red);
+  font-size: 24px;
+}
+.pdp-cashback-banner p {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--ink-2);
+  font-weight: 800;
+}
+.pdp-cashback-banner a {
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ── Promociones bancarias ── */
+.pdp-bank-promos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pdp-bank-promos-label {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--blue);
+  text-decoration: underline;
+}
+.pdp-bank-logos { display: flex; gap: 8px; }
+.pdp-bank-logo {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ink-2);
+  font-family: var(--fn);
+}
+
+/* ── Acordeones: Descripción / Especificaciones ── */
+.pdp-accordions {
+  display: flex;
+  flex-direction: column;
+}
+.pdp-accordion {
+  border-bottom: 1px solid var(--border);
+}
+.pdp-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  cursor: pointer;
+  font-family: var(--fn);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  text-align: left;
+}
+.pdp-accordion-chevron { color: var(--ink); flex-shrink: 0; }
+.pdp-accordion-body { padding-bottom: 16px; }
+.pdp-accordion-body[hidden] { display: none; }
+
+.pdp-desc-table {
+  display: flex;
+  gap: 24px;
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 16px;
+  overflow-x: auto;
+}
+.pdp-desc-labels,
+.pdp-desc-values {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.pdp-desc-labels p, .pdp-desc-values p { margin: 0; }
+.pdp-desc-labels { font-weight: 700; color: var(--ink); flex-shrink: 0; }
+.pdp-desc-values { font-weight: 800; color: var(--ink); }
+
+/* ── Especificaciones: panel de valor nutricional ── */
+.pdp-nutrition {
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 20px;
+  font-family: var(--fn);
+  color: var(--ink);
+}
+.pdp-nutrition h3 {
+  font-size: 28px;
+  font-weight: 800;
+  border-bottom: 8px solid var(--ink);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+.pdp-nutrition-sub { font-size: 14px; margin-bottom: 6px; }
+.pdp-nutrition-serving {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom: 6px solid var(--ink);
+  padding: 6px 0;
+  margin-bottom: 6px;
+}
+.pdp-nutrition-cal-label { font-size: 13px; font-weight: 700; }
+.pdp-nutrition-cal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 26px;
+  font-weight: 800;
+  border-bottom: 8px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+.pdp-nutrition-dv {
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+}
+.pdp-nutrition-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pdp-nutrition-row.bold { font-weight: 800; }
+.pdp-nutrition-row .val { font-weight: 700; }
+.pdp-nutrition-foot {
+  font-size: 11px;
+  color: var(--ink-2);
+  margin-top: 8px;
+  line-height: 14px;
+}
+
+/* ── Productos recomendados ── */
+.pdp-recommended { margin-top: 8px; }
+.pdp-recommended h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.pdp-recommended-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.pdp-recommended-row .plp-card { flex: 0 0 176px; }
+
 /* ── Breakpoints: mobile ≤767px (default) · tablet 768–1199px · desktop ≥1200px ── */
 @media (min-width: 768px) {
   .pdp-main {
@@ -278,24 +469,47 @@
 @media (min-width: 1200px) {
   .pdp-main {
     max-width: 1160px;
+    padding-bottom: 16px;
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-areas:
+      "breadcrumb breadcrumb"
+      "left info"
+      "recommended recommended";
     align-items: start;
     gap: 40px;
   }
-  .pdp-main > .plp-breadcrumb {
-    grid-column: 1 / -1;
+  .pdp-main > .plp-breadcrumb { grid-area: breadcrumb; }
+  .pdp-recommended { grid-area: recommended; order: initial; }
+  /* .pdp-left vuelve a ser una caja real (ya no "contents") que agrupa imagen + acordeones
+     en una sola celda del grid, para que .pdp-info sea sticky sin necesidad de abarcar filas. */
+  .pdp-left {
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-  .pdp-media {
-    max-width: none;
+  .pdp-media { order: initial; max-width: none; }
+  .pdp-accordions { order: initial; }
+  /* El bloque derecho (info + CTA) se queda fijo; el bloque izquierdo (imagen + acordeones) hace scroll. */
+  .pdp-info {
+    grid-area: info;
+    order: initial;
     position: sticky;
     top: 96px;
   }
   .pdp-footer {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    background: none;
+    backdrop-filter: none;
+    border-top: 1px solid var(--border);
     border-radius: 16px;
     border: 1px solid var(--border);
-    border-top: 1px solid var(--border);
     margin: 8px 0 0;
     width: 100%;
+    padding: 12px 16px;
   }
 }

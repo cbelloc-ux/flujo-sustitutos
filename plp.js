@@ -33,18 +33,18 @@ function selectSort(row) {
 // Catálogo del PLP (128 productos = 4 páginas de 32), reutilizado por el PDP (pdp.html?id=p1).
 const PLP_CATALOG = (() => {
   const items = [
-    { id: 'p1', name: 'Manzana Red Delicious Importada Suprema', price: '$44.95', priceOld: '$54.95', unit: 'kg', img: 'assets/product-manzana-red.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
-    { id: 'p2', name: 'Manzana Verde Granny Smith', price: '$37.50', priceOld: '$45.50', unit: 'kg', img: 'assets/product-manzana-verde.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
-    { id: 'p3', name: 'Manzana Gala Nacional', price: '$34.90', priceOld: '$42.90', unit: 'kg', img: 'assets/product-manzana-3.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
+    { id: 'p1', name: 'Manzana Red Delicious Importada Suprema', price: '$44.95', priceOld: '$54.95', unit: 'pza', img: 'assets/product-manzana-red.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
+    { id: 'p2', name: 'Manzana Verde Granny Smith', price: '$37.50', priceOld: '$45.50', unit: 'pza', img: 'assets/product-manzana-verde.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
+    { id: 'p3', name: 'Manzana Gala Nacional', price: '$34.90', priceOld: '$42.90', unit: 'pza', img: 'assets/product-manzana-3.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
     { id: 'p4', name: 'Bolsa Manzanas Mixtas 1 kg', price: '$46.00', priceOld: '$56.00', unit: 'pza', img: 'assets/product-manzana-4.png', badgePink: 'Llévate producto Gratis', badgeGray: null },
     // Única piña del catálogo: es el único producto con la etiqueta "Quedan pocos".
     { id: 'p5', name: 'Piña', price: '$35.00', priceOld: '$42.00', unit: 'pza', img: 'assets/512260_01.webp', badgePink: null, badgeGray: 'Quedan pocos' },
   ];
   const templates = [
-    { name: 'Plátano Tabasco 1 kg', img: 'assets/platano.webp', unit: 'kg', base: 22 },
-    { name: 'Mango Ataulfo 1 kg', img: 'assets/mango.webp', unit: 'kg', base: 30 },
+    { name: 'Manojo de Plátano Tabasco', img: 'assets/platano.webp', unit: 'pza', base: 22 },
+    { name: 'Mango Ataulfo', img: 'assets/mango.webp', unit: 'pza', base: 30 },
     { name: 'Coco Entero', img: 'assets/301841_01.webp', unit: 'pza', base: 30 },
-    { name: 'Papaya Maradol 1 kg', img: 'assets/301918_01.webp', unit: 'kg', base: 20 },
+    { name: 'Papaya Maradol', img: 'assets/301918_01.webp', unit: 'pza', base: 20 },
     { name: 'Kiwi Zespri SunGold', img: 'assets/323977_01.webp', unit: 'pza', base: 15 },
     { name: 'Pitahaya', img: 'assets/427906_01.webp', unit: 'pza', base: 38 },
   ];
@@ -71,8 +71,8 @@ const PRODUCTS = Object.fromEntries(PLP_CATALOG.map(p => [p.id, p]));
 const SIMILAR_PRODUCTS = [
   { id: 's1', name: 'Manzana Red Delicious Importada Suprema', price: '$44.95', priceOld: '$54.95', img: 'assets/product-manzana-red.png' },
   { id: 's2', name: 'Manzana Verde Granny Smith', price: '$37.50', priceOld: '$45.50', img: 'assets/product-manzana-verde.png' },
-  { id: 's3', name: 'Plátano Tabasco 1 kg', price: '$28.00', priceOld: '$34.00', img: 'assets/platano.webp' },
-  { id: 's4', name: 'Mango Ataulfo 1 kg', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
+  { id: 's3', name: 'Manojo de Plátano Tabasco', price: '$28.00', priceOld: '$34.00', img: 'assets/platano.webp' },
+  { id: 's4', name: 'Mango Ataulfo', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
   { id: 's5', name: 'Piña', price: '$35.00', priceOld: '$42.00', img: 'assets/512260_01.webp' },
   { id: 's6', name: 'Coco Entero', price: '$33.00', priceOld: '$40.00', img: 'assets/301841_01.webp' },
   { id: 's7', name: 'Kiwi Zespri SunGold', price: '$19.00', priceOld: '$23.00', img: 'assets/323977_01.webp' },
@@ -85,8 +85,8 @@ const OTHER_PRODUCTS = [
   { id: 'o3', name: 'Coco Entero', price: '$32.00', priceOld: '$39.00', img: 'assets/301841_01.webp' },
   { id: 'o4', name: 'Manzana Gala Nacional', price: '$34.90', priceOld: '$42.90', img: 'assets/product-manzana-3.png' },
   { id: 'o5', name: 'Bolsa Manzanas Mixtas 1 kg', price: '$46.00', priceOld: '$56.00', img: 'assets/product-manzana-4.png' },
-  { id: 'o6', name: 'Mango Ataulfo 1 kg', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
-  { id: 'o7', name: 'Papaya Maradol 1 kg', price: '$22.50', priceOld: '$27.50', img: 'assets/301918_01.webp' },
+  { id: 'o6', name: 'Mango Ataulfo', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
+  { id: 'o7', name: 'Papaya Maradol', price: '$22.50', priceOld: '$27.50', img: 'assets/301918_01.webp' },
 ];
 
 const ALL_PRODUCTS = SIMILAR_PRODUCTS.concat(OTHER_PRODUCTS);
@@ -109,8 +109,20 @@ function substituteLabel(selection) {
   if (!selection || selection.type === 'picker') return null;
   if (selection.type === 'none') return { title: 'No reemplazar', desc: 'Eliminar producto del pedido' };
   if (selection.type === 'contact') return { title: 'Que me contacten', desc: 'Te preguntaremos por WhatsApp antes de sustituir' };
-  const product = ALL_PRODUCTS.find(p => p.id === selection.id);
-  return product ? { title: product.name, price: product.price, priceOld: product.priceOld, img: product.img } : null;
+  const product = getAnyProduct(selection.id);
+  if (!product) return null;
+  // La cantidad del sustituto es informativa (se reemplaza el producto original por N piezas
+  // de este); no se agrega como línea aparte al carrito.
+  const qty = selection.qty > 0 ? selection.qty : 1;
+  return {
+    title: product.name,
+    price: product.price,
+    priceOld: product.priceOld,
+    img: product.img,
+    qty,
+    totalPrice: parsePrice(product.price) * qty,
+    totalPriceOld: parsePrice(product.priceOld) * qty,
+  };
 }
 
 function refreshProductUI(productId) {
@@ -187,20 +199,16 @@ function clearSubSearch() {
 }
 
 function selectChoice(choice) {
-  const prev = tempSelection;
-  // Cambiar de sustituto (o elegir otra opción) quita la cantidad agregada del producto anterior.
-  if (prev && prev.type === 'product' && !(choice && choice.type === 'product' && choice.id === prev.id)) {
-    plpQty[prev.id] = 0;
-  }
-  // Elegir un producto similar como sustituto agrega automáticamente 1 pieza.
-  if (choice && choice.type === 'product' && !(plpQty[choice.id] > 0)) {
-    plpQty[choice.id] = 1;
+  // La cantidad de un sustituto elegido es informativa (para mostrar "se sustituye por N piezas
+  // de X" en el carrito); nunca se agrega como línea aparte al carrito real.
+  if (choice && choice.type === 'product') {
+    const prevQty = (tempSelection && tempSelection.type === 'product' && tempSelection.id === choice.id) ? tempSelection.qty : 0;
+    choice.qty = prevQty > 0 ? prevQty : 1;
   }
   // Elegir una de las opciones de arriba (no un producto similar) contrae el acordeón para no causar confusión.
   if (choice && choice.type !== 'product') {
     setSimilarExpanded(false);
   }
-  persistCartQty();
   tempSelection = choice;
   syncOptionRows();
   renderCarousel();
@@ -220,7 +228,8 @@ function updateSaveButton() {
 }
 
 function miniCtaHtml(product) {
-  const qty = plpQty[product.id] || 0;
+  const selected = tempSelection && tempSelection.type === 'product' && tempSelection.id === product.id;
+  const qty = selected ? (tempSelection.qty || 1) : 0;
   if (qty <= 0) {
     return `<button type="button" class="plp-add-btn" onclick="addMiniQty('${product.id}')" aria-label="Agregar ${product.name}">${CTA_PLUS_SVG}</button>`;
   }
@@ -240,13 +249,13 @@ function addMiniQty(id) {
 }
 
 function changeMiniQty(id, delta) {
-  plpQty[id] = (plpQty[id] || 0) + delta;
-  if (plpQty[id] < 0) plpQty[id] = 0;
+  // Solo aplica al producto que ya está elegido como sustituto (es el único con stepper visible).
+  if (!(tempSelection && tempSelection.type === 'product' && tempSelection.id === id)) return;
+  tempSelection.qty = (tempSelection.qty || 1) + delta;
   // Si se quita la última pieza, deja de ser el sustituto elegido.
-  if (plpQty[id] === 0 && tempSelection && tempSelection.type === 'product' && tempSelection.id === id) {
+  if (tempSelection.qty <= 0) {
     tempSelection = null;
   }
-  persistCartQty();
   syncOptionRows();
   renderCarousel();
   renderSearchGrid();
@@ -255,7 +264,7 @@ function changeMiniQty(id, delta) {
 
 function miniCardHtml(product) {
   const selected = tempSelection && tempSelection.type === 'product' && tempSelection.id === product.id;
-  const qty = plpQty[product.id] || 0;
+  const qty = selected ? (tempSelection.qty || 1) : 0;
   return `
     <div class="plp-mini-card">
       <div class="plp-mini-media" onclick="selectChoice({type:'product', id:'${product.id}'})">
@@ -363,8 +372,8 @@ function persistCartQty() {
 
 updateHeaderCartSummary();
 
-function unitLabel(p) {
-  return p.unit === 'kg' ? 'kg' : 'pza';
+function unitLabel() {
+  return 'pza';
 }
 
 function ctaWrapClass(p) {
