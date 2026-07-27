@@ -57,7 +57,7 @@ function renderCartNotice(id) {
   }
 
   media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
-  title.textContent = 'Se sustituye por el siguiente:';
+  title.textContent = '¿Qué enviamos si se agota?';
   desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
 }
 
