@@ -96,14 +96,6 @@ function renderPdpNotice() {
     return;
   }
 
-  if (label.title === 'Que me contacten') {
-    media.innerHTML = PDP_ICON_CONTACT;
-    title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = label.desc;
-    desc.hidden = false;
-    return;
-  }
-
   media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
   title.textContent = 'Se sustituye por el siguiente:';
   desc.innerHTML = `${label.title} · ${label.qty} pza · <s>$${label.totalPriceOld.toFixed(2)}</s> <b>$${label.totalPrice.toFixed(2)}</b>`;
@@ -112,7 +104,6 @@ function renderPdpNotice() {
 
 const PDP_ICON_CACHED = '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">cached</span>';
 const PDP_ICON_BLOCK = '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">block</span>';
-const PDP_ICON_CONTACT = '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">chat</span>';
 
 document.addEventListener('DOMContentLoaded', () => {
   renderPdpProduct();

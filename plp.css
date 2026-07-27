@@ -745,7 +745,10 @@
   inset: 0;
   background: rgba(34,31,25,.45);
   z-index: 100;
+  opacity: 0;
+  transition: opacity .2s ease-out;
 }
+.plp-overlay.open { opacity: 1; }
 
 .plp-modal {
   position: fixed;
@@ -769,7 +772,11 @@
   max-height: 88vh;
   height: 100%;
   box-shadow: 0 -4px 18px rgba(0,0,0,.15);
+  /* Cerrado: fuera de pantalla hacia abajo (mobile/tablet = sheet vertical) */
+  transform: translateY(100%);
+  transition: transform .2s cubic-bezier(.22,.61,.36,1);
 }
+.plp-modal.open .plp-modal-sheet { transform: translateY(0); }
 
 /* Tablet: centered, taller bottom sheet */
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -799,7 +806,10 @@
     border-radius: 0;
     max-height: none;
     height: 100%;
+    /* Cerrado: fuera de pantalla hacia la derecha (desktop = drawer lateral) */
+    transform: translateX(100%);
   }
+  .plp-modal.open .plp-modal-sheet { transform: translateX(0); }
 }
 
 .plp-modal-header {
@@ -847,59 +857,6 @@
   margin-bottom: 16px;
 }
 
-/* ── Option rows ── */
-.plp-sub-options {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 24px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-.plp-sub-option {
-  background: var(--blue-bg);
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,.6);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 16px;
-  text-align: left;
-  font-family: var(--fn);
-}
-.plp-sub-icon {
-  background: var(--blue);
-  border-radius: 9999px;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.plp-sub-text {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
-}
-.plp-sub-text strong {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.plp-sub-text small {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-3);
-}
-.plp-chevron {
-  flex-shrink: 0;
-  display: flex;
-}
-
 .plp-radio {
   flex-shrink: 0;
   width: 24px;
@@ -920,46 +877,81 @@
   border-radius: 9999px;
   background: transparent;
 }
-.plp-sub-option.selected .plp-radio,
 .plp-radio.checked {
   border-color: var(--blue);
 }
-.plp-sub-option.selected .plp-radio::after,
 .plp-radio.checked::after {
   background: var(--blue);
 }
 
-/* ── Similar products / carousel (acordeón) ── */
-.plp-similar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 0 16px 0 0;
-  margin-bottom: 16px;
-  cursor: pointer;
-  font-family: var(--fn);
-  text-align: left;
-}
-.plp-similar-header-title {
+/* ── Similar products / carousel (incluye al final el bloque de opciones) ── */
+.plp-similar-title {
   font-size: 20px;
   font-weight: 800;
+  line-height: 24px;
   color: var(--ink);
-}
-.plp-similar-chevron {
-  flex-shrink: 0;
-  color: var(--ink);
-}
-.plp-similar-row[hidden] {
-  display: none;
+  margin: 0 0 16px;
 }
 .plp-similar-row {
   display: flex;
   gap: 14px;
   overflow-x: auto;
   padding-bottom: 8px;
+}
+
+/* ── Tarjetas de opción (buscar / picker / no reemplazar) integradas al carrusel ──
+   Mismo alto/ancho de media y misma posición del radio que .plp-mini-card, para que
+   quede alineado con las tarjetas de producto del mismo carrusel. */
+.plp-option-card {
+  flex-shrink: 0;
+  width: 140px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--fn);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.plp-option-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plp-option-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 9999px;
+  background: var(--blue);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plp-option-media .plp-radio {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--surface);
+}
+.plp-option-title {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 24px;
+  color: var(--blue);
+}
+.plp-option-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--blue);
 }
 
 .plp-mini-card {
@@ -1071,7 +1063,8 @@
     flex-wrap: wrap;
     overflow-x: visible;
   }
-  .plp-similar-row .plp-mini-card {
+  .plp-similar-row .plp-mini-card,
+  .plp-similar-row .plp-option-card {
     width: calc((100% - 28px) / 3);
   }
   .plp-search-grid {
@@ -1094,6 +1087,7 @@
 }
 .plp-modal-footer p {
   font-size: 12px;
+  font-weight: 700;
   color: var(--ink-2);
   text-align: center;
 }

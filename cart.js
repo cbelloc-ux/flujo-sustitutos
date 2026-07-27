@@ -56,13 +56,6 @@ function renderCartNotice(id) {
     return;
   }
 
-  if (label.title === 'Que me contacten') {
-    media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_CONTACT}</div>`;
-    title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = label.desc;
-    return;
-  }
-
   media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
   title.textContent = 'Se sustituye por el siguiente:';
   desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
@@ -70,7 +63,6 @@ function renderCartNotice(id) {
 
 const CART_ICON_CACHED = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">cached</span>';
 const CART_ICON_BLOCK = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">block</span>';
-const CART_ICON_CONTACT = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">chat</span>';
 
 function openSavingsSheet() {
   document.getElementById('savingsOverlay').hidden = false;

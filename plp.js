@@ -94,7 +94,6 @@ const ALL_PRODUCTS = SIMILAR_PRODUCTS.concat(OTHER_PRODUCTS);
 let currentProductId = null;
 let tempSelection = null; // {type:'picker'} | {type:'none'} | {type:'product', id}
 let toastTimeout = null;
-let similarExpanded = true;
 
 function loadSubstitutes() {
   try { return JSON.parse(localStorage.getItem('heb-substitutes')) || {}; }
@@ -108,7 +107,6 @@ const savedSubstitutes = loadSubstitutes();
 function substituteLabel(selection) {
   if (!selection || selection.type === 'picker') return null;
   if (selection.type === 'none') return { title: 'No reemplazar', desc: 'Eliminar producto del pedido' };
-  if (selection.type === 'contact') return { title: 'Que me contacten', desc: 'Te preguntaremos por WhatsApp antes de sustituir' };
   const product = getAnyProduct(selection.id);
   if (!product) return null;
   // La cantidad del sustituto es informativa (se reemplaza el producto original por N piezas
@@ -139,44 +137,43 @@ function initSubstituteUI() {
   Object.keys(savedSubstitutes).forEach(refreshProductUI);
 }
 
-function setSimilarExpanded(expanded) {
-  similarExpanded = expanded;
-  const row = document.getElementById('subCarousel');
-  const toggle = document.getElementById('subSimilarToggle');
-  const chevron = document.getElementById('subSimilarChevron');
-  if (!row || !toggle) return;
-  row.hidden = !expanded;
-  toggle.setAttribute('aria-expanded', String(expanded));
-  if (chevron) chevron.textContent = expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
-}
-
-function toggleSimilar() {
-  setSimilarExpanded(!similarExpanded);
-}
+// Duración de la animación de cierre del modal (debe igualar la transición en CSS)
+// para no ocultar el modal (hidden) antes de que termine de deslizarse hacia fuera.
+const MODAL_ANIM_MS = 200;
 
 function openSubstituteModal(productId) {
   currentProductId = productId;
   tempSelection = savedSubstitutes[productId] || null;
   showMainView();
   document.getElementById('subSearchInput').value = '';
-  setSimilarExpanded(true);
   renderCarousel();
   renderSearchGrid();
-  syncOptionRows();
   updateSaveButton();
-  document.getElementById('subOverlay').hidden = false;
-  document.getElementById('subModal').hidden = false;
+  const overlay = document.getElementById('subOverlay');
+  const modal = document.getElementById('subModal');
+  overlay.hidden = false;
+  modal.hidden = false;
+  // Forzar reflow para que el navegador registre el estado "cerrado" antes de animar a "open".
+  void modal.offsetHeight;
+  overlay.classList.add('open');
+  modal.classList.add('open');
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 
 function closeSubstituteModal() {
-  document.getElementById('subOverlay').hidden = true;
-  document.getElementById('subModal').hidden = true;
+  const overlay = document.getElementById('subOverlay');
+  const modal = document.getElementById('subModal');
+  overlay.classList.remove('open');
+  modal.classList.remove('open');
   document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
   currentProductId = null;
   tempSelection = null;
+  setTimeout(() => {
+    overlay.hidden = true;
+    modal.hidden = true;
+  }, MODAL_ANIM_MS);
 }
 
 function showMainView() {
@@ -189,7 +186,6 @@ function showSearchView() {
   document.getElementById('subMainView').hidden = true;
   document.getElementById('subSearchView').hidden = false;
   document.getElementById('subBack').hidden = false;
-  setSimilarExpanded(false);
 }
 
 function clearSubSearch() {
@@ -205,22 +201,10 @@ function selectChoice(choice) {
     const prevQty = (tempSelection && tempSelection.type === 'product' && tempSelection.id === choice.id) ? tempSelection.qty : 0;
     choice.qty = prevQty > 0 ? prevQty : 1;
   }
-  // Elegir una de las opciones de arriba (no un producto similar) contrae el acordeón para no causar confusión.
-  if (choice && choice.type !== 'product') {
-    setSimilarExpanded(false);
-  }
   tempSelection = choice;
-  syncOptionRows();
   renderCarousel();
   renderSearchGrid();
   updateSaveButton();
-}
-
-function syncOptionRows() {
-  document.querySelectorAll('.plp-sub-option[data-choice]').forEach(el => {
-    const isSelected = tempSelection && tempSelection.type === el.dataset.choice;
-    el.classList.toggle('selected', !!isSelected);
-  });
 }
 
 function updateSaveButton() {
@@ -256,7 +240,6 @@ function changeMiniQty(id, delta) {
   if (tempSelection.qty <= 0) {
     tempSelection = null;
   }
-  syncOptionRows();
   renderCarousel();
   renderSearchGrid();
   updateSaveButton();
@@ -281,8 +264,35 @@ function miniCardHtml(product) {
   `;
 }
 
+// Bloque de opciones (no producto) integrado al final del carrusel de "Productos similares",
+// en el mismo orden que la referencia de Figma: buscar, picker, no reemplazar.
+const OPTION_CARD_DEFS = [
+  { choice: 'search', icon: 'search', title: 'Buscar otro sustituto' },
+  { choice: 'picker', icon: 'emoji_people', title: 'Picker sugiere', desc: 'Si no contesto, que elijan por mi' },
+  { choice: 'none', icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido' },
+];
+
+function optionCardHtml(def) {
+  const selected = def.choice !== 'search' && tempSelection && tempSelection.type === def.choice;
+  const action = def.choice === 'search' ? 'showSearchView()' : `selectChoice({type:'${def.choice}'})`;
+  return `
+    <button type="button" class="plp-option-card" onclick="${action}">
+      <span class="plp-option-media">
+        <span class="plp-option-icon">
+          <span class="msi" aria-hidden="true" style="font-size:30px; color:white">${def.icon}</span>
+        </span>
+        ${def.choice !== 'search' ? `<span class="plp-radio${selected ? ' checked' : ''}"></span>` : ''}
+      </span>
+      <span class="plp-option-title">${def.title}</span>
+      ${def.desc ? `<span class="plp-option-desc">${def.desc}</span>` : ''}
+    </button>
+  `;
+}
+
 function renderCarousel() {
-  document.getElementById('subCarousel').innerHTML = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
+  const productCards = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
+  const optionCards = OPTION_CARD_DEFS.map(optionCardHtml).join('');
+  document.getElementById('subCarousel').innerHTML = productCards + optionCards;
 }
 
 function renderSearchGrid() {
