@@ -57,6 +57,7 @@
 
     <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
       <span class="msi" aria-hidden="true">shopping_cart</span>
+      <span class="plp-cart-badge">0</span>
     </a>
   </div>
 
@@ -234,7 +235,7 @@
 <div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
   <div class="plp-modal-sheet">
     <div class="plp-modal-header">
-      <button type="button" class="plp-modal-back" id="subBack" onclick="showMainView()" aria-label="Regresar" hidden>
+      <button type="button" class="plp-modal-back" id="subBack" onclick="closeSearchScreen()" aria-label="Regresar" hidden>
         <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
       </button>
       <h2 class="plp-modal-title" id="subModalTitle">Sustitutos</h2>
@@ -244,16 +245,33 @@
     </div>
 
     <div class="plp-modal-body">
-      <div class="plp-modal-view" id="subMainView">
+      <div class="plp-modal-view" id="subMainScreen">
         <p class="plp-modal-desc">Quedan pocas piezas de este producto. Dinos qué prefieres si se agota.</p>
 
-        <div class="plp-similar">
-          <h3 class="plp-similar-title">Elige uno de estos productos similares</h3>
-          <div class="plp-similar-row" id="subCarousel"></div>
+        <div class="plp-segment" id="subSegment" role="tablist" aria-label="Qué prefieres si se agota">
+          <button type="button" class="plp-segment-btn active" data-segment="product" onclick="selectSegment('product')" role="tab" aria-selected="true">Productos</button>
+          <button type="button" class="plp-segment-btn" data-segment="picker" onclick="selectSegment('picker')" role="tab" aria-selected="false">Picker sugiere</button>
+          <button type="button" class="plp-segment-btn" data-segment="none" onclick="selectSegment('none')" role="tab" aria-selected="false">No reemplazar</button>
+        </div>
+
+        <div class="plp-modal-view" id="subProductView">
+          <button type="button" class="plp-search-trigger" onclick="openSearchScreen()">
+            <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+            <span class="plp-search-trigger-text">Busca cualquier producto para sustituir</span>
+          </button>
+
+          <div class="plp-similar">
+            <h3 class="plp-similar-title">O elige uno de estos productos similares</h3>
+            <div class="plp-similar-row" id="subCarousel"></div>
+          </div>
+        </div>
+
+        <div class="plp-modal-view" id="subChoiceView" hidden>
+          <div class="plp-choice-panel" id="subChoicePanel"></div>
         </div>
       </div>
 
-      <div class="plp-modal-view" id="subSearchView" hidden>
+      <div class="plp-modal-view" id="subSearchScreen" hidden>
         <div class="plp-search-input-wrap">
           <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
           <input type="text" id="subSearchInput" class="plp-search-input" placeholder="Busca cualquier producto para sustituir" oninput="renderSearchGrid()">

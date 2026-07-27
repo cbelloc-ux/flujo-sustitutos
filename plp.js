@@ -73,7 +73,6 @@ const SIMILAR_PRODUCTS = [
   { id: 's2', name: 'Manzana Verde Granny Smith', price: '$37.50', priceOld: '$45.50', img: 'assets/product-manzana-verde.png' },
   { id: 's3', name: 'Manojo de Plátano Tabasco', price: '$28.00', priceOld: '$34.00', img: 'assets/platano.webp' },
   { id: 's4', name: 'Mango Ataulfo', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
-  { id: 's5', name: 'Piña', price: '$35.00', priceOld: '$42.00', img: 'assets/512260_01.webp' },
   { id: 's6', name: 'Coco Entero', price: '$33.00', priceOld: '$40.00', img: 'assets/301841_01.webp' },
   { id: 's7', name: 'Kiwi Zespri SunGold', price: '$19.00', priceOld: '$23.00', img: 'assets/323977_01.webp' },
 ];
@@ -93,6 +92,7 @@ const ALL_PRODUCTS = SIMILAR_PRODUCTS.concat(OTHER_PRODUCTS);
 
 let currentProductId = null;
 let tempSelection = null; // {type:'picker'} | {type:'none'} | {type:'product', id}
+let activeSegment = 'product'; // 'product' | 'picker' | 'none' — segment control activo en la vista principal
 let toastTimeout = null;
 
 function loadSubstitutes() {
@@ -144,10 +144,14 @@ const MODAL_ANIM_MS = 200;
 function openSubstituteModal(productId) {
   currentProductId = productId;
   tempSelection = savedSubstitutes[productId] || null;
-  showMainView();
-  document.getElementById('subSearchInput').value = '';
+  // Por defecto se abre en el segmento "Productos"; si ya había una elección de
+  // "Picker sugiere" o "No reemplazar" guardada, se respeta ese segmento al reabrir.
+  activeSegment = (tempSelection && (tempSelection.type === 'picker' || tempSelection.type === 'none'))
+    ? tempSelection.type
+    : 'product';
+  closeSearchScreen();
+  syncSegmentUI();
   renderCarousel();
-  renderSearchGrid();
   updateSaveButton();
   const overlay = document.getElementById('subOverlay');
   const modal = document.getElementById('subModal');
@@ -170,28 +174,74 @@ function closeSubstituteModal() {
   document.body.style.overflow = '';
   currentProductId = null;
   tempSelection = null;
+  activeSegment = 'product';
   setTimeout(() => {
     overlay.hidden = true;
     modal.hidden = true;
   }, MODAL_ANIM_MS);
 }
 
-function showMainView() {
-  document.getElementById('subMainView').hidden = false;
-  document.getElementById('subSearchView').hidden = true;
-  document.getElementById('subBack').hidden = true;
+// El buscador es una pantalla independiente dentro del modal (no un filtro en línea):
+// se abre con su propio botón "Regresar" en el header y su propia grilla de resultados.
+function openSearchScreen() {
+  document.getElementById('subMainScreen').hidden = true;
+  document.getElementById('subSearchScreen').hidden = false;
+  document.getElementById('subBack').hidden = false;
+  document.getElementById('subSearchInput').value = '';
+  renderSearchGrid();
+  document.getElementById('subSearchInput').focus();
 }
 
-function showSearchView() {
-  document.getElementById('subMainView').hidden = true;
-  document.getElementById('subSearchView').hidden = false;
-  document.getElementById('subBack').hidden = false;
+function closeSearchScreen() {
+  document.getElementById('subSearchScreen').hidden = true;
+  document.getElementById('subMainScreen').hidden = false;
+  document.getElementById('subBack').hidden = true;
 }
 
 function clearSubSearch() {
   document.getElementById('subSearchInput').value = '';
   document.getElementById('subSearchInput').focus();
   renderSearchGrid();
+}
+
+// Contenido del segmento activo cuando no es "Productos" (no hay nada más que elegir:
+// el propio segmento ES la elección).
+const CHOICE_PANEL_DEFS = {
+  picker: { icon: 'emoji_people', title: 'Picker sugiere', desc: 'Si no contesto, que elijan por mi' },
+  none: { icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido' },
+};
+
+function selectSegment(segment) {
+  activeSegment = segment;
+  if (segment === 'picker' || segment === 'none') {
+    tempSelection = { type: segment };
+  } else if (!(tempSelection && tempSelection.type === 'product')) {
+    // Volver al segmento "Productos" sin un producto ya elegido no deja ninguna
+    // elección a medias (picker/no reemplazar) seleccionada por accidente.
+    tempSelection = null;
+  }
+  syncSegmentUI();
+  renderCarousel();
+  updateSaveButton();
+}
+
+function syncSegmentUI() {
+  document.querySelectorAll('.plp-segment-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.segment === activeSegment);
+  });
+  const isProduct = activeSegment === 'product';
+  document.getElementById('subProductView').hidden = !isProduct;
+  document.getElementById('subChoiceView').hidden = isProduct;
+  if (!isProduct) {
+    const def = CHOICE_PANEL_DEFS[activeSegment];
+    document.getElementById('subChoicePanel').innerHTML = `
+      <span class="plp-choice-icon">
+        <span class="msi" aria-hidden="true" style="font-size:34px; color:white">${def.icon}</span>
+      </span>
+      <span class="plp-choice-title">${def.title}</span>
+      <span class="plp-choice-desc">${def.desc}</span>
+    `;
+  }
 }
 
 function selectChoice(choice) {
@@ -264,35 +314,10 @@ function miniCardHtml(product) {
   `;
 }
 
-// Bloque de opciones (no producto) integrado al final del carrusel de "Productos similares",
-// en el mismo orden que la referencia de Figma: buscar, picker, no reemplazar.
-const OPTION_CARD_DEFS = [
-  { choice: 'search', icon: 'search', title: 'Buscar otro sustituto' },
-  { choice: 'picker', icon: 'emoji_people', title: 'Picker sugiere', desc: 'Si no contesto, que elijan por mi' },
-  { choice: 'none', icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido' },
-];
-
-function optionCardHtml(def) {
-  const selected = def.choice !== 'search' && tempSelection && tempSelection.type === def.choice;
-  const action = def.choice === 'search' ? 'showSearchView()' : `selectChoice({type:'${def.choice}'})`;
-  return `
-    <button type="button" class="plp-option-card" onclick="${action}">
-      <span class="plp-option-media">
-        <span class="plp-option-icon">
-          <span class="msi" aria-hidden="true" style="font-size:30px; color:white">${def.icon}</span>
-        </span>
-        ${def.choice !== 'search' ? `<span class="plp-radio${selected ? ' checked' : ''}"></span>` : ''}
-      </span>
-      <span class="plp-option-title">${def.title}</span>
-      ${def.desc ? `<span class="plp-option-desc">${def.desc}</span>` : ''}
-    </button>
-  `;
-}
-
+// El segmento "Productos" solo muestra productos similares; "Picker sugiere" y
+// "No reemplazar" ahora son segmentos propios (ver CHOICE_PANEL_DEFS), no tarjetas del carrusel.
 function renderCarousel() {
-  const productCards = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
-  const optionCards = OPTION_CARD_DEFS.map(optionCardHtml).join('');
-  document.getElementById('subCarousel').innerHTML = productCards + optionCards;
+  document.getElementById('subCarousel').innerHTML = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
 }
 
 function renderSearchGrid() {

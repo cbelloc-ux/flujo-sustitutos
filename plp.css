@@ -199,7 +199,7 @@
   line-height: 1;
 }
 
-.plp-cart-icon-btn { display: flex; }
+.plp-cart-icon-btn { display: flex; position: relative; }
 
 .plp-delivery-bar {
   width: 100%;
@@ -884,7 +884,94 @@
   background: var(--blue);
 }
 
-/* ── Similar products / carousel (incluye al final el bloque de opciones) ── */
+/* ── Segment control (Productos / Picker sugiere / No reemplazar) ──
+   Debajo del copy "Quedan pocas piezas..."; "Productos" es el segmento por defecto. */
+.plp-segment {
+  display: flex;
+  gap: 4px;
+  background: var(--subtle);
+  border: none;
+  border-radius: 9999px;
+  padding: 6px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+.plp-segment-btn {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  border-radius: 9999px;
+  padding: 12px 10px;
+  font-family: var(--fn);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-align: center;
+  cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.plp-segment-btn.active {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,.14);
+}
+
+/* ── Panel de elección para los segmentos "Picker sugiere" / "No reemplazar" ──
+   El propio segmento ES la elección; no hace falta escoger nada más. */
+.plp-choice-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 16px;
+}
+.plp-choice-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  background: var(--blue);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plp-choice-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.plp-choice-desc {
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: 260px;
+  line-height: 18px;
+}
+
+/* ── Botón que abre el buscador como pantalla independiente (no filtra en línea) ── */
+.plp-search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 9999px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  font-family: var(--fn);
+  text-align: left;
+  flex-shrink: 0;
+}
+.plp-search-trigger-text {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* ── Similar products / carousel ── */
 .plp-similar-title {
   font-size: 20px;
   font-weight: 800;
@@ -897,61 +984,6 @@
   gap: 14px;
   overflow-x: auto;
   padding-bottom: 8px;
-}
-
-/* ── Tarjetas de opción (buscar / picker / no reemplazar) integradas al carrusel ──
-   Mismo alto/ancho de media y misma posición del radio que .plp-mini-card, para que
-   quede alineado con las tarjetas de producto del mismo carrusel. */
-.plp-option-card {
-  flex-shrink: 0;
-  width: 140px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: var(--fn);
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-}
-.plp-option-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.plp-option-icon {
-  width: 62px;
-  height: 62px;
-  border-radius: 9999px;
-  background: var(--blue);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.plp-option-media .plp-radio {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: var(--surface);
-}
-.plp-option-title {
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 24px;
-  color: var(--blue);
-}
-.plp-option-desc {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--blue);
 }
 
 .plp-mini-card {
@@ -1014,7 +1046,7 @@
   overflow: hidden;
 }
 
-/* ── Search view ── */
+/* ── Buscador — pantalla independiente (ver #subSearchScreen) ── */
 .plp-search-input-wrap {
   display: flex;
   align-items: center;
@@ -1063,15 +1095,8 @@
     flex-wrap: wrap;
     overflow-x: visible;
   }
-  .plp-similar-row .plp-mini-card,
-  .plp-similar-row .plp-option-card {
+  .plp-similar-row .plp-mini-card {
     width: calc((100% - 28px) / 3);
-  }
-  .plp-search-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .plp-search-grid .plp-mini-card {
-    width: 100%;
   }
 }
 
