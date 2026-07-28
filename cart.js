@@ -45,7 +45,7 @@ function renderCartNotice(id) {
   if (!label) {
     media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_CACHED}</div>`;
     title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = 'Si no contesto, que el picker elija por mi';
+    desc.textContent = 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.';
     return;
   }
 

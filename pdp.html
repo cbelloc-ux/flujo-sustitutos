@@ -17,7 +17,7 @@
 <!-- ══ HEADER ══ -->
 <header class="plp-header">
   <div class="plp-header-top">
-    <button class="plp-icon-btn plp-header-lead-btn" onclick="location.href='index.html'" aria-label="Regresar">
+    <button class="plp-icon-btn plp-header-lead-btn" onclick="location.href='plp.html'" aria-label="Regresar">
       <span class="msi" aria-hidden="true">arrow_back</span>
     </button>
 
@@ -67,7 +67,7 @@
   </button>
 
   <nav class="plp-pleca" aria-label="Categorías">
-    <button class="plp-pleca-item active"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item active" onclick="openPasillosMenu()"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
     <button class="plp-pleca-item">Nuestras marcas</button>
     <button class="plp-pleca-item">Prime</button>
     <button class="plp-pleca-item">Promociones</button>
@@ -238,14 +238,17 @@
 
         <div class="plp-segment" id="subSegment" role="tablist" aria-label="Qué prefieres si se agota">
           <button type="button" class="plp-segment-btn active" data-segment="product" onclick="selectSegment('product')" role="tab" aria-selected="true">Productos</button>
-          <button type="button" class="plp-segment-btn" data-segment="picker" onclick="selectSegment('picker')" role="tab" aria-selected="false">Picker sugiere</button>
+          <button type="button" class="plp-segment-btn" data-segment="picker" onclick="selectSegment('picker')" role="tab" aria-selected="false">HEB Sugiere</button>
           <button type="button" class="plp-segment-btn" data-segment="none" onclick="selectSegment('none')" role="tab" aria-selected="false">No reemplazar</button>
         </div>
 
         <div class="plp-modal-view" id="subProductView">
           <button type="button" class="plp-search-trigger" onclick="openSearchScreen()">
-            <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
-            <span class="plp-search-trigger-text">Busca cualquier producto para sustituir</span>
+            <span class="plp-search-trigger-left">
+              <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+              <span class="plp-search-trigger-text">Busca cualquier producto para sustituir</span>
+            </span>
+            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
           </button>
 
           <div class="plp-similar">
@@ -281,6 +284,98 @@
 <div class="plp-toast" id="subToast" role="status" aria-live="polite">
   <span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#2a9f47">check_circle</span>
   <span>Sustituto guardado con éxito.</span>
+</div>
+
+<!-- ══ MENÚ PASILLOS (mega menú de categorías) ══ -->
+<div class="pasillos-overlay" id="pasillosOverlay" onclick="closePasillosMenu()" hidden></div>
+<div class="pasillos-panel" id="pasillosPanel" hidden role="dialog" aria-modal="true" aria-label="Pasillos">
+  <div class="pasillos-sheet">
+    <div class="pasillos-view" id="pasillosLevel1">
+      <div class="pasillos-header">
+        <h2 class="pasillos-title">Explorar todo</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-list">
+        <button type="button" class="pasillos-pill">Despensa</button>
+        <button type="button" class="pasillos-pill" onclick="showPasillosLevel2()">Frutas y Verduras</button>
+        <button type="button" class="pasillos-pill">Carnes y Pescados</button>
+        <button type="button" class="pasillos-pill">Bebidas y Snacks</button>
+        <button type="button" class="pasillos-pill">Jamones, Quesos y Deli</button>
+        <button type="button" class="pasillos-pill">Pan y Tortillas</button>
+        <button type="button" class="pasillos-pill">Lácteos y Huevo</button>
+        <button type="button" class="pasillos-pill">Vinos, Licores y Cervezas</button>
+        <button type="button" class="pasillos-pill">Alimentos Congelados</button>
+        <button type="button" class="pasillos-pill">Bebés</button>
+        <button type="button" class="pasillos-pill">Cuidado Personal y Belleza</button>
+        <button type="button" class="pasillos-pill">Mascotas</button>
+        <button type="button" class="pasillos-pill">Hogar y Entretenimiento</button>
+        <button type="button" class="pasillos-pill">Limpieza del Hogar</button>
+      </div>
+    </div>
+
+    <div class="pasillos-view" id="pasillosLevel2" hidden>
+      <div class="pasillos-header">
+        <button type="button" class="pasillos-back" onclick="showPasillosLevel1()" aria-label="Regresar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+        </button>
+        <h2 class="pasillos-title">Frutas y Verduras</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-groups">
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">A Granel</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Desinfectantes</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Ensaladas</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Cortada</a>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Enchilada</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_up</span>
+            <span class="pasillos-group-name">Frutas</span>
+            <a class="pasillos-vertodo pasillos-vertodo--active" href="plp.html">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items">
+            <a class="pasillos-item" href="plp.html">HEB Fresh</a>
+            <a class="pasillos-item" href="plp.html">Jugos</a>
+            <a class="pasillos-item" href="plp.html">Nueces y Cacahuates</a>
+            <a class="pasillos-item" href="plp.html">Orgánicos</a>
+            <a class="pasillos-item" href="plp.html">Variedad</a>
+            <a class="pasillos-item" href="plp.html">Vegetales en bolsa</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Verduras</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="plp.js"></script>

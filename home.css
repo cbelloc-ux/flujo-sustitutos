@@ -1,0 +1,352 @@
+/* ══ Homepage — categorías, promociones, cupones ══
+   Estructura tomada de referencia de heb.com.mx (tiles de categoría, grid de promos,
+   fila de cupones), adaptada a los breakpoints ya establecidos en el resto del sitio. */
+
+.home-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+.home-section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+/* ── Categorías (fila con scroll horizontal en mobile/tablet) ── */
+.home-categories { margin-bottom: 28px; }
+.home-cat-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.home-cat-tile {
+  flex-shrink: 0;
+  width: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.home-cat-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.home-cat-icon .msi { font-size: 32px; color: white; }
+.home-cat-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  line-height: 16px;
+}
+
+/* ── Promociones (grid de tarjetas de color) ── */
+.home-promos { margin-bottom: 28px; }
+.home-promo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.home-promo-tile {
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 160px;
+  justify-content: flex-end;
+}
+.home-promo-tag {
+  align-self: flex-start;
+  background: rgba(255,255,255,.92);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 4px 14px;
+  border-radius: 9999px;
+}
+.home-promo-headline {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 26px;
+  margin: 0;
+}
+.home-promo-fine {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: .9;
+  margin: 0;
+}
+
+/* ── Cupones ── */
+.home-coupons { margin-bottom: 8px; }
+.home-coupon-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.home-coupon-card {
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-coupon-card--dark  { background: var(--ink); }
+.home-coupon-card--green { background: var(--green); }
+.home-coupon-card--red   { background: var(--red); }
+.home-coupon-tag {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  opacity: .85;
+}
+.home-coupon-amount {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 36px;
+}
+.home-coupon-desc {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: .9;
+  margin: 4px 0 0;
+}
+
+/* Tablet: 2 columnas de promos, 3 de tiles quedan igual (scroll) */
+@media (min-width: 768px) {
+  .home-promo-grid { grid-template-columns: 1fr 1fr; }
+  .home-promo-tile--wide { grid-column: 1 / -1; }
+  .home-coupon-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Desktop: categorías sin scroll (quedan en una fila fija), más aire general */
+@media (min-width: 1200px) {
+  .home-main { padding: 32px 32px 64px; }
+  .home-cat-row { overflow-x: visible; flex-wrap: wrap; }
+  .home-promo-tile { min-height: 200px; }
+}
+
+/* ── Carrusel de productos (reutiliza .plp-card del catálogo) ── */
+.home-carousel { margin-bottom: 28px; }
+.home-carousel-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.home-carousel-row .plp-card {
+  flex: 0 0 180px;
+  width: 180px;
+}
+
+/* ── Promociones (segment control + carrusel) ── */
+.home-promo-section {
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 24px 16px;
+  margin-bottom: 28px;
+}
+.home-promo-section-header {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.home-promo-section-tag {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--red);
+}
+.home-promo-section .plp-segment {
+  max-width: 480px;
+  margin: 16px auto 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.home-promo-section .home-carousel-row .plp-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* ── Módulos patrocinados ── */
+.home-sponsored { margin-bottom: 28px; }
+.home-sponsored-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.home-sponsored-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.home-sponsored-tag {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-2);
+  padding: 8px 12px 0;
+}
+.home-sponsored-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-sponsored-media .msi { font-size: 56px; color: white; }
+.home-sponsored-body { padding: 12px; }
+.home-sponsored-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.home-sponsored-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .home-sponsored-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ══ Footer ══ */
+.home-footer {
+  background: var(--ink);
+  color: white;
+  margin-top: 8px;
+}
+.home-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+.home-footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+  margin-bottom: 32px;
+}
+.home-footer-newsletter h3,
+.home-footer-app h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+.home-footer-form {
+  display: flex;
+  gap: 8px;
+  max-width: 480px;
+}
+.home-footer-input {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 9999px;
+  padding: 12px 20px;
+  color: white;
+  font-family: var(--fn);
+  font-size: 14px;
+}
+.home-footer-input::placeholder { color: rgba(255,255,255,.6); }
+.home-footer-submit {
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 0 24px;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: var(--fn);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.home-footer-app { display: flex; align-items: center; gap: 16px; }
+.home-footer-qr {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-footer-qr .msi { font-size: 40px; color: var(--ink); }
+.home-footer-app p { font-size: 14px; max-width: 260px; margin: 0; opacity: .85; }
+
+.home-footer-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.home-footer-col h4 {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+.home-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.home-footer-col a {
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  font-size: 13px;
+}
+.home-footer-col a:hover { color: white; }
+
+.home-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+.home-footer-copyright { font-size: 12px; color: rgba(255,255,255,.6); }
+.home-footer-social { display: flex; gap: 12px; }
+.home-footer-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .home-footer-top { flex-direction: row; justify-content: space-between; }
+  .home-footer-links { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1200px) {
+  .home-footer-links { grid-template-columns: repeat(4, 1fr) 1.3fr; }
+  .home-footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+}

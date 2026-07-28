@@ -83,7 +83,7 @@ function renderPdpNotice() {
   if (!label) {
     media.innerHTML = PDP_ICON_CACHED;
     title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = 'Si no contesto, que el picker elija por mi';
+    desc.textContent = 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.';
     desc.hidden = false;
     return;
   }

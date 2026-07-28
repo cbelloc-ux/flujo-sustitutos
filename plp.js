@@ -106,7 +106,7 @@ const savedSubstitutes = loadSubstitutes();
 
 function substituteLabel(selection) {
   if (!selection || selection.type === 'picker') return null;
-  if (selection.type === 'none') return { title: 'No reemplazar', desc: 'Eliminar producto del pedido' };
+  if (selection.type === 'none') return { title: 'No reemplazar', desc: 'Eliminar producto del pedido.' };
   const product = getAnyProduct(selection.id);
   if (!product) return null;
   // La cantidad del sustituto es informativa (se reemplaza el producto original por N piezas
@@ -145,7 +145,7 @@ function openSubstituteModal(productId) {
   currentProductId = productId;
   tempSelection = savedSubstitutes[productId] || null;
   // Por defecto se abre en el segmento "Productos"; si ya había una elección de
-  // "Picker sugiere" o "No reemplazar" guardada, se respeta ese segmento al reabrir.
+  // "HEB Sugiere" o "No reemplazar" guardada, se respeta ese segmento al reabrir.
   activeSegment = (tempSelection && (tempSelection.type === 'picker' || tempSelection.type === 'none'))
     ? tempSelection.type
     : 'product';
@@ -207,8 +207,8 @@ function clearSubSearch() {
 // Contenido del segmento activo cuando no es "Productos" (no hay nada más que elegir:
 // el propio segmento ES la elección).
 const CHOICE_PANEL_DEFS = {
-  picker: { icon: 'emoji_people', title: 'Picker sugiere', desc: 'Si no contesto, que elijan por mi' },
-  none: { icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido' },
+  picker: { icon: 'emoji_people', title: 'HEB Sugiere', desc: 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.' },
+  none: { icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido.' },
 };
 
 function selectSegment(segment) {
@@ -314,7 +314,7 @@ function miniCardHtml(product) {
   `;
 }
 
-// El segmento "Productos" solo muestra productos similares; "Picker sugiere" y
+// El segmento "Productos" solo muestra productos similares; "HEB Sugiere" y
 // "No reemplazar" ahora son segmentos propios (ver CHOICE_PANEL_DEFS), no tarjetas del carrusel.
 function renderCarousel() {
   document.getElementById('subCarousel').innerHTML = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
@@ -349,6 +349,56 @@ function showToast() {
   clearTimeout(toastTimeout);
   toast.classList.add('show');
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 5000);
+}
+
+/* ══ Menú "Pasillos" (mega menú de categorías) ══
+   Mismo drawer y misma animación en todos los breakpoints: en mobile/tablet se abre desde
+   el ícono de menú (hamburguesa) del header; en desktop desde el botón "Pasillos" de la pleca. */
+function openPasillosMenu() {
+  const overlay = document.getElementById('pasillosOverlay');
+  const panel = document.getElementById('pasillosPanel');
+  if (!overlay || !panel) return;
+  showPasillosLevel1();
+  overlay.hidden = false;
+  panel.hidden = false;
+  // Forzar reflow para que el navegador registre el estado "cerrado" antes de animar a "open".
+  void panel.offsetHeight;
+  overlay.classList.add('open');
+  panel.classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePasillosMenu() {
+  const overlay = document.getElementById('pasillosOverlay');
+  const panel = document.getElementById('pasillosPanel');
+  if (!overlay || !panel) return;
+  overlay.classList.remove('open');
+  panel.classList.remove('open');
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+  setTimeout(() => {
+    overlay.hidden = true;
+    panel.hidden = true;
+  }, MODAL_ANIM_MS);
+}
+
+function showPasillosLevel1() {
+  document.getElementById('pasillosLevel1').hidden = false;
+  document.getElementById('pasillosLevel2').hidden = true;
+}
+
+function showPasillosLevel2() {
+  document.getElementById('pasillosLevel1').hidden = true;
+  document.getElementById('pasillosLevel2').hidden = false;
+}
+
+function togglePasillosGroup(headerBtn) {
+  const items = headerBtn.nextElementSibling;
+  const chevron = headerBtn.querySelector('.pasillos-group-chevron');
+  const isHidden = items.hidden;
+  items.hidden = !isHidden;
+  if (chevron) chevron.textContent = isHidden ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
 }
 
 /* ══ PLP grid + pagination ══ */
@@ -527,7 +577,37 @@ function goToPlpPage(page) {
   document.querySelector('.plp-results-row').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+/* ══ Homepage — carruseles de producto (reutilizan plpCardHtml del catálogo) ══
+   Cada carrusel usa un rango de ids disjunto de los demás para evitar ids duplicados
+   ("cta-<id>") cuando conviven varios carruseles en la misma página. */
+function renderHomeCarousel(containerId, ids) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = ids.map(id => PRODUCTS[id]).filter(Boolean).map(plpCardHtml).join('');
+}
+
+const HOME_PROMO_TABS = {
+  ofertas: ['p10', 'p11', 'p12', 'p13', 'p14'],
+  nuevos: ['p16', 'p17', 'p18', 'p19', 'p20'],
+  populares: ['p21', 'p22', 'p23', 'p24', 'p25'],
+};
+
+function selectHomePromoTab(tab) {
+  document.querySelectorAll('#homePromoSegment .plp-segment-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  renderHomeCarousel('homePromoCarousel', HOME_PROMO_TABS[tab]);
+}
+
+function initHomepage() {
+  if (!document.getElementById('homeCarousel1')) return;
+  renderHomeCarousel('homeCarousel1', ['p1', 'p2', 'p3', 'p4', 'p6', 'p7', 'p8', 'p9']);
+  renderHomeCarousel('homeCarousel2', ['p26', 'p27', 'p28', 'p29', 'p30', 'p31', 'p32', 'p33']);
+  selectHomePromoTab('ofertas');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderPlpGrid();
   initSubstituteUI();
+  initHomepage();
 });

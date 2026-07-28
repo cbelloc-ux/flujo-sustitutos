@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrito — HEB</title>
+  <title>Frutas — H-E-B</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="plp.css">
-  <link rel="stylesheet" href="cart.css">
 </head>
-<body>
+<body class="plp-body">
 
 <!-- ══ HEADER ══ -->
 <header class="plp-header">
@@ -76,161 +75,133 @@
   </nav>
 </header>
 
-<!-- ══ PAGE ══ -->
-<main class="page-wrap">
+<!-- ══ BODY ══ -->
+<main class="plp-main">
 
-  <!-- ── Left: Cart ── -->
-  <section class="cart-main">
+  <nav class="plp-breadcrumb" aria-label="Ruta de navegación">
+    <span>H-E-B</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px; color:#414142">chevron_right</span>
+    <span>Frutas y Verduras</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px; color:#414142">chevron_right</span>
+    <strong>Frutas</strong>
+  </nav>
 
-    <div class="cart-head">
-      <button class="back-btn" aria-label="Regresar" onclick="location.href='plp.html'">
-        <span class="msi" aria-hidden="true">arrow_back</span>
-      </button>
-      <h1 class="cart-title">Carrito <span class="cart-count">(0 productos)</span></h1>
-      <button class="vaciar-btn" onclick="clearCart()">
-        <span class="vaciar-label">Vaciar carrito</span>
-        <span class="msi msi-fill" aria-hidden="true" style="font-size:20px">delete</span>
-      </button>
-    </div>
+  <div class="plp-layout">
 
-    <!-- Substitute global toggle (mobile/tablet: inline at top of list) -->
-    <div class="toggle-card toggle-card--mobile">
-      <div class="toggle-icon">
-        <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
-      </div>
-      <div class="toggle-content">
-        <div class="toggle-title">
-          Permitir sustitutos
-          <span class="info-tooltip-wrap">
-            <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
-            <div class="info-tooltip" hidden>
-              <div class="info-tooltip-arrow"></div>
-              <div class="info-tooltip-header">
-                <span>¿Cómo funcionan los sustitutos?</span>
-                <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
-                  <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
-                </button>
-              </div>
-              <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
-            </div>
-          </span>
-        </div>
-        <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
-      </div>
-      <button class="toggle-switch" aria-pressed="true" onclick="toggleAllowSubstitutes()"></button>
-    </div>
-
-    <div id="cartItemsList" class="cart-items-list"></div>
-
-    <div class="cart-empty" id="cartEmptyState" hidden>
-      <span class="msi" aria-hidden="true" style="font-size:40px; color:#b6ad98">shopping_cart</span>
-      <p>Tu carrito está vacío.</p>
-      <a class="pago-btn" href="plp.html">Ver productos</a>
-    </div>
-
-  </section>
-
-  <!-- ── Right: Summary ── -->
-  <aside class="sidebar">
-
-    <div class="summary-card">
-      <h2 class="summary-title">Resumen de compra</h2>
-
-      <div class="savings-highlight">
-        <span class="savings-label">Ahorro:</span>
-        <span class="savings-value" id="cartSavingsValue">$0.00</span>
+    <!-- ── Desktop: filtros siempre visibles ── -->
+    <aside class="plp-filters-sidebar" aria-label="Filtros">
+      <div class="plp-filter-intro">
+        <h1 class="plp-filter-title">Frutas</h1>
+        <p class="plp-filter-desc" id="filterDesc">Encuentra la mejor selección de frutas frescas de temporada, nacionales e importadas, seleccionadas por su sabor, textura y calidad, directo del campo a tu mesa.</p>
+        <button type="button" class="plp-leer-mas" onclick="toggleFilterDesc()">
+          <span id="filterDescLabel">Leer más</span>
+          <span class="msi" aria-hidden="true" style="font-size:16px" id="filterDescIcon">keyboard_arrow_down</span>
+        </button>
       </div>
 
-      <div class="cupones-row" role="button" tabindex="0">
-        <span class="msi msi-fill" aria-hidden="true" style="color:#007db3">confirmation_number</span>
-        <span class="cupones-label">Cupones disponibles</span>
-        <span class="msi" aria-hidden="true" style="font-size:18px; color:#007db3">chevron_right</span>
-      </div>
-
-      <div class="sum-lines">
-        <div class="sum-line">
-          <span class="lbl">Subtotal</span>
-          <span class="val" id="cartSubtotalValue">$0.00</span>
-        </div>
-        <div class="sum-line promo">
-          <button class="lbl promo-lbl">
-            Ahorro en promociones
-            <span class="msi" aria-hidden="true" style="font-size:14px">expand_more</span>
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Ordenar por
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_up</span>
+        </button>
+        <div class="plp-filter-body">
+          <button type="button" class="plp-checkbox-row plp-sort-row checked" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Destacados
           </button>
-          <span class="val green-val" id="cartPromoSavings">$0.00</span>
-        </div>
-        <div class="sum-line">
-          <span class="lbl">Gastos de envío</span>
-          <span class="val envio-val">
-            <span class="strike">$50.00</span>
-            <span class="free">$0.00</span>
-          </span>
-        </div>
-        <div class="sum-line total-line">
-          <span class="lbl total-lbl">Total</span>
-          <span class="val total-val" id="cartTotalValue">$0.00</span>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Más vendido
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Más recientes
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Precio más alto
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            Precio más bajo
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            De la A a la Z
+          </button>
+          <button type="button" class="plp-checkbox-row plp-sort-row" onclick="selectSort(this)">
+            <span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>
+            De la Z a la A
+          </button>
         </div>
       </div>
 
-      <button class="pago-btn">Proceder al pago</button>
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">Precio</button>
+        <div class="plp-filter-body">
+          <div class="plp-price-slider">
+            <div class="plp-price-track"></div>
+            <div class="plp-price-track-fill"></div>
+            <div class="plp-price-handle" style="left:0"></div>
+            <div class="plp-price-handle" style="right:0"></div>
+          </div>
+          <div class="plp-price-labels">
+            <span>$0</span>
+            <span>$220</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Marca
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_down</span>
+        </button>
+        <div class="plp-filter-body" hidden>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>H-E-B<span class="plp-checkbox-count">38</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Golden Acres<span class="plp-checkbox-count">21</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Sunkist<span class="plp-checkbox-count">17</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Orgánico Certificado<span class="plp-checkbox-count">14</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Import USA<span class="plp-checkbox-count">12</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Rainier<span class="plp-checkbox-count">9</span></button>
+        </div>
+      </div>
+
+      <div class="plp-filter-section">
+        <button type="button" class="plp-filter-header" onclick="toggleFilterSection(this)">
+          Promociones
+          <span class="msi" aria-hidden="true" style="font-size:24px">keyboard_arrow_down</span>
+        </button>
+        <div class="plp-filter-body" hidden>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Llévate producto gratis<span class="plp-checkbox-count">45</span></button>
+          <button type="button" class="plp-checkbox-row" onclick="toggleCheckbox(this)"><span class="plp-checkbox-box"><span class="msi" aria-hidden="true" style="font-size:16px; color:white">check</span></span>Quedan pocos<span class="plp-checkbox-count">27</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="plp-content">
+      <div class="plp-banner">
+        <img src="assets/banner-overlay.png" alt="Frutas frescas todos los días">
+      </div>
+
+      <div class="plp-results-row">
+        <span class="plp-results-count">128 resultados</span>
+        <button class="plp-filtros-btn">
+          Filtros
+          <span class="msi" aria-hidden="true" style="font-size:16px">keyboard_arrow_down</span>
+        </button>
+      </div>
+
+      <div class="plp-grid" id="plpGrid"></div>
+
+      <nav class="plp-pagination" id="plpPagination" aria-label="Paginación de resultados"></nav>
     </div>
 
-    <!-- Substitute global toggle (desktop: below Resumen de compra) -->
-    <div class="toggle-card toggle-card--desktop">
-      <div class="toggle-icon">
-        <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
-      </div>
-      <div class="toggle-content">
-        <div class="toggle-title">
-          Permitir sustitutos
-          <span class="info-tooltip-wrap">
-            <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
-            <div class="info-tooltip" hidden>
-              <div class="info-tooltip-arrow"></div>
-              <div class="info-tooltip-header">
-                <span>¿Cómo funcionan los sustitutos?</span>
-                <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
-                  <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
-                </button>
-              </div>
-              <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
-            </div>
-          </span>
-        </div>
-        <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
-      </div>
-      <button class="toggle-switch" aria-pressed="true" onclick="toggleAllowSubstitutes()"></button>
-    </div>
-
-  </aside>
+  </div>
 
 </main>
 
-<!-- ══ MOBILE: bottom bar + savings sheet ══ -->
-<div class="cart-bottom-bar" id="cartBottomBar">
-  <div class="cart-bottom-row">
-    <button type="button" class="cart-ahorro-link" onclick="openSavingsSheet()">
-      Ahorro: <span id="cartAhorroBar">$0.00</span>
-      <span class="msi" aria-hidden="true" style="font-size:16px">chevron_right</span>
-    </button>
-    <span class="cart-bottom-subtotal">Subtotal: <b id="cartSubtotalBar">$0.00</b></span>
-  </div>
-  <button class="pago-btn cart-bottom-pago">Continuar con el pago</button>
-</div>
-
-<div class="plp-overlay" id="savingsOverlay" onclick="closeSavingsSheet()" hidden></div>
-<div class="savings-sheet" id="savingsSheet" hidden role="dialog" aria-modal="true" aria-label="Desglose de ahorro">
-  <button type="button" class="cart-ahorro-link savings-sheet-title" onclick="closeSavingsSheet()">
-    Ahorro: <span id="cartAhorroSheetTitle">$0.00</span>
-    <span class="msi" aria-hidden="true" style="font-size:16px">chevron_right</span>
-  </button>
-
-  <div id="savingsBreakdown"></div>
-
-  <button type="button" class="savings-close" onclick="closeSavingsSheet()">Cerrar</button>
-</div>
-
-<!-- ══ SUSTITUTE MODAL (compartido con PLP/PDP) ══ -->
+<!-- ══ SUSTITUTE MODAL ══ -->
 <div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
 <div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
   <div class="plp-modal-sheet">
@@ -391,6 +362,5 @@
 </div>
 
 <script src="plp.js"></script>
-<script src="cart.js"></script>
 </body>
 </html>
