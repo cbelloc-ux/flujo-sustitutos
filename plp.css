@@ -932,15 +932,33 @@
   box-shadow: 0 2px 6px rgba(0,0,0,.14);
 }
 
-/* ── Panel de elección para los segmentos "Picker sugiere" / "No reemplazar" ──
-   El propio segmento ES la elección; no hace falta escoger nada más. */
+/* #subMainScreen ocupa como mínimo todo el alto visible del modal (ahora fijo, ver
+   .plp-modal) para que #subChoiceView pueda centrar verticalmente su contenido;
+   si el contenido de #subProductView es más alto, sigue creciendo y scrolleando igual. */
+#subMainScreen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+#subMainScreen[hidden] { display: none; }
+
+/* ── Panel de elección para los segmentos "HEB Sugiere" / "No reemplazar" ──
+   El propio segmento ES la elección; no hace falta escoger nada más, así que su
+   contenido se centra vertical y horizontalmente en el espacio disponible. */
+#subChoiceView {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#subChoiceView[hidden] { display: none; }
 .plp-choice-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 12px;
-  padding: 40px 16px;
+  padding: 16px;
 }
 .plp-choice-icon {
   width: 72px;

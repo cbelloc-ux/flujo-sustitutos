@@ -168,6 +168,19 @@ function openSubstituteModal(productId) {
 function closeSubstituteModal() {
   const overlay = document.getElementById('subOverlay');
   const modal = document.getElementById('subModal');
+  // Cerrar el modal sin haber elegido ningún sustituto equivale a "No reemplazar":
+  // se guarda esa preferencia y se agrega 1 pza del producto original al carrito.
+  // (Si venía de guardar una elección, tempSelection sigue siendo esa elección —no
+  // null— en este punto, porque saveSelection() la persiste antes de llamar a esta
+  // función; el guard de abajo no se dispara en ese caso.)
+  if (!tempSelection && currentProductId) {
+    const id = currentProductId;
+    savedSubstitutes[id] = { type: 'none' };
+    persistSubstitutes();
+    plpQty[id] = (plpQty[id] || 0) + 1;
+    persistCartQty();
+    refreshProductUI(id);
+  }
   overlay.classList.remove('open');
   modal.classList.remove('open');
   document.documentElement.style.overflow = '';
