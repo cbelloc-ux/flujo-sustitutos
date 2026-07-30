@@ -254,6 +254,10 @@ function syncSegmentUI() {
       </span>
       <span class="plp-choice-title">${def.title}</span>
       <span class="plp-choice-desc">${def.desc}</span>
+      <span class="plp-choice-confirm">
+        <span class="msi msi-fill" aria-hidden="true">check_circle</span>
+        Esta es tu opción seleccionada
+      </span>
     `;
   }
 }
