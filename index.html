@@ -80,31 +80,73 @@
 <main class="home-main">
 
   <section class="home-categories" aria-label="Categorías destacadas">
-    <div class="home-cat-row">
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#2a9f47"><span class="msi" aria-hidden="true">wb_sunny</span></span>
-        <span class="home-cat-label">Temporadas</span>
+    <button type="button" class="home-cat-arrow home-cat-arrow--prev" onclick="homeCatScroll(-1)" aria-label="Anterior">
+      <span class="msi" aria-hidden="true">chevron_left</span>
+    </button>
+    <div class="home-cat-row" id="homeCatRow">
+      <a class="home-cat-tile" href="plp.html"><img src="assets/Shortcut1.webp" alt="Frutas y Verduras"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut2.webp" alt="Carnes y Mariscos"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut3.webp" alt="Temporadas"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut4.webp" alt="Mascotas"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut5.webp" alt="Vinos y Licores"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut6.webp" alt="Deli, Lácteos y Congelados"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut7.webp" alt="Belleza"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut8.webp" alt="HEB Babies"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut9.webp" alt="Cuidando tu salud"></a>
+    </div>
+    <button type="button" class="home-cat-arrow home-cat-arrow--next" onclick="homeCatScroll(1)" aria-label="Siguiente">
+      <span class="msi" aria-hidden="true">chevron_right</span>
+    </button>
+  </section>
+
+  <section class="home-hero" aria-label="Destacados">
+    <div class="home-hero-slider" id="homeHeroSlider">
+      <div class="home-hero-slides">
+        <a class="home-hero-slide active" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero1.webp">
+            <img src="assets/Hero1-web.jpg" alt="Verano Loco H-E-B: las promos más locas del año" decoding="async">
+          </picture>
+        </a>
+        <a class="home-hero-slide" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero2.webp">
+            <img src="assets/Hero2.webp" alt="Vive la pasión con Herdez" decoding="async">
+          </picture>
+        </a>
+        <a class="home-hero-slide" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero3.webp">
+            <img src="assets/Hero3.webp" alt="Lo mejor para regresar a clases hoy y mañana también" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <button type="button" class="home-hero-arrow home-hero-arrow--prev" onclick="homeHeroGo(-1)" aria-label="Anterior">
+        <span class="msi" aria-hidden="true">chevron_left</span>
+      </button>
+      <button type="button" class="home-hero-arrow home-hero-arrow--next" onclick="homeHeroGo(1)" aria-label="Siguiente">
+        <span class="msi" aria-hidden="true">chevron_right</span>
+      </button>
+      <div class="home-hero-controls">
+        <div class="home-hero-dots" id="homeHeroDots"></div>
+        <button type="button" class="home-hero-playpause" id="homeHeroPlayPause" onclick="homeHeroTogglePlay()" aria-label="Pausar">
+          <span class="msi msi-fill" aria-hidden="true">pause</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="home-hero-fixed">
+      <a class="home-hero-banner" href="#">
+        <img src="assets/midhero.webp" alt="3x2 en todos los detergentes o suavizantes líquidos">
       </a>
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#cd8100"><span class="msi" aria-hidden="true">pets</span></span>
-        <span class="home-cat-label">Mascotas</span>
-      </a>
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#7a2048"><span class="msi" aria-hidden="true">liquor</span></span>
-        <span class="home-cat-label">Vinos y Licores</span>
-      </a>
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#007db3"><span class="msi" aria-hidden="true">kitchen</span></span>
-        <span class="home-cat-label">Deli, Lácteos y Congelados</span>
-      </a>
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#d9238d"><span class="msi" aria-hidden="true">spa</span></span>
-        <span class="home-cat-label">Belleza</span>
-      </a>
-      <a class="home-cat-tile" href="#">
-        <span class="home-cat-icon" style="background:#e1251b"><span class="msi" aria-hidden="true">child_care</span></span>
-        <span class="home-cat-label">HEB Babies</span>
-      </a>
+      <div class="home-hero-modules">
+        <a class="home-hero-module" href="#">
+          <img src="assets/midhero2.webp" alt="Gratis una crema corporal Nivea o Lubriderm comprando un tinte para cabello">
+        </a>
+        <a class="home-hero-module" href="#">
+          <img src="assets/midahero3.webp" alt="3x2 en pizzas congeladas">
+        </a>
+      </div>
     </div>
   </section>
 
@@ -113,87 +155,40 @@
     <div class="home-carousel-row" id="homeCarousel1"></div>
   </section>
 
-  <section class="home-promos" aria-label="Promociones">
-    <div class="home-promo-grid">
-      <div class="home-promo-tile home-promo-tile--wide" style="background:#0f8a91">
-        <span class="home-promo-tag">3x2</span>
-        <p class="home-promo-headline">En todos los detergentes o suavizantes líquidos</p>
-        <p class="home-promo-fine">Vigencia: 17 al 30 de julio del 2026.</p>
-      </div>
-      <div class="home-promo-tile" style="background:#b0206a">
-        <span class="home-promo-tag">Gratis</span>
-        <p class="home-promo-headline">Una crema corporal Nivea o Lubriderm de 400 ml</p>
-        <p class="home-promo-fine">Comprando un tinte para cabello Nutrisse, Imedia o Koleston.</p>
-      </div>
-      <div class="home-promo-tile" style="background:#2a9f47">
-        <span class="home-promo-tag">3x2</span>
-        <p class="home-promo-headline">En pizzas congeladas</p>
-        <p class="home-promo-fine">Vigencia: 24 al 30 de julio del 2026.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-promo-section" aria-label="Promociones destacadas">
-    <div class="home-promo-section-header">
-      <span class="home-promo-section-tag">PROMOCIONES</span>
-    </div>
-    <div class="plp-segment" id="homePromoSegment" role="tablist" aria-label="Filtrar promociones">
-      <button type="button" class="plp-segment-btn active" data-tab="ofertas" onclick="selectHomePromoTab('ofertas')" role="tab" aria-selected="true">Ofertas</button>
-      <button type="button" class="plp-segment-btn" data-tab="nuevos" onclick="selectHomePromoTab('nuevos')" role="tab" aria-selected="false">Nuevos</button>
-      <button type="button" class="plp-segment-btn" data-tab="populares" onclick="selectHomePromoTab('populares')" role="tab" aria-selected="false">Populares</button>
-    </div>
-    <div class="home-carousel-row" id="homePromoCarousel"></div>
-  </section>
-
   <section class="home-coupons" aria-label="Cupones">
     <h2 class="home-section-title">Cupones</h2>
     <div class="home-coupon-row">
-      <div class="home-coupon-card home-coupon-card--dark">
-        <span class="home-coupon-tag">AHORRA</span>
-        <span class="home-coupon-amount">$500</span>
-        <p class="home-coupon-desc">Comprando $4,000 o más en tus pedidos en línea.</p>
-      </div>
-      <div class="home-coupon-card home-coupon-card--green">
-        <span class="home-coupon-tag">AHORRA</span>
-        <span class="home-coupon-amount">$150</span>
-        <p class="home-coupon-desc">Comprando $1,300 o más en tus pedidos en línea.</p>
-      </div>
-      <div class="home-coupon-card home-coupon-card--red">
-        <span class="home-coupon-tag">AHORRA</span>
-        <span class="home-coupon-amount">$300</span>
-        <p class="home-coupon-desc">En 2 compras en línea con un mínimo de $1,500 o más.</p>
-      </div>
+      <a class="home-coupon-card" href="#"><img src="assets/cupon1.webp" alt="Ahorra $500 comprando $4,000 o más en tus pedidos en línea. Cupón COPA550"></a>
+      <a class="home-coupon-card" href="#"><img src="assets/cupon2.webp" alt="Ahorra $150 comprando $1,300 o más en tus pedidos en línea. Cupón PENAL150"></a>
+      <a class="home-coupon-card" href="#"><img src="assets/cupon3.webp" alt="Ahorra $300 en 2 compras en línea con un mínimo de $1,500 o más. Cupón HEBGOL300"></a>
     </div>
   </section>
 
   <section class="home-sponsored" aria-label="Contenido patrocinado">
     <h2 class="home-section-title">Descubre más</h2>
     <div class="home-sponsored-row">
-      <div class="home-sponsored-tile">
+      <a class="home-sponsored-tile" href="#">
         <span class="home-sponsored-tag">Patrocinado</span>
-        <div class="home-sponsored-media" style="background:#2a9f47"><span class="msi" aria-hidden="true">eco</span></div>
-        <div class="home-sponsored-body">
-          <p class="home-sponsored-title">Productos orgánicos certificados</p>
-          <p class="home-sponsored-desc">Cultivados sin pesticidas, directo de productores locales.</p>
-        </div>
-      </div>
-      <div class="home-sponsored-tile">
+        <img src="assets/module1.webp" alt="3x2 en vinos de todos los países">
+      </a>
+      <a class="home-sponsored-tile" href="#">
         <span class="home-sponsored-tag">Patrocinado</span>
-        <div class="home-sponsored-media" style="background:#cd8100"><span class="msi" aria-hidden="true">local_cafe</span></div>
-        <div class="home-sponsored-body">
-          <p class="home-sponsored-title">Café de altura, tueste artesanal</p>
-          <p class="home-sponsored-desc">Nuevas variedades exclusivas, disponibles solo en línea.</p>
-        </div>
-      </div>
-      <div class="home-sponsored-tile">
+        <img src="assets/module2.webp" alt="5x3 en todos los pañales para bebé">
+      </a>
+      <a class="home-sponsored-tile" href="#">
         <span class="home-sponsored-tag">Patrocinado</span>
-        <div class="home-sponsored-media" style="background:#007db3"><span class="msi" aria-hidden="true">icecream</span></div>
-        <div class="home-sponsored-body">
-          <p class="home-sponsored-title">Postres congelados de temporada</p>
-          <p class="home-sponsored-desc">Sabores nuevos cada mes, en presentación familiar.</p>
-        </div>
-      </div>
+        <img src="assets/module3.webp" alt="Por cada $100 ahorra $25 en toda la línea de camarones">
+      </a>
     </div>
+  </section>
+
+  <section class="home-skinny" aria-label="Promoción destacada">
+    <a href="#">
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/mskinny1.webp">
+        <img src="assets/Skinny1.webp" alt="Corona: el extra de México es Mundial">
+      </picture>
+    </a>
   </section>
 
   <section class="home-carousel" aria-label="Más vendidos">

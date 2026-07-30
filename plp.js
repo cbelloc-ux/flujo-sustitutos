@@ -52,6 +52,9 @@ const PLP_CATALOG = (() => {
   for (let i = 6; i <= 128; i++) {
     const t = templates[(i - 6) % templates.length];
     const price = t.base + ((i * 7) % 30);
+    // Único coco del catálogo con "Quedan pocos": segundo producto con flujo de sustitutos,
+    // junto con la piña. Sin badge rosa para no saturar la tarjeta con dos etiquetas.
+    const isQuedanPocosCoco = i === 8;
     items.push({
       id: 'p' + i,
       name: t.name,
@@ -59,8 +62,8 @@ const PLP_CATALOG = (() => {
       priceOld: fmt(price + 10 + (i % 20)),
       unit: t.unit,
       img: t.img,
-      badgePink: i % 3 === 0 ? 'Llévate producto Gratis' : null,
-      badgeGray: null,
+      badgePink: isQuedanPocosCoco ? null : (i % 3 === 0 ? 'Llévate producto Gratis' : null),
+      badgeGray: isQuedanPocosCoco ? 'Quedan pocos' : null,
     });
   }
   return items;
@@ -73,7 +76,6 @@ const SIMILAR_PRODUCTS = [
   { id: 's2', name: 'Manzana Verde Granny Smith', price: '$37.50', priceOld: '$45.50', img: 'assets/product-manzana-verde.png' },
   { id: 's3', name: 'Manojo de Plátano Tabasco', price: '$28.00', priceOld: '$34.00', img: 'assets/platano.webp' },
   { id: 's4', name: 'Mango Ataulfo', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
-  { id: 's6', name: 'Coco Entero', price: '$33.00', priceOld: '$40.00', img: 'assets/301841_01.webp' },
   { id: 's7', name: 'Kiwi Zespri SunGold', price: '$19.00', priceOld: '$23.00', img: 'assets/323977_01.webp' },
 ];
 
@@ -81,7 +83,6 @@ const SIMILAR_PRODUCTS = [
 const OTHER_PRODUCTS = [
   { id: 'o1', name: 'Kiwi Zespri SunGold', price: '$18.00', priceOld: '$22.00', img: 'assets/323977_01.webp' },
   { id: 'o2', name: 'Pitahaya', price: '$45.00', priceOld: '$54.00', img: 'assets/427906_01.webp' },
-  { id: 'o3', name: 'Coco Entero', price: '$32.00', priceOld: '$39.00', img: 'assets/301841_01.webp' },
   { id: 'o4', name: 'Manzana Gala Nacional', price: '$34.90', priceOld: '$42.90', img: 'assets/product-manzana-3.png' },
   { id: 'o5', name: 'Bolsa Manzanas Mixtas 1 kg', price: '$46.00', priceOld: '$56.00', img: 'assets/product-manzana-4.png' },
   { id: 'o6', name: 'Mango Ataulfo', price: '$32.90', priceOld: '$39.90', img: 'assets/mango.webp' },
@@ -599,24 +600,83 @@ function renderHomeCarousel(containerId, ids) {
   container.innerHTML = ids.map(id => PRODUCTS[id]).filter(Boolean).map(plpCardHtml).join('');
 }
 
-const HOME_PROMO_TABS = {
-  ofertas: ['p10', 'p11', 'p12', 'p13', 'p14'],
-  nuevos: ['p16', 'p17', 'p18', 'p19', 'p20'],
-  populares: ['p21', 'p22', 'p23', 'p24', 'p25'],
-};
-
-function selectHomePromoTab(tab) {
-  document.querySelectorAll('#homePromoSegment .plp-segment-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.tab === tab);
-  });
-  renderHomeCarousel('homePromoCarousel', HOME_PROMO_TABS[tab]);
-}
-
 function initHomepage() {
   if (!document.getElementById('homeCarousel1')) return;
-  renderHomeCarousel('homeCarousel1', ['p1', 'p2', 'p3', 'p4', 'p6', 'p7', 'p8', 'p9']);
+  // p5 (Piña) y p8 (Coco) son "Quedan pocos" y requieren el modal de sustitutos,
+  // que no existe en el homepage: se excluyen de estos carruseles.
+  renderHomeCarousel('homeCarousel1', ['p1', 'p2', 'p3', 'p4', 'p6', 'p7', 'p9', 'p34']);
   renderHomeCarousel('homeCarousel2', ['p26', 'p27', 'p28', 'p29', 'p30', 'p31', 'p32', 'p33']);
-  selectHomePromoTab('ofertas');
+  initHomeHero();
+}
+
+/* ══ Homepage — carrusel de shortcuts (desktop): flechas a los extremos, 1 sola línea ══ */
+function homeCatScroll(direction) {
+  const row = document.getElementById('homeCatRow');
+  if (!row) return;
+  // Recorre aproximadamente el ancho visible menos una tarjeta, para que siempre
+  // quede una tarjeta "de referencia" visible entre un salto y el siguiente.
+  const amount = row.clientWidth - 160;
+  row.scrollBy({ left: direction * amount, behavior: 'smooth' });
+}
+
+/* ══ Homepage — slider del Hero (assets/Hero*.webp / mhero*.webp) ══
+   En movimiento constante: avanza sola cada 3s; el botón integrado a los dots
+   pausa/reanuda ese avance automático. */
+let homeHeroIndex = 0;
+let homeHeroPlaying = true;
+let homeHeroTimer = null;
+const HOME_HERO_INTERVAL_MS = 3000;
+
+function initHomeHero() {
+  const dotsContainer = document.getElementById('homeHeroDots');
+  if (!dotsContainer) return;
+  const slides = document.querySelectorAll('.home-hero-slide');
+  dotsContainer.innerHTML = Array.from(slides).map((_, i) =>
+    `<button type="button" class="home-hero-dot${i === 0 ? ' active' : ''}" onclick="homeHeroGoTo(${i})" aria-label="Ir a la diapositiva ${i + 1}"></button>`
+  ).join('');
+  startHomeHeroAutoplay();
+}
+
+function homeHeroGo(delta) {
+  const slides = document.querySelectorAll('.home-hero-slide');
+  if (!slides.length) return;
+  homeHeroGoTo((homeHeroIndex + delta + slides.length) % slides.length);
+}
+
+function homeHeroGoTo(index) {
+  homeHeroIndex = index;
+  document.querySelectorAll('.home-hero-slide').forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.home-hero-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+  // Navegar manualmente (flecha o dot) reinicia el conteo de 3s, para que no
+  // se sienta que "ya casi" avanzaba solo justo después de la acción manual.
+  if (homeHeroPlaying) startHomeHeroAutoplay();
+}
+
+function startHomeHeroAutoplay() {
+  clearInterval(homeHeroTimer);
+  homeHeroTimer = setInterval(() => homeHeroGo(1), HOME_HERO_INTERVAL_MS);
+}
+
+function stopHomeHeroAutoplay() {
+  clearInterval(homeHeroTimer);
+  homeHeroTimer = null;
+}
+
+function homeHeroTogglePlay() {
+  homeHeroPlaying = !homeHeroPlaying;
+  const btn = document.getElementById('homeHeroPlayPause');
+  if (btn) {
+    btn.innerHTML = homeHeroPlaying
+      ? '<span class="msi msi-fill" aria-hidden="true">pause</span>'
+      : '<span class="msi msi-fill" aria-hidden="true">play_arrow</span>';
+    btn.setAttribute('aria-label', homeHeroPlaying ? 'Pausar' : 'Reproducir');
+  }
+  if (homeHeroPlaying) startHomeHeroAutoplay();
+  else stopHomeHeroAutoplay();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

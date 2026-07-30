@@ -15,82 +15,176 @@
   margin: 0 0 16px;
 }
 
-/* ── Categorías (fila con scroll horizontal en mobile/tablet) ── */
-.home-categories { margin-bottom: 28px; }
+/* ── Categorías (imágenes reales de assets/Shortcut*.webp) ──
+   Mobile/tablet: caben 3.5 tiles (scroll horizontal táctil, insinúa que hay más).
+   Desktop: carrusel de 1 sola línea (sin wrap) con flechas en los extremos. */
+.home-categories {
+  position: relative;
+  margin-bottom: 28px;
+}
 .home-cat-row {
   display: flex;
   gap: 16px;
   overflow-x: auto;
   padding-bottom: 4px;
+  scroll-behavior: smooth;
 }
 .home-cat-tile {
-  flex-shrink: 0;
-  width: 96px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
+  flex: 0 0 calc((100% - 3 * 16px) / 3.5);
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
   cursor: pointer;
 }
-.home-cat-icon {
-  width: 72px;
-  height: 72px;
+.home-cat-tile img { width: 100%; display: block; }
+
+/* Flechas del carrusel: solo aplica a nivel desktop (ver media query ≥1200px) */
+.home-cat-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
   border-radius: 9999px;
+  background: var(--surface);
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+.home-cat-arrow--prev { left: -20px; }
+.home-cat-arrow--next { right: -20px; }
+
+/* ── Hero: slider (assets/Hero*.webp, mhero*.webp) + columna fija de promos
+   (assets/midhero.webp + midhero2/midahero3.webp) ── */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.home-hero-slider {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.home-hero-slides {
+  position: relative;
+  aspect-ratio: 1481 / 857;
+}
+.home-hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.home-hero-slide.active { opacity: 1; pointer-events: auto; }
+.home-hero-slide picture,
+.home-hero-slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.home-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.9);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.home-hero-arrow--prev { left: 8px; }
+.home-hero-arrow--next { right: 8px; }
+
+/* Píldora con los dots + botón de play/pausa del avance automático (cada 3s) */
+.home-hero-controls {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(60,52,38,.35);
+  border-radius: 9999px;
+  padding: 6px;
+  z-index: 2;
+}
+.home-hero-dots { display: flex; align-items: center; gap: 6px; padding: 0 4px; }
+.home-hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.6);
+  border: none;
+  cursor: pointer;
+  padding: 0;
   flex-shrink: 0;
 }
-.home-cat-icon .msi { font-size: 32px; color: white; }
-.home-cat-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
-  text-align: center;
-  line-height: 16px;
-}
-
-/* ── Promociones (grid de tarjetas de color) ── */
-.home-promos { margin-bottom: 28px; }
-.home-promo-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-.home-promo-tile {
-  border-radius: 16px;
-  padding: 24px;
+.home-hero-dot.active { background: white; width: 20px; border-radius: 9999px; transition: width .2s; }
+.home-hero-playpause {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.25);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
   color: white;
+}
+.home-hero-playpause .msi { font-size: 16px; color: white; }
+
+.home-hero-fixed {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 160px;
-  justify-content: flex-end;
+  gap: 16px;
 }
-.home-promo-tag {
-  align-self: flex-start;
-  background: rgba(255,255,255,.92);
-  color: var(--ink);
-  font-weight: 800;
-  font-size: 14px;
-  padding: 4px 14px;
-  border-radius: 9999px;
+.home-hero-banner,
+.home-hero-module {
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  line-height: 0;
 }
-.home-promo-headline {
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 26px;
-  margin: 0;
-}
-.home-promo-fine {
-  font-size: 12px;
-  font-weight: 600;
-  opacity: .9;
-  margin: 0;
+.home-hero-banner img { width: 100%; display: block; }
+.home-hero-modules { display: flex; gap: 16px; }
+.home-hero-module { flex: 1; aspect-ratio: 1 / 1; }
+.home-hero-module img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (min-width: 1200px) {
+  .home-hero { flex-direction: row; align-items: stretch; }
+  .home-hero-slider,
+  .home-hero-fixed { flex: 1 1 50%; min-width: 0; }
+  .home-hero-slides { aspect-ratio: 1 / 1; height: 100%; }
 }
 
-/* ── Cupones ── */
+/* ── Skinny banner (assets/Skinny1.webp, mskinny1.webp) ── */
+.home-skinny {
+  margin-bottom: 28px;
+  border-radius: 16px;
+  overflow: hidden;
+  line-height: 0;
+}
+.home-skinny img { width: 100%; display: block; }
+
+/* ── Cupones (assets/cupon1-3.webp) ── */
 .home-coupons { margin-bottom: 8px; }
 .home-coupon-row {
   display: grid;
@@ -98,46 +192,24 @@
   gap: 16px;
 }
 .home-coupon-card {
+  display: block;
   border-radius: 12px;
-  padding: 20px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  overflow: hidden;
+  line-height: 0;
+  text-decoration: none;
 }
-.home-coupon-card--dark  { background: var(--ink); }
-.home-coupon-card--green { background: var(--green); }
-.home-coupon-card--red   { background: var(--red); }
-.home-coupon-tag {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .04em;
-  opacity: .85;
-}
-.home-coupon-amount {
-  font-size: 32px;
-  font-weight: 800;
-  line-height: 36px;
-}
-.home-coupon-desc {
-  font-size: 13px;
-  font-weight: 600;
-  opacity: .9;
-  margin: 4px 0 0;
-}
+.home-coupon-card img { width: 100%; display: block; }
 
-/* Tablet: 2 columnas de promos, 3 de tiles quedan igual (scroll) */
+/* Tablet */
 @media (min-width: 768px) {
-  .home-promo-grid { grid-template-columns: 1fr 1fr; }
-  .home-promo-tile--wide { grid-column: 1 / -1; }
   .home-coupon-row { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Desktop: categorías sin scroll (quedan en una fila fija), más aire general */
+/* Desktop: carrusel de 1 sola línea — caben 8, el resto se alcanza con las flechas */
 @media (min-width: 1200px) {
   .home-main { padding: 32px 32px 64px; }
-  .home-cat-row { overflow-x: visible; flex-wrap: wrap; }
-  .home-promo-tile { min-height: 200px; }
+  .home-cat-tile { flex: 0 0 calc((100% - 7 * 16px) / 8); }
+  .home-cat-arrow { display: flex; }
 }
 
 /* ── Carrusel de productos (reutiliza .plp-card del catálogo) ── */
@@ -153,78 +225,39 @@
   width: 180px;
 }
 
-/* ── Promociones (segment control + carrusel) ── */
-.home-promo-section {
-  background: var(--subtle);
-  border-radius: 16px;
-  padding: 24px 16px;
-  margin-bottom: 28px;
-}
-.home-promo-section-header {
-  text-align: center;
-  margin-bottom: 4px;
-}
-.home-promo-section-tag {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  color: var(--red);
-}
-.home-promo-section .plp-segment {
-  max-width: 480px;
-  margin: 16px auto 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-.home-promo-section .home-carousel-row .plp-card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 8px;
-}
-
-/* ── Módulos patrocinados ── */
+/* ── Módulos patrocinados (assets/module1-3.webp) ──
+   Mobile: slider con scroll horizontal. Tablet/desktop: grid de 3 columnas fijas. */
 .home-sponsored { margin-bottom: 28px; }
 .home-sponsored-row {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 .home-sponsored-tile {
+  display: block;
+  flex: 0 0 78%;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
+  text-decoration: none;
 }
 .home-sponsored-tag {
   display: block;
   font-size: 11px;
   font-weight: 700;
   color: var(--ink-2);
-  padding: 8px 12px 0;
+  padding: 8px 12px;
 }
-.home-sponsored-media {
+.home-sponsored-tile img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.home-sponsored-media .msi { font-size: 56px; color: white; }
-.home-sponsored-body { padding: 12px; }
-.home-sponsored-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--ink);
-  margin: 0 0 4px;
-}
-.home-sponsored-desc {
-  font-size: 13px;
-  color: var(--ink-2);
-  margin: 0;
+  display: block;
 }
 
 @media (min-width: 768px) {
-  .home-sponsored-row { grid-template-columns: repeat(3, 1fr); }
+  .home-sponsored-row { display: grid; grid-template-columns: repeat(3, 1fr); overflow-x: visible; }
+  .home-sponsored-tile { flex: initial; }
 }
 
 /* ══ Footer ══ */
