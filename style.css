@@ -479,8 +479,8 @@ body {
   border-radius: 24px;
   padding: 16px 20px;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 14px;
   box-shadow: 0 1px 3px rgba(34,31,25,.07);
   margin-bottom: 20px;
 }
@@ -489,6 +489,11 @@ body {
 @media (min-width: 1200px) {
   .toggle-card--mobile { display: none; }
   .toggle-card--desktop { display: flex; margin-bottom: 0; }
+}
+.toggle-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .toggle-icon {
   width: 36px;
@@ -588,31 +593,46 @@ body {
   color: white;
   line-height: 18px;
 }
-.toggle-switch {
-  flex-shrink: 0;
-  width: 50px;
-  height: 28px;
-  border-radius: 14px;
+/* ── Segmented "Contactarme" / "No reemplazar" (estilo píldora: opción activa en
+   cápsula blanca con ícono a color; la inactiva queda apagada sobre el fondo tenue) ── */
+.toggle-segment {
+  display: flex;
+  gap: 4px;
+  background: var(--subtle);
+  border-radius: 9999px;
+  padding: 4px;
+}
+.toggle-segment-btn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   border: none;
+  background: none;
+  border-radius: 9999px;
+  padding: 10px 12px;
+  font-family: var(--fn);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
   cursor: pointer;
-  position: relative;
-  background: var(--blue);
-  transition: background .2s;
+  white-space: nowrap;
+  transition: background .15s, color .15s, box-shadow .15s;
 }
-.toggle-switch::after {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background: white;
-  border-radius: 50%;
-  top: 3px;
-  right: 3px;
-  transition: right .2s, left .2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+.toggle-segment-btn .msi {
+  font-size: 18px;
+  color: var(--ink-2);
+  transition: color .15s;
 }
-.toggle-switch.off { background: var(--border); }
-.toggle-switch.off::after { right: unset; left: 3px; }
+.toggle-segment-btn.active {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(34,31,25,.14);
+}
+.toggle-segment-btn.active .msi { color: var(--blue); }
 
 /* ── Responsive: mobile ≤767px · tablet 768–1199px (stacked, wider) · desktop ≥1200px (2 columns) ── */
 @media (max-width: 1199px) {

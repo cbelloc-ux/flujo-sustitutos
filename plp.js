@@ -92,9 +92,28 @@ const OTHER_PRODUCTS = [
 const ALL_PRODUCTS = SIMILAR_PRODUCTS.concat(OTHER_PRODUCTS);
 
 let currentProductId = null;
-let tempSelection = null; // {type:'picker'} | {type:'none'} | {type:'product', id}
-let activeSegment = 'product'; // 'product' | 'picker' | 'none' — segment control activo en la vista principal
+let tempSelection = null; // {type:'picker'} | {type:'none'} | {type:'contact'} | {type:'product', id}
 let toastTimeout = null;
+
+// Debounce: agregar varias piezas seguidas de un producto "Quedan pocos" no abre el modal en
+// cada clic; solo se abre cuando el usuario deja de hacer clic (pierde el ritmo) este tiempo.
+const substituteDebounceTimers = {};
+const SUBSTITUTE_DEBOUNCE_MS = 1200;
+
+function armSubstituteModal(productId) {
+  clearTimeout(substituteDebounceTimers[productId]);
+  substituteDebounceTimers[productId] = setTimeout(() => {
+    delete substituteDebounceTimers[productId];
+    if ((plpQty[productId] || 0) > 0 && document.getElementById('subModal').hidden) {
+      openSubstituteModal(productId);
+    }
+  }, SUBSTITUTE_DEBOUNCE_MS);
+}
+
+function cancelSubstituteModal(productId) {
+  clearTimeout(substituteDebounceTimers[productId]);
+  delete substituteDebounceTimers[productId];
+}
 
 function loadSubstitutes() {
   try { return JSON.parse(localStorage.getItem('heb-substitutes')) || {}; }
@@ -106,8 +125,11 @@ function persistSubstitutes() {
 const savedSubstitutes = loadSubstitutes();
 
 function substituteLabel(selection) {
-  if (!selection || selection.type === 'picker') return null;
-  if (selection.type === 'none') return { title: 'No reemplazar', desc: 'Eliminar producto del pedido.' };
+  if (!selection) return null;
+  if (selection.type === 'none' || selection.type === 'picker' || selection.type === 'contact') {
+    const def = OPTION_DEFS[selection.type];
+    return { title: def.title, desc: def.desc };
+  }
   const product = getAnyProduct(selection.id);
   if (!product) return null;
   // La cantidad del sustituto es informativa (se reemplaza el producto original por N piezas
@@ -143,16 +165,12 @@ function initSubstituteUI() {
 const MODAL_ANIM_MS = 200;
 
 function openSubstituteModal(productId) {
+  cancelSubstituteModal(productId);
   currentProductId = productId;
   tempSelection = savedSubstitutes[productId] || null;
-  // Por defecto se abre en el segmento "Productos"; si ya había una elección de
-  // "HEB Sugiere" o "No reemplazar" guardada, se respeta ese segmento al reabrir.
-  activeSegment = (tempSelection && (tempSelection.type === 'picker' || tempSelection.type === 'none'))
-    ? tempSelection.type
-    : 'product';
   closeSearchScreen();
-  syncSegmentUI();
   renderCarousel();
+  renderSelectionSummary();
   updateSaveButton();
   const overlay = document.getElementById('subOverlay');
   const modal = document.getElementById('subModal');
@@ -186,9 +204,9 @@ function closeSubstituteModal() {
   modal.classList.remove('open');
   document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
+  cancelSubstituteModal(currentProductId);
   currentProductId = null;
   tempSelection = null;
-  activeSegment = 'product';
   setTimeout(() => {
     overlay.hidden = true;
     modal.hidden = true;
@@ -218,49 +236,14 @@ function clearSubSearch() {
   renderSearchGrid();
 }
 
-// Contenido del segmento activo cuando no es "Productos" (no hay nada más que elegir:
-// el propio segmento ES la elección).
-const CHOICE_PANEL_DEFS = {
-  picker: { icon: 'emoji_people', title: 'HEB Sugiere', desc: 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.' },
-  none: { icon: 'delete', title: 'No reemplazar', desc: 'Eliminar producto del pedido.' },
+// Opciones que no son un producto en sí (tarjetas al final del carrusel de sustitutos).
+// "search" es una acción (abre el buscador); las demás son elegibles como tempSelection.
+const OPTION_DEFS = {
+  search: { icon: 'search', title: 'Buscar otro producto', desc: '' },
+  contact: { icon: 'chat', fill: true, title: 'Contactarme', desc: 'Nos pondremos en contacto contigo antes de decidir un sustituto.' },
+  picker: { icon: 'emoji_people', title: 'HEB Sugiere', desc: 'Que el recolector elija por mi un producto similar en precio y características.' },
+  none: { icon: 'block', title: 'No reemplazar', desc: 'Eliminar producto del pedido.' },
 };
-
-function selectSegment(segment) {
-  activeSegment = segment;
-  if (segment === 'picker' || segment === 'none') {
-    tempSelection = { type: segment };
-  } else if (!(tempSelection && tempSelection.type === 'product')) {
-    // Volver al segmento "Productos" sin un producto ya elegido no deja ninguna
-    // elección a medias (picker/no reemplazar) seleccionada por accidente.
-    tempSelection = null;
-  }
-  syncSegmentUI();
-  renderCarousel();
-  updateSaveButton();
-}
-
-function syncSegmentUI() {
-  document.querySelectorAll('.plp-segment-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.segment === activeSegment);
-  });
-  const isProduct = activeSegment === 'product';
-  document.getElementById('subProductView').hidden = !isProduct;
-  document.getElementById('subChoiceView').hidden = isProduct;
-  if (!isProduct) {
-    const def = CHOICE_PANEL_DEFS[activeSegment];
-    document.getElementById('subChoicePanel').innerHTML = `
-      <span class="plp-choice-icon">
-        <span class="msi" aria-hidden="true" style="font-size:34px; color:white">${def.icon}</span>
-      </span>
-      <span class="plp-choice-title">${def.title}</span>
-      <span class="plp-choice-desc">${def.desc}</span>
-      <span class="plp-choice-confirm">
-        <span class="msi msi-fill" aria-hidden="true">check_circle</span>
-        Esta es tu opción seleccionada
-      </span>
-    `;
-  }
-}
 
 function selectChoice(choice) {
   // La cantidad de un sustituto elegido es informativa (para mostrar "se sustituye por N piezas
@@ -272,6 +255,7 @@ function selectChoice(choice) {
   tempSelection = choice;
   renderCarousel();
   renderSearchGrid();
+  renderSelectionSummary();
   updateSaveButton();
 }
 
@@ -310,14 +294,16 @@ function changeMiniQty(id, delta) {
   }
   renderCarousel();
   renderSearchGrid();
+  renderSelectionSummary();
   updateSaveButton();
 }
 
-function miniCardHtml(product) {
+function miniCardHtml(product, sponsored) {
   const selected = tempSelection && tempSelection.type === 'product' && tempSelection.id === product.id;
   const qty = selected ? (tempSelection.qty || 1) : 0;
   return `
     <div class="plp-mini-card">
+      ${sponsored ? '<span class="plp-mini-sponsored">Patrocinado</span>' : ''}
       <div class="plp-mini-media" onclick="selectChoice({type:'product', id:'${product.id}'})">
         <img src="${product.img}" alt="${product.name}">
         <button type="button" class="plp-radio${selected ? ' checked' : ''}" aria-label="Elegir ${product.name} como sustituto" onclick="event.stopPropagation(); selectChoice({type:'product', id:'${product.id}'})"></button>
@@ -332,10 +318,71 @@ function miniCardHtml(product) {
   `;
 }
 
-// El segmento "Productos" solo muestra productos similares; "HEB Sugiere" y
-// "No reemplazar" ahora son segmentos propios (ver CHOICE_PANEL_DEFS), no tarjetas del carrusel.
+// Tarjeta-tile para una opción que no es un producto: ícono circular + título + descripción,
+// todo centrado (mismo ancho que .plp-mini-card). "Buscar otro producto" es una acción (abre
+// el buscador); "Contactarme"/"HEB Sugiere"/"No reemplazar" son elegibles como tempSelection.
+function optionTileHtml(type) {
+  const def = OPTION_DEFS[type];
+  const isSearch = type === 'search';
+  const selected = !isSearch && tempSelection && tempSelection.type === type;
+  const action = isSearch ? 'openSearchScreen()' : `selectChoice({type:'${type}'})`;
+  return `
+    <div class="plp-mini-card plp-option-card">
+      <div class="plp-option-circle-wrap" onclick="${action}">
+        <span class="plp-option-circle">
+          <span class="msi${def.fill ? ' msi-fill' : ''}" aria-hidden="true" style="font-size:28px; color:#655f52">${def.icon}</span>
+        </span>
+        ${isSearch ? '' : `<button type="button" class="plp-radio${selected ? ' checked' : ''}" aria-label="Elegir ${def.title}" onclick="event.stopPropagation(); selectChoice({type:'${type}'})"></button>`}
+      </div>
+      <span class="plp-option-title">${def.title}</span>
+      ${def.desc ? `<span class="plp-option-desc">${def.desc}</span>` : ''}
+    </div>
+  `;
+}
+
+// 5 productos similares + 4 tarjetas de opción al final, en este orden fijo:
+// Buscar otro producto, Contactarme, HEB Sugiere, No reemplazar.
 function renderCarousel() {
-  document.getElementById('subCarousel').innerHTML = SIMILAR_PRODUCTS.slice(0, 7).map(miniCardHtml).join('');
+  // Los primeros 2 productos llevan el badge "Patrocinado" (ver referencia de diseño).
+  const productTiles = SIMILAR_PRODUCTS.slice(0, 5).map((p, i) => miniCardHtml(p, i < 2)).join('');
+  const optionTiles = ['search', 'contact', 'picker', 'none'].map(optionTileHtml).join('');
+  document.getElementById('subCarousel').innerHTML = productTiles + optionTiles;
+}
+
+// Miniatura + detalle de la elección actual, fija arriba del botón "Guardar selección".
+function renderSelectionSummary() {
+  const box = document.getElementById('subSelectionSummary');
+  if (!box) return;
+  if (!tempSelection) {
+    box.hidden = true;
+    box.innerHTML = '';
+    return;
+  }
+  box.hidden = false;
+  if (tempSelection.type === 'product') {
+    const product = getAnyProduct(tempSelection.id);
+    if (!product) { box.hidden = true; return; }
+    const qty = tempSelection.qty || 1;
+    const total = parsePrice(product.price) * qty;
+    box.innerHTML = `
+      <img class="plp-selection-img" src="${product.img}" alt="${product.name}">
+      <div class="plp-selection-info">
+        <span class="plp-selection-name">${product.name}</span>
+        <span class="plp-selection-qty">${qty} ${unitLabel(product)}</span>
+      </div>
+      <span class="plp-selection-price">$${total.toFixed(2)}</span>
+    `;
+    return;
+  }
+  const def = OPTION_DEFS[tempSelection.type];
+  box.innerHTML = `
+    <span class="plp-selection-icon">
+      <span class="msi" aria-hidden="true" style="font-size:20px; color:white">${def.icon}</span>
+    </span>
+    <div class="plp-selection-info">
+      <span class="plp-selection-name">${def.title}</span>
+    </div>
+  `;
 }
 
 function renderSearchGrid() {
@@ -343,7 +390,7 @@ function renderSearchGrid() {
   const grid = document.getElementById('subSearchGrid');
   const results = ALL_PRODUCTS.filter(p => p.name.toLowerCase().includes(query));
   grid.innerHTML = results.length
-    ? results.map(miniCardHtml).join('')
+    ? results.map(p => miniCardHtml(p)).join('')
     : '<p class="plp-search-empty">No encontramos productos que coincidan.</p>';
 }
 
@@ -486,18 +533,18 @@ function ctaWrapClass(p) {
 
 function ctaHtml(p) {
   const qty = plpQty[p.id] || 0;
+  const eligible = isSubstituteEligible(p);
   if (qty <= 0) {
-    if (isSubstituteEligible(p)) {
-      return `<button class="plp-add-btn" onclick="openSubstituteModal('${p.id}')" aria-label="Agregar al carrito">${CTA_PLUS_SVG}</button>`;
-    }
-    return `<button class="plp-add-btn" onclick="addNormally('${p.id}')" aria-label="Agregar al carrito">${CTA_PLUS_SVG}</button>`;
+    const addFn = eligible ? `addEligible('${p.id}')` : `addNormally('${p.id}')`;
+    return `<button class="plp-add-btn" onclick="${addFn}" aria-label="Agregar al carrito">${CTA_PLUS_SVG}</button>`;
   }
   const leftIcon = qty === 1 ? CTA_TRASH_SVG : CTA_MINUS_SVG;
+  const changeFn = eligible ? 'changeQtyEligible' : 'changeQty';
   return `
     <div class="plp-stepper-inline">
-      <button onclick="changeQty('${p.id}',-1)" aria-label="${qty === 1 ? 'Quitar del carrito' : 'Disminuir'}">${leftIcon}</button>
+      <button onclick="${changeFn}('${p.id}',-1)" aria-label="${qty === 1 ? 'Quitar del carrito' : 'Disminuir'}">${leftIcon}</button>
       <span>${qty} ${unitLabel(p)}</span>
-      <button onclick="changeQty('${p.id}',1)" aria-label="Aumentar">${CTA_PLUS_SVG}</button>
+      <button onclick="${changeFn}('${p.id}',1)" aria-label="Aumentar">${CTA_PLUS_SVG}</button>
     </div>
   `;
 }
@@ -506,6 +553,19 @@ function addNormally(id) {
   plpQty[id] = 1;
   persistCartQty();
   renderCardCta(id);
+}
+
+// Agregar un producto "Quedan pocos" nunca abre el modal de inmediato: arma el debounce
+// para que, si el usuario sigue agregando piezas seguidas, el modal no lo interrumpa.
+function addEligible(id) {
+  addNormally(id);
+  armSubstituteModal(id);
+}
+
+function changeQtyEligible(id, delta) {
+  changeQty(id, delta);
+  if ((plpQty[id] || 0) > 0) armSubstituteModal(id);
+  else cancelSubstituteModal(id);
 }
 
 function changeQty(id, delta) {

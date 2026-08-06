@@ -525,10 +525,6 @@
   display: flex;
   justify-content: flex-end;
 }
-.plp-cta.plp-cta-center {
-  justify-content: center;
-}
-
 .plp-add-btn {
   width: 40px;
   height: 40px;
@@ -546,18 +542,19 @@
 .plp-add-btn:active,
 .plp-add-btn.added  { transform: scale(.92); }
 
-/* Stepper inline (cantidad ya agregada al carrito) */
+/* Stepper inline (cantidad ya agregada al carrito): ocupa el ancho completo de la imagen
+   para que el botón "+" quede en el mismo borde derecho que el botón "+" del estado default. */
 .plp-stepper-inline {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 18px;
+  justify-content: space-between;
+  gap: 12px;
   background: var(--red);
   border: 4px solid var(--bg);
   border-radius: 9999px;
   height: 40px;
   padding: 0 14px;
-  max-width: 100%;
+  width: 100%;
   box-shadow: 0 2px 6px rgba(34,31,25,.28);
 }
 .plp-stepper-inline button {
@@ -895,138 +892,11 @@
   background: var(--blue);
 }
 
-/* ── Segment control (Productos / Picker sugiere / No reemplazar) ──
-   Debajo del copy "Quedan pocas piezas..."; "Productos" es el segmento por defecto. */
-.plp-segment {
-  display: flex;
-  gap: 4px;
-  background: var(--subtle);
-  border: none;
-  border-radius: 9999px;
-  padding: 4px;
-  margin-bottom: 20px;
-  flex-shrink: 0;
-}
-.plp-segment-btn {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  background: none;
-  border-radius: 9999px;
-  padding: 8px 4px;
-  font-family: var(--fn);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-2);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  transition: background .15s, color .15s, box-shadow .15s;
-}
-.plp-segment-btn.active {
-  background: var(--blue);
-  color: white;
-  font-weight: 800;
-  box-shadow: 0 2px 6px rgba(0,0,0,.14);
-}
-
-/* #subMainScreen ocupa como mínimo todo el alto visible del modal (ahora fijo, ver
-   .plp-modal) para que #subChoiceView pueda centrar verticalmente su contenido;
-   si el contenido de #subProductView es más alto, sigue creciendo y scrolleando igual. */
 #subMainScreen {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
 }
 #subMainScreen[hidden] { display: none; }
-
-/* ── Panel de elección para los segmentos "HEB Sugiere" / "No reemplazar" ──
-   El propio segmento ES la elección; no hace falta escoger nada más, así que su
-   contenido se centra vertical y horizontalmente en el espacio disponible. */
-#subChoiceView {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#subChoiceView[hidden] { display: none; }
-.plp-choice-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-  padding: 16px;
-}
-.plp-choice-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 9999px;
-  background: var(--blue);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.plp-choice-title {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ink);
-}
-.plp-choice-desc {
-  font-size: 14px;
-  color: var(--ink-2);
-  max-width: 260px;
-  line-height: 18px;
-}
-.plp-choice-confirm {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #e8f6ea;
-  color: var(--green);
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 20px;
-  border-radius: 9999px;
-  margin-top: 4px;
-}
-.plp-choice-confirm .msi { font-size: 18px; color: var(--green); }
-
-/* ── Botón que abre el buscador como pantalla independiente (no filtra en línea) ── */
-.plp-search-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  padding: 10px 16px;
-  margin-bottom: 16px;
-  cursor: pointer;
-  font-family: var(--fn);
-  text-align: left;
-  flex-shrink: 0;
-}
-.plp-search-trigger-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
-}
-.plp-search-trigger-text {
-  font-size: 14px;
-  color: var(--ink-2);
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 /* ── Similar products / carousel ── */
 .plp-similar-title {
@@ -1041,6 +911,11 @@
   gap: 14px;
   overflow-x: auto;
   padding-bottom: 8px;
+  /* Empieza alineada con el texto (mismo padding del modal) pero se sale por los bordes:
+     margen negativo + padding propio, para que el scroll llegue hasta el borde real del modal. */
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .plp-mini-card {
@@ -1050,6 +925,12 @@
   flex-direction: column;
   gap: 8px;
   font-family: var(--fn);
+}
+.plp-mini-sponsored {
+  font-size: 11px;
+  color: var(--ink-3);
+  text-align: right;
+  margin-bottom: -4px;
 }
 .plp-mini-media {
   position: relative;
@@ -1103,6 +984,51 @@
   overflow: hidden;
 }
 
+/* ── Tarjetas de opción al final del carrusel: Buscar otro producto / Contactarme /
+   HEB Sugiere / No reemplazar. Ícono circular + título + descripción, todo centrado. */
+.plp-option-card {
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.plp-option-circle-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.plp-option-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--subtle);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plp-option-circle-wrap .plp-radio {
+  position: absolute;
+  /* Queda completo e inscrito sobre el círculo (no asomando hacia el fondo de la página,
+     donde su mitad se perdía por falta de contraste), igual que el radio inset de las
+     tarjetas de producto. */
+  top: 2px;
+  right: 2px;
+  background: var(--surface);
+}
+.plp-option-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 16px;
+}
+.plp-option-desc {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 15px;
+}
+
 /* ── Buscador — pantalla independiente (ver #subSearchScreen) ──
    Fija arriba del modal (sticky sobre .plp-modal-body) mientras se hace scroll
    en la grilla de resultados. */
@@ -1143,6 +1069,11 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+/* Las tarjetas crecen para llenar su columna (en vez de quedarse en los 140px fijos de
+   .plp-mini-card), igual que en la grilla del PLP. */
+.plp-search-grid .plp-mini-card {
+  width: 100%;
+}
 .plp-search-empty {
   grid-column: 1 / -1;
   text-align: center;
@@ -1160,6 +1091,62 @@
   .plp-similar-row .plp-mini-card {
     width: calc((100% - 28px) / 3);
   }
+  .plp-search-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Miniatura de la elección actual, fija arriba del botón "Guardar selección" ── */
+.plp-selection-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.plp-selection-summary[hidden] { display: none; }
+.plp-selection-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.plp-selection-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.plp-selection-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.plp-selection-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.plp-selection-qty {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.plp-selection-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  flex-shrink: 0;
 }
 
 /* ── Footer / save ── */

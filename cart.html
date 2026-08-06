@@ -95,29 +95,40 @@
 
     <!-- Substitute global toggle (mobile/tablet: inline at top of list) -->
     <div class="toggle-card toggle-card--mobile">
-      <div class="toggle-icon">
-        <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
-      </div>
-      <div class="toggle-content">
-        <div class="toggle-title">
-          Permitir sustitutos
-          <span class="info-tooltip-wrap">
-            <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
-            <div class="info-tooltip" hidden>
-              <div class="info-tooltip-arrow"></div>
-              <div class="info-tooltip-header">
-                <span>¿Cómo funcionan los sustitutos?</span>
-                <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
-                  <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
-                </button>
-              </div>
-              <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
-            </div>
-          </span>
+      <div class="toggle-header">
+        <div class="toggle-icon">
+          <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
         </div>
-        <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        <div class="toggle-content">
+          <div class="toggle-title">
+            Permitir sustitutos
+            <span class="info-tooltip-wrap">
+              <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
+              <div class="info-tooltip" hidden>
+                <div class="info-tooltip-arrow"></div>
+                <div class="info-tooltip-header">
+                  <span>¿Cómo funcionan los sustitutos?</span>
+                  <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
+                    <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
+                  </button>
+                </div>
+                <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
+              </div>
+            </span>
+          </div>
+          <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        </div>
       </div>
-      <button class="toggle-switch" aria-pressed="true" onclick="toggleAllowSubstitutes()"></button>
+      <div class="toggle-segment" role="group" aria-label="¿Qué prefieres si un producto se agota?">
+        <button type="button" class="toggle-segment-btn" data-choice="contact" onclick="setAllowSubstitutes(true)">
+          <span class="msi msi-fill" aria-hidden="true">chat</span>
+          Contactarme
+        </button>
+        <button type="button" class="toggle-segment-btn" data-choice="none" onclick="setAllowSubstitutes(false)">
+          <span class="msi" aria-hidden="true">block</span>
+          No reemplazar
+        </button>
+      </div>
     </div>
 
     <div id="cartItemsList" class="cart-items-list"></div>
@@ -177,29 +188,40 @@
 
     <!-- Substitute global toggle (desktop: below Resumen de compra) -->
     <div class="toggle-card toggle-card--desktop">
-      <div class="toggle-icon">
-        <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
-      </div>
-      <div class="toggle-content">
-        <div class="toggle-title">
-          Permitir sustitutos
-          <span class="info-tooltip-wrap">
-            <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
-            <div class="info-tooltip" hidden>
-              <div class="info-tooltip-arrow"></div>
-              <div class="info-tooltip-header">
-                <span>¿Cómo funcionan los sustitutos?</span>
-                <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
-                  <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
-                </button>
-              </div>
-              <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
-            </div>
-          </span>
+      <div class="toggle-header">
+        <div class="toggle-icon">
+          <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
         </div>
-        <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        <div class="toggle-content">
+          <div class="toggle-title">
+            Permitir sustitutos
+            <span class="info-tooltip-wrap">
+              <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
+              <div class="info-tooltip" hidden>
+                <div class="info-tooltip-arrow"></div>
+                <div class="info-tooltip-header">
+                  <span>¿Cómo funcionan los sustitutos?</span>
+                  <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
+                    <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
+                  </button>
+                </div>
+                <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
+              </div>
+            </span>
+          </div>
+          <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        </div>
       </div>
-      <button class="toggle-switch" aria-pressed="true" onclick="toggleAllowSubstitutes()"></button>
+      <div class="toggle-segment" role="group" aria-label="¿Qué prefieres si un producto se agota?">
+        <button type="button" class="toggle-segment-btn" data-choice="contact" onclick="setAllowSubstitutes(true)">
+          <span class="msi msi-fill" aria-hidden="true">chat</span>
+          Contactarme
+        </button>
+        <button type="button" class="toggle-segment-btn" data-choice="none" onclick="setAllowSubstitutes(false)">
+          <span class="msi" aria-hidden="true">block</span>
+          No reemplazar
+        </button>
+      </div>
     </div>
 
   </aside>
@@ -248,29 +270,9 @@
       <div class="plp-modal-view" id="subMainScreen">
         <p class="plp-modal-desc">Quedan pocas piezas de este producto. Dinos qué prefieres si se agota.</p>
 
-        <div class="plp-segment" id="subSegment" role="tablist" aria-label="Qué prefieres si se agota">
-          <button type="button" class="plp-segment-btn active" data-segment="product" onclick="selectSegment('product')" role="tab" aria-selected="true">Productos</button>
-          <button type="button" class="plp-segment-btn" data-segment="picker" onclick="selectSegment('picker')" role="tab" aria-selected="false">HEB Sugiere</button>
-          <button type="button" class="plp-segment-btn" data-segment="none" onclick="selectSegment('none')" role="tab" aria-selected="false">No reemplazar</button>
-        </div>
-
-        <div class="plp-modal-view" id="subProductView">
-          <button type="button" class="plp-search-trigger" onclick="openSearchScreen()">
-            <span class="plp-search-trigger-left">
-              <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
-              <span class="plp-search-trigger-text">Busca cualquier producto para sustituir</span>
-            </span>
-            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
-          </button>
-
-          <div class="plp-similar">
-            <h3 class="plp-similar-title">O elige uno de estos productos similares</h3>
-            <div class="plp-similar-row" id="subCarousel"></div>
-          </div>
-        </div>
-
-        <div class="plp-modal-view" id="subChoiceView" hidden>
-          <div class="plp-choice-panel" id="subChoicePanel"></div>
+        <div class="plp-similar">
+          <h3 class="plp-similar-title">Elige un producto o una opción</h3>
+          <div class="plp-similar-row" id="subCarousel"></div>
         </div>
       </div>
 
@@ -285,6 +287,8 @@
         <div class="plp-search-grid" id="subSearchGrid"></div>
       </div>
     </div>
+
+    <div class="plp-selection-summary" id="subSelectionSummary" hidden></div>
 
     <div class="plp-modal-footer">
       <p>Se te cobrará el precio del artículo que recibas.</p>

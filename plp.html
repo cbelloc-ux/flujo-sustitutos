@@ -219,29 +219,9 @@
       <div class="plp-modal-view" id="subMainScreen">
         <p class="plp-modal-desc">Quedan pocas piezas de este producto. Dinos qué prefieres si se agota.</p>
 
-        <div class="plp-segment" id="subSegment" role="tablist" aria-label="Qué prefieres si se agota">
-          <button type="button" class="plp-segment-btn active" data-segment="product" onclick="selectSegment('product')" role="tab" aria-selected="true">Productos</button>
-          <button type="button" class="plp-segment-btn" data-segment="picker" onclick="selectSegment('picker')" role="tab" aria-selected="false">HEB Sugiere</button>
-          <button type="button" class="plp-segment-btn" data-segment="none" onclick="selectSegment('none')" role="tab" aria-selected="false">No reemplazar</button>
-        </div>
-
-        <div class="plp-modal-view" id="subProductView">
-          <button type="button" class="plp-search-trigger" onclick="openSearchScreen()">
-            <span class="plp-search-trigger-left">
-              <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
-              <span class="plp-search-trigger-text">Busca cualquier producto para sustituir</span>
-            </span>
-            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
-          </button>
-
-          <div class="plp-similar">
-            <h3 class="plp-similar-title">O elige uno de estos productos similares</h3>
-            <div class="plp-similar-row" id="subCarousel"></div>
-          </div>
-        </div>
-
-        <div class="plp-modal-view" id="subChoiceView" hidden>
-          <div class="plp-choice-panel" id="subChoicePanel"></div>
+        <div class="plp-similar">
+          <h3 class="plp-similar-title">Elige un producto o una opción</h3>
+          <div class="plp-similar-row" id="subCarousel"></div>
         </div>
       </div>
 
@@ -256,6 +236,8 @@
         <div class="plp-search-grid" id="subSearchGrid"></div>
       </div>
     </div>
+
+    <div class="plp-selection-summary" id="subSelectionSummary" hidden></div>
 
     <div class="plp-modal-footer">
       <p>Se te cobrará el precio del artículo que recibas.</p>

@@ -60,22 +60,24 @@ function renderPdpRecommended(product) {
 
 function pdpAddToCart(btn) {
   const product = PRODUCTS[pdpProductId];
-  if (isSubstituteEligible(product)) {
-    openSubstituteModal(pdpProductId);
-    return;
-  }
   const alreadyInCart = (plpQty[pdpProductId] || 0) > 0;
   if (alreadyInCart) {
     changeQty(pdpProductId, 1);
   } else {
     addNormally(pdpProductId);
   }
+  // Igual que en el PLP: agregar varias piezas seguidas no abre el modal en cada clic,
+  // solo cuando el usuario deja de hacer clic (pierde el ritmo).
+  if (isSubstituteEligible(product)) {
+    armSubstituteModal(pdpProductId);
+  }
   btn.classList.add('added');
   setTimeout(() => btn.classList.remove('added'), 150);
 }
 
 function renderPdpNotice() {
-  const label = substituteLabel(savedSubstitutes[pdpProductId]);
+  const selection = savedSubstitutes[pdpProductId];
+  const label = substituteLabel(selection);
   const media = document.getElementById('pdpSubNoticeMedia');
   const title = document.getElementById('pdpSubNoticeTitle');
   const desc = document.getElementById('pdpSubNoticeDesc');
@@ -88,8 +90,8 @@ function renderPdpNotice() {
     return;
   }
 
-  if (label.title === 'No reemplazar') {
-    media.innerHTML = PDP_ICON_BLOCK;
+  if (selection.type !== 'product') {
+    media.innerHTML = PDP_NOTICE_ICONS[selection.type];
     title.textContent = '¿Qué enviamos si se agota?';
     desc.textContent = label.desc;
     desc.hidden = false;
@@ -104,6 +106,11 @@ function renderPdpNotice() {
 
 const PDP_ICON_CACHED = '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">cached</span>';
 const PDP_ICON_BLOCK = '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">block</span>';
+const PDP_NOTICE_ICONS = {
+  none: PDP_ICON_BLOCK,
+  contact: '<span class="msi msi-fill" aria-hidden="true" style="font-size:24px; color:#221f19">chat</span>',
+  picker: '<span class="msi" aria-hidden="true" style="font-size:24px; color:#221f19">emoji_people</span>',
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   renderPdpProduct();

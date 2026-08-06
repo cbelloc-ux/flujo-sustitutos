@@ -3,23 +3,34 @@ function loadAllowSubstitutes() {
 }
 let allowSubstitutes = loadAllowSubstitutes();
 
-function toggleAllowSubstitutes() {
-  allowSubstitutes = !allowSubstitutes;
+// "Contactarme" (allowSubstitutes = true) / "No reemplazar" (allowSubstitutes = false):
+// mismo interruptor de siempre, ahora expresado como dos opciones nombradas en vez de on/off.
+// Es un reset general: sobreescribe el ajuste individual de TODOS los productos elegibles
+// del carrito con la opción recién elegida (que se puede volver a personalizar después,
+// producto por producto, con "Cambiar").
+function setAllowSubstitutes(value) {
+  allowSubstitutes = value;
   localStorage.setItem('heb-allow-substitutes', String(allowSubstitutes));
+  const eligibleItems = cartItems().filter(item => isSubstituteEligible(item.product));
+  eligibleItems.forEach(item => {
+    savedSubstitutes[item.id] = { type: value ? 'contact' : 'none' };
+  });
+  persistSubstitutes();
   syncToggleUI();
-  cartItems().filter(item => isSubstituteEligible(item.product)).forEach(item => renderCartNotice(item.id));
+  eligibleItems.forEach(item => refreshProductUI(item.id));
 }
 
 function syncToggleUI() {
   // Dos instancias en el DOM (mobile inline / desktop en el sidebar); se mantienen sincronizadas.
-  document.querySelectorAll('.toggle-switch').forEach(toggle => {
-    toggle.classList.toggle('off', !allowSubstitutes);
-    toggle.setAttribute('aria-pressed', String(allowSubstitutes));
+  document.querySelectorAll('.toggle-segment-btn').forEach(btn => {
+    const isContact = btn.dataset.choice === 'contact';
+    const active = isContact === allowSubstitutes;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
   });
 }
 
 function openCartSubstitute(id) {
-  if (!allowSubstitutes) return;
   openSubstituteModal(id);
 }
 
@@ -27,12 +38,25 @@ function renderCartNotice(id) {
   const media = document.getElementById('cartNoticeMedia-' + id);
   const title = document.getElementById('cartNoticeTitle-' + id);
   const desc = document.getElementById('cartNoticeDesc-' + id);
-  const cta = document.getElementById('cartNoticeCta-' + id);
   const notice = document.getElementById('cartNotice-' + id);
   if (!notice) return;
 
-  notice.classList.toggle('disabled', !allowSubstitutes);
-  cta.classList.toggle('disabled', !allowSubstitutes);
+  // "Cambiar" siempre queda habilitado: aunque la preferencia general sea "No reemplazar",
+  // el ajuste individual por producto (savedSubstitutes[id]) tiene prioridad sobre ella.
+  const selection = savedSubstitutes[id];
+  const label = substituteLabel(selection);
+  if (label) {
+    if (selection.type === 'product') {
+      media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
+      title.textContent = '¿Qué enviamos si se agota?';
+      desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
+      return;
+    }
+    media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_NOTICE_ICONS[selection.type]}</div>`;
+    title.textContent = '¿Qué enviamos si se agota?';
+    desc.textContent = label.desc;
+    return;
+  }
 
   if (!allowSubstitutes) {
     media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_BLOCK}</div>`;
@@ -41,28 +65,18 @@ function renderCartNotice(id) {
     return;
   }
 
-  const label = substituteLabel(savedSubstitutes[id]);
-  if (!label) {
-    media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_CACHED}</div>`;
-    title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.';
-    return;
-  }
-
-  if (label.title === 'No reemplazar') {
-    media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_BLOCK}</div>`;
-    title.textContent = '¿Qué enviamos si se agota?';
-    desc.textContent = label.desc;
-    return;
-  }
-
-  media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
+  media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_CACHED}</div>`;
   title.textContent = '¿Qué enviamos si se agota?';
-  desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
+  desc.textContent = 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.';
 }
 
 const CART_ICON_CACHED = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">cached</span>';
 const CART_ICON_BLOCK = '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">block</span>';
+const CART_NOTICE_ICONS = {
+  none: CART_ICON_BLOCK,
+  contact: '<span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#655f52">chat</span>',
+  picker: '<span class="msi" aria-hidden="true" style="font-size:20px; color:#655f52">emoji_people</span>',
+};
 
 function openSavingsSheet() {
   document.getElementById('savingsOverlay').hidden = false;
