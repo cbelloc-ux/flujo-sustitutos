@@ -1,0 +1,547 @@
+/* ══ PDP (Product Detail Page) — mobile ══ */
+
+.pdp-main {
+  max-width: 480px;
+  min-width: 390px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* En mobile/tablet, .pdp-left "desaparece" (sus hijos pasan a ser flex items
+   directos de .pdp-main) para poder reordenar Descripción/Especificaciones
+   después del bloque de info, sin duplicar marcado. */
+.pdp-left {
+  display: contents;
+}
+.pdp-media { order: 1; }
+.pdp-info { order: 2; }
+.pdp-accordions { order: 3; }
+.pdp-recommended { order: 4; }
+
+/* ── Media ── */
+.pdp-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.pdp-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pdp-prime-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid #facc15;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-family: var(--fn);
+  font-size: 13px;
+  font-weight: 800;
+  color: #422006;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.pdp-prime-pill {
+  background: #221f19;
+  color: #facc15;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+
+.pdp-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(147,147,146,.5);
+  border-radius: 9999px;
+  padding: 5px 8px;
+}
+.pdp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.6);
+}
+.pdp-dot.active {
+  width: 18px;
+  background: white;
+}
+
+/* ── Info ── */
+.pdp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pdp-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pdp-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 24px;
+  color: var(--ink);
+}
+.pdp-share-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  color: var(--ink);
+}
+.pdp-sku {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.pdp-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.pdp-price {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.pdp-price-old {
+  font-size: 14px;
+  color: var(--ink-2);
+  text-decoration: line-through;
+}
+
+/* ── Substitute notice (illustrated) ── */
+.pdp-sub-notice {
+  width: 100%;
+  background: var(--subtle);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--fn);
+  transition: background .12s;
+}
+.pdp-sub-notice:hover { background: #e2ddd0; }
+
+.pdp-sub-notice-media {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.pdp-sub-notice-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pdp-sub-notice-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pdp-sub-notice-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.pdp-sub-notice-text small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-2);
+  line-height: 16px;
+}
+.pdp-sub-notice-text small s { color: var(--ink-3); }
+.pdp-sub-notice-text small b { color: var(--ink); }
+
+.pdp-sub-notice-cta {
+  flex-shrink: 0;
+  background: var(--surface);
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 9999px;
+}
+
+/* ── Combo banner ── */
+.pdp-combo-banner {
+  background: var(--plp-pink-bg, #f7d3e8);
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pdp-combo-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pdp-combo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pdp-combo-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--plp-pink-txt, #ae1c71);
+  text-decoration: underline;
+}
+.pdp-combo-text small {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+/* ── Footer CTA: fijo en la parte inferior de la pantalla (mobile/tablet) ── */
+.pdp-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(248,246,241,.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+}
+.pdp-footer-price {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.pdp-footer-total {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 26px;
+}
+.pdp-footer-unit {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.pdp-footer-cta { flex: 1; }
+.pdp-footer-btn {
+  width: 100%;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  height: 44px;
+  font-family: var(--fn);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .12s, transform .1s;
+}
+.pdp-footer-btn:hover { background: var(--red-dk); }
+.pdp-footer-btn.added { transform: scale(.96); }
+
+/* Stepper "− cantidad +" una vez agregado, mismo look que el botón "Agregar" que reemplaza. */
+.pdp-footer-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  background: var(--red);
+  border-radius: 9999px;
+  height: 44px;
+  padding: 0 16px;
+}
+.pdp-footer-stepper button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pdp-footer-stepper > span {
+  color: white;
+  font-family: var(--fn);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+/* ── Cashback banner ── */
+.pdp-cashback-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 12px;
+}
+.pdp-cashback-icon {
+  flex-shrink: 0;
+  color: var(--red);
+  font-size: 24px;
+}
+.pdp-cashback-banner p {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--ink-2);
+  font-weight: 800;
+}
+.pdp-cashback-banner a {
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ── Promociones bancarias ── */
+.pdp-bank-promos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pdp-bank-promos-label {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--blue);
+  text-decoration: underline;
+}
+.pdp-bank-logos { display: flex; gap: 8px; }
+.pdp-bank-logo {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ink-2);
+  font-family: var(--fn);
+}
+
+/* ── Acordeones: Descripción / Especificaciones ── */
+.pdp-accordions {
+  display: flex;
+  flex-direction: column;
+}
+.pdp-accordion {
+  border-bottom: 1px solid var(--border);
+}
+.pdp-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  cursor: pointer;
+  font-family: var(--fn);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  text-align: left;
+}
+.pdp-accordion-chevron { color: var(--ink); flex-shrink: 0; }
+.pdp-accordion-body { padding-bottom: 16px; }
+.pdp-accordion-body[hidden] { display: none; }
+
+.pdp-desc-table {
+  display: flex;
+  gap: 24px;
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 16px;
+  overflow-x: auto;
+}
+.pdp-desc-labels,
+.pdp-desc-values {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.pdp-desc-labels p, .pdp-desc-values p { margin: 0; }
+.pdp-desc-labels { font-weight: 700; color: var(--ink); flex-shrink: 0; }
+.pdp-desc-values { font-weight: 800; color: var(--ink); }
+
+/* ── Especificaciones: panel de valor nutricional ── */
+.pdp-nutrition {
+  background: var(--subtle);
+  border-radius: 16px;
+  padding: 20px;
+  font-family: var(--fn);
+  color: var(--ink);
+}
+.pdp-nutrition h3 {
+  font-size: 28px;
+  font-weight: 800;
+  border-bottom: 8px solid var(--ink);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+.pdp-nutrition-sub { font-size: 14px; margin-bottom: 6px; }
+.pdp-nutrition-serving {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom: 6px solid var(--ink);
+  padding: 6px 0;
+  margin-bottom: 6px;
+}
+.pdp-nutrition-cal-label { font-size: 13px; font-weight: 700; }
+.pdp-nutrition-cal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 26px;
+  font-weight: 800;
+  border-bottom: 8px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+.pdp-nutrition-dv {
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+}
+.pdp-nutrition-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pdp-nutrition-row.bold { font-weight: 800; }
+.pdp-nutrition-row .val { font-weight: 700; }
+.pdp-nutrition-foot {
+  font-size: 11px;
+  color: var(--ink-2);
+  margin-top: 8px;
+  line-height: 14px;
+}
+
+/* ── Productos recomendados ── */
+.pdp-recommended { margin-top: 8px; }
+.pdp-recommended h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.pdp-recommended-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.pdp-recommended-row .plp-card { flex: 0 0 176px; }
+
+/* ── Breakpoints: mobile ≤767px (default) · tablet 768–1199px · desktop ≥1200px ── */
+@media (min-width: 768px) {
+  .pdp-main {
+    max-width: 700px;
+  }
+  .pdp-media { max-width: 480px; margin: 0 auto; width: 100%; }
+}
+
+@media (min-width: 1200px) {
+  .pdp-main {
+    max-width: 1160px;
+    padding-bottom: 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-areas:
+      "breadcrumb breadcrumb"
+      "left info"
+      "recommended recommended";
+    align-items: start;
+    gap: 40px;
+  }
+  .pdp-main > .plp-breadcrumb { grid-area: breadcrumb; }
+  .pdp-recommended { grid-area: recommended; order: initial; }
+  /* .pdp-left vuelve a ser una caja real (ya no "contents") que agrupa imagen + acordeones
+     en una sola celda del grid, para que .pdp-info sea sticky sin necesidad de abarcar filas. */
+  .pdp-left {
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pdp-media { order: initial; max-width: none; }
+  .pdp-accordions { order: initial; }
+  /* El bloque derecho (info + CTA) se queda fijo; el bloque izquierdo (imagen + acordeones) hace scroll. */
+  .pdp-info {
+    grid-area: info;
+    order: initial;
+    position: sticky;
+    top: 96px;
+  }
+  .pdp-footer {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    background: none;
+    backdrop-filter: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin: 8px 0 0;
+    width: 100%;
+    padding: 12px 16px;
+  }
+}

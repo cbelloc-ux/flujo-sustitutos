@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de producto — H-E-B</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plp.css">
+  <link rel="stylesheet" href="pdp.css">
+</head>
+<body class="plp-body">
+
+<!-- ══ HEADER ══ -->
+<header class="plp-header">
+  <div class="plp-header-top">
+    <button class="plp-icon-btn plp-header-lead-btn" onclick="location.href='plp.html'" aria-label="Regresar">
+      <span class="msi" aria-hidden="true">arrow_back</span>
+    </button>
+
+    <a class="plp-logo-link" href="index.html" aria-label="H-E-B">
+      <img class="plp-logo" src="assets/logo-heb-blanco.png" alt="H-E-B">
+    </a>
+
+    <button class="plp-search-bar" aria-label="Buscar en H-E-B">
+      <span>Busca en H-E-B</span>
+      <span class="msi" aria-hidden="true">search</span>
+    </button>
+
+    <div class="plp-search-desktop">
+      <input type="text" placeholder="Busca productos" aria-label="Busca productos">
+      <span class="msi" aria-hidden="true">search</span>
+    </div>
+
+    <div class="plp-header-divider" aria-hidden="true"></div>
+
+    <button class="plp-delivery-pill">
+      <span class="msi" aria-hidden="true">location_on</span>
+      <span class="plp-delivery-text">Recibe en <strong>Zimapán #302, Mitr...</strong></span>
+      <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <div class="plp-header-actions">
+      <button class="plp-account-btn">
+        <span class="msi" aria-hidden="true">person</span>
+        <span>Mi cuenta</span>
+      </button>
+      <a class="plp-cart-btn" href="cart.html">
+        <span class="msi" aria-hidden="true">shopping_cart</span>
+        <span class="plp-cart-price">$0.00</span>
+        <span class="plp-cart-badge">0</span>
+      </a>
+    </div>
+
+    <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
+      <span class="msi" aria-hidden="true">shopping_cart</span>
+      <span class="plp-cart-badge">0</span>
+    </a>
+  </div>
+
+  <button class="plp-delivery-bar">
+    ¿Cómo quieres recibir tu pedido?
+    <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+  </button>
+
+  <nav class="plp-pleca" aria-label="Categorías">
+    <button class="plp-pleca-item active" onclick="openPasillosMenu()"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item">Nuestras marcas</button>
+    <button class="plp-pleca-item">Prime</button>
+    <button class="plp-pleca-item">Promociones</button>
+    <button class="plp-pleca-item">Vive Saludable</button>
+    <button class="plp-pleca-item">Mascotas</button>
+  </nav>
+</header>
+
+<!-- ══ BODY ══ -->
+<main class="pdp-main">
+
+  <nav class="plp-breadcrumb" aria-label="Ruta de navegación">
+    <span>H-E-B</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px; color:#414142">chevron_right</span>
+    <strong>Frutas y Verduras</strong>
+  </nav>
+
+  <div class="pdp-left">
+    <div class="pdp-media">
+      <img id="pdpImg" class="pdp-media-img" src="" alt="">
+      <button class="pdp-prime-badge">
+        <span class="pdp-prime-pill">PRIME</span> -25%
+      </button>
+      <button class="plp-addlist-btn" aria-label="Agregar a lista">
+        <svg width="16" height="20" viewBox="0 0 16.0664 19.999" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12.0303 11.9229C12.5845 11.9231 13.0339 12.3725 13.0342 12.9268V14.957H15.0615C15.6164 14.957 16.0664 15.407 16.0664 15.9619C16.0662 16.5166 15.6163 16.9658 15.0615 16.9658H13.0342V18.9951C13.0341 19.5495 12.5846 19.9988 12.0303 19.999C11.4757 19.999 11.0254 19.5497 11.0254 18.9951V16.9658H8.99707C8.44234 16.9658 7.99243 16.5166 7.99219 15.9619C7.99219 15.407 8.44219 14.9571 8.99707 14.957H11.0254V12.9268C11.0256 12.3724 11.4758 11.9229 12.0303 11.9229ZM12.0586 0C13.6258 0.000141112 14.8787 1.28319 14.8789 2.84473V10.4219C14.8789 10.8821 14.5061 11.2559 14.0459 11.2559C13.5858 11.2557 13.2129 10.882 13.2129 10.4219V2.84473C13.2127 2.18468 12.6865 1.66616 12.0586 1.66602H2.82031C2.19264 1.66636 1.66619 2.18482 1.66602 2.84473V16.082C1.66605 16.7421 2.19255 17.2604 2.82031 17.2607H6.66797C7.1281 17.2607 7.50178 17.6337 7.50195 18.0938C7.50191 18.5539 7.12818 18.9268 6.66797 18.9268H2.82031C1.25324 18.9264 3.27789e-05 17.6436 0 16.082V2.84473C0.000174103 1.28331 1.25332 0.000345799 2.82031 0H12.0586ZM7.24023 8.0293C7.78507 8.0293 8.22656 8.47176 8.22656 9.0166C8.22636 9.56127 7.78495 10.0029 7.24023 10.0029H4.43262C3.8881 10.0027 3.44649 9.56112 3.44629 9.0166C3.44629 8.47191 3.88798 8.02953 4.43262 8.0293H7.24023ZM10.5752 4.16602C11.1198 4.16623 11.5615 4.60765 11.5615 5.15234C11.5615 5.69705 11.1199 6.13846 10.5752 6.13867H4.43262C3.88798 6.13843 3.44629 5.69703 3.44629 5.15234C3.4463 4.60766 3.88799 4.16625 4.43262 4.16602H10.5752Z" fill="#4A4741"/></svg>
+      </button>
+      <div class="pdp-dots">
+        <span class="pdp-dot"></span><span class="pdp-dot active"></span><span class="pdp-dot"></span><span class="pdp-dot"></span>
+      </div>
+    </div>
+
+    <div class="pdp-accordions">
+      <section class="pdp-accordion">
+        <button type="button" class="pdp-accordion-header" onclick="toggleAccordion(this)" aria-expanded="true" aria-controls="pdpDescBody">
+          <span>Descripción</span>
+          <span class="msi pdp-accordion-chevron" aria-hidden="true">keyboard_arrow_up</span>
+        </button>
+        <div class="pdp-accordion-body" id="pdpDescBody">
+          <div class="pdp-desc-table">
+            <div class="pdp-desc-labels">
+              <p>Tipo de producto</p>
+              <p>Marca</p>
+              <p>Denominación/Variedad</p>
+              <p>Presentación</p>
+              <p>País de origen</p>
+              <p>Advertencias de almacenamiento</p>
+              <p>Ingredientes</p>
+              <p>Porción sugerida</p>
+              <p>Porciones por envase</p>
+            </div>
+            <div class="pdp-desc-values" id="pdpDescValues"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pdp-accordion">
+        <button type="button" class="pdp-accordion-header" onclick="toggleAccordion(this)" aria-expanded="true" aria-controls="pdpSpecsBody">
+          <span>Especificaciones</span>
+          <span class="msi pdp-accordion-chevron" aria-hidden="true">keyboard_arrow_up</span>
+        </button>
+        <div class="pdp-accordion-body" id="pdpSpecsBody">
+          <div class="pdp-nutrition">
+            <h3>Valor nutricional</h3>
+            <p class="pdp-nutrition-sub">Producto natural</p>
+            <div class="pdp-nutrition-serving"><span>Tamaño de la porción</span><span>1 pieza mediana (100 g)</span></div>
+            <p class="pdp-nutrition-cal-label">Cantidad por porción</p>
+            <div class="pdp-nutrition-cal"><span>Calorías</span><span>52</span></div>
+            <p class="pdp-nutrition-dv">% Valor Diario*</p>
+            <div class="pdp-nutrition-row bold"><span>Grasas totales 0.2 g</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row"><span>Sodio 1 mg</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row bold"><span>Carbohidratos totales 14 g</span><span class="val">5%</span></div>
+            <div class="pdp-nutrition-row"><span>Fibra dietética 2.4 g</span><span class="val">9%</span></div>
+            <div class="pdp-nutrition-row"><span>Azúcares totales 10 g</span><span class="val"></span></div>
+            <div class="pdp-nutrition-row bold"><span>Proteínas 0.3 g</span><span class="val"></span></div>
+            <div class="pdp-nutrition-row"><span>Vitamina C 4.6 mg</span><span class="val">5%</span></div>
+            <div class="pdp-nutrition-row"><span>Calcio 6 mg</span><span class="val">0%</span></div>
+            <div class="pdp-nutrition-row"><span>Hierro 0.1 mg</span><span class="val">1%</span></div>
+            <div class="pdp-nutrition-row"><span>Potasio 107 mg</span><span class="val">2%</span></div>
+            <p class="pdp-nutrition-foot">* El % de Valor Diario (VD) indica cuánto contribuye un nutriente en una porción de alimento a la dieta diaria. 2,000 calorías al día se utilizan para propósitos de asesoramiento nutricional general.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="pdp-info">
+    <div class="pdp-title-row">
+      <h1 class="pdp-title" id="pdpName"></h1>
+      <button class="pdp-share-btn" aria-label="Compartir">
+        <span class="msi" aria-hidden="true">share</span>
+      </button>
+    </div>
+    <p class="pdp-sku">SKU 12345678</p>
+    <div class="pdp-price-row">
+      <span class="pdp-price" id="pdpPrice"></span>
+      <span class="pdp-price-old" id="pdpPriceOld"></span>
+    </div>
+    <span class="plp-badge plp-badge-gray" id="pdpBadgeGray"></span>
+
+    <!-- ══ Substitute notice (illustrated) ══ -->
+    <button type="button" class="pdp-sub-notice" id="pdpSubNotice" onclick="void 0">
+      <div class="pdp-sub-notice-media" id="pdpSubNoticeMedia"></div>
+      <div class="pdp-sub-notice-text">
+        <strong id="pdpSubNoticeTitle"></strong>
+        <small id="pdpSubNoticeDesc"></small>
+      </div>
+      <span class="pdp-sub-notice-cta">Cambiar</span>
+    </button>
+
+    <div class="pdp-combo-banner">
+      <div class="pdp-combo-icon">
+        <span class="msi msi-fill" aria-hidden="true" style="font-size:30px; color:var(--plp-pink-txt, #ae1c71)">redeem</span>
+      </div>
+      <div class="pdp-combo-text">
+        <strong>Compra 1 mermelada y llévate chocolate GRATIS.</strong>
+        <small>Vigencia 20 de diciembre</small>
+      </div>
+    </div>
+
+    <!-- ══ FOOTER CTA ══ -->
+    <div class="pdp-footer">
+      <div class="pdp-footer-price">
+        <span class="pdp-footer-total" id="pdpFooterTotal"></span>
+        <span class="pdp-footer-unit" id="pdpUnitPrice"></span>
+      </div>
+      <div class="pdp-footer-cta" id="pdpFooterCta"></div>
+    </div>
+
+    <div class="pdp-cashback-banner">
+      <span class="msi msi-fill pdp-cashback-icon" aria-hidden="true">sell</span>
+      <p>Obtén un <b>5% de cashback</b> en todas tus compras en heb.com.mx y nuestra app con la <b>tarjeta de crédito HEB Afirme.</b> <a href="#" onclick="return false">Solicítala aquí</a></p>
+    </div>
+
+    <div class="pdp-bank-promos">
+      <span class="pdp-bank-promos-label">Promociones bancarias</span>
+      <div class="pdp-bank-logos">
+        <span class="pdp-bank-logo">VISA</span>
+        <span class="pdp-bank-logo">Mastercard</span>
+        <span class="pdp-bank-logo">AMEX</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="pdp-recommended">
+    <h2>Productos recomendados</h2>
+    <div class="pdp-recommended-row" id="pdpRecommended"></div>
+  </section>
+
+</main>
+
+<!-- ══ SUSTITUTE MODAL (compartido con el PLP) ══ -->
+<div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
+<div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
+  <div class="plp-modal-sheet">
+    <div class="plp-modal-header">
+      <button type="button" class="plp-modal-back" id="subBack" onclick="closeSearchScreen()" aria-label="Regresar" hidden>
+        <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+      </button>
+      <h2 class="plp-modal-title" id="subModalTitle">Sustitutos</h2>
+      <button type="button" class="plp-modal-close" onclick="closeSubstituteModal()" aria-label="Cerrar">
+        <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <p class="plp-summary-label">Dinos qué prefieres si se agota este producto:</p>
+    <div class="plp-selection-summary" id="subOriginSummary" hidden></div>
+
+    <div class="plp-modal-body">
+      <div class="plp-modal-view" id="subMainScreen">
+        <div class="plp-promo-panel" id="subPromoPanel" hidden>
+          <h3 class="plp-promo-title">Mantén tu promoción con estos sustitutos</h3>
+          <div class="plp-promo-row" id="subPromoCarousel"></div>
+        </div>
+
+        <div class="plp-similar">
+          <h3 class="plp-similar-title">Elige un producto o una opción</h3>
+          <button type="button" class="plp-carousel-nav plp-carousel-nav-prev" id="subCarouselPrev" aria-label="Anterior" hidden>‹</button>
+          <div class="plp-similar-row" id="subCarousel"></div>
+          <button type="button" class="plp-carousel-nav plp-carousel-nav-next" id="subCarouselNext" aria-label="Siguiente" hidden>›</button>
+        </div>
+      </div>
+
+      <div class="plp-modal-view" id="subSearchScreen" hidden>
+        <div class="plp-search-input-wrap">
+          <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+          <input type="text" id="subSearchInput" class="plp-search-input" placeholder="Busca cualquier producto para sustituir" oninput="renderSearchGrid()">
+          <button type="button" class="plp-search-clear" onclick="clearSubSearch()" aria-label="Limpiar búsqueda">
+            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
+          </button>
+        </div>
+        <div class="plp-search-grid" id="subSearchGrid"></div>
+      </div>
+    </div>
+
+    <p class="plp-summary-label" id="subSelectionLabel" hidden>Si se agota enviaremos:</p>
+    <div class="plp-selection-summary" id="subSelectionSummary" hidden></div>
+
+    <div class="plp-modal-footer">
+      <p id="subFooterNote">Se te cobrará el precio del artículo que recibas.</p>
+      <button type="button" class="plp-modal-save" id="subSave" onclick="saveSelection()" disabled>Guardar selección</button>
+    </div>
+  </div>
+</div>
+
+<div class="plp-toast" id="subToast" role="status" aria-live="polite">
+  <span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#2a9f47">check_circle</span>
+  <span>Sustituto guardado con éxito.</span>
+</div>
+
+<!-- ══ MENÚ PASILLOS (mega menú de categorías) ══ -->
+<div class="pasillos-overlay" id="pasillosOverlay" onclick="closePasillosMenu()" hidden></div>
+<div class="pasillos-panel" id="pasillosPanel" hidden role="dialog" aria-modal="true" aria-label="Pasillos">
+  <div class="pasillos-sheet">
+    <div class="pasillos-view" id="pasillosLevel1">
+      <div class="pasillos-header">
+        <h2 class="pasillos-title">Explorar todo</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-list">
+        <button type="button" class="pasillos-pill">Despensa</button>
+        <button type="button" class="pasillos-pill" onclick="showPasillosLevel2()">Frutas y Verduras</button>
+        <button type="button" class="pasillos-pill">Carnes y Pescados</button>
+        <button type="button" class="pasillos-pill">Bebidas y Snacks</button>
+        <button type="button" class="pasillos-pill">Jamones, Quesos y Deli</button>
+        <button type="button" class="pasillos-pill">Pan y Tortillas</button>
+        <button type="button" class="pasillos-pill">Lácteos y Huevo</button>
+        <button type="button" class="pasillos-pill">Vinos, Licores y Cervezas</button>
+        <button type="button" class="pasillos-pill">Alimentos Congelados</button>
+        <button type="button" class="pasillos-pill">Bebés</button>
+        <button type="button" class="pasillos-pill">Cuidado Personal y Belleza</button>
+        <button type="button" class="pasillos-pill">Mascotas</button>
+        <button type="button" class="pasillos-pill">Hogar y Entretenimiento</button>
+        <button type="button" class="pasillos-pill">Limpieza del Hogar</button>
+      </div>
+    </div>
+
+    <div class="pasillos-view" id="pasillosLevel2" hidden>
+      <div class="pasillos-header">
+        <button type="button" class="pasillos-back" onclick="showPasillosLevel1()" aria-label="Regresar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+        </button>
+        <h2 class="pasillos-title">Frutas y Verduras</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-groups">
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">A Granel</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Desinfectantes</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Ensaladas</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Cortada</a>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Enchilada</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_up</span>
+            <span class="pasillos-group-name">Frutas</span>
+            <a class="pasillos-vertodo pasillos-vertodo--active" href="plp.html">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items">
+            <a class="pasillos-item" href="plp.html">HEB Fresh</a>
+            <a class="pasillos-item" href="plp.html">Jugos</a>
+            <a class="pasillos-item" href="plp.html">Nueces y Cacahuates</a>
+            <a class="pasillos-item" href="plp.html">Orgánicos</a>
+            <a class="pasillos-item" href="plp.html">Variedad</a>
+            <a class="pasillos-item" href="plp.html">Vegetales en bolsa</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Verduras</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="plp.js"></script>
+<script src="pdp.js"></script>
+</body>
+</html>

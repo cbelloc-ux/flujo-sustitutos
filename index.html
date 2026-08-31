@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H-E-B México — Supermercado en línea</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plp.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body class="plp-body">
+
+<!-- ══ HEADER ══ -->
+<header class="plp-header">
+  <div class="plp-header-top">
+    <button class="plp-icon-btn plp-header-lead-btn" onclick="openPasillosMenu()" aria-label="Menú">
+      <span class="msi" aria-hidden="true">menu</span>
+    </button>
+
+    <a class="plp-logo-link" href="index.html" aria-label="H-E-B">
+      <img class="plp-logo" src="assets/logo-heb-blanco.png" alt="H-E-B">
+    </a>
+
+    <button class="plp-search-bar" aria-label="Buscar en H-E-B">
+      <span>Busca en H-E-B</span>
+      <span class="msi" aria-hidden="true">search</span>
+    </button>
+
+    <div class="plp-search-desktop">
+      <input type="text" placeholder="Busca productos" aria-label="Busca productos">
+      <span class="msi" aria-hidden="true">search</span>
+    </div>
+
+    <div class="plp-header-divider" aria-hidden="true"></div>
+
+    <button class="plp-delivery-pill">
+      <span class="msi" aria-hidden="true">location_on</span>
+      <span class="plp-delivery-text">Recibe en <strong>Zimapán #302, Mitr...</strong></span>
+      <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <div class="plp-header-actions">
+      <button class="plp-account-btn">
+        <span class="msi" aria-hidden="true">person</span>
+        <span>Mi cuenta</span>
+      </button>
+      <a class="plp-cart-btn" href="cart.html">
+        <span class="msi" aria-hidden="true">shopping_cart</span>
+        <span class="plp-cart-price">$0.00</span>
+        <span class="plp-cart-badge">0</span>
+      </a>
+    </div>
+
+    <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
+      <span class="msi" aria-hidden="true">shopping_cart</span>
+      <span class="plp-cart-badge">0</span>
+    </a>
+  </div>
+
+  <button class="plp-delivery-bar">
+    ¿Cómo quieres recibir tu pedido?
+    <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+  </button>
+
+  <nav class="plp-pleca" aria-label="Categorías">
+    <button class="plp-pleca-item active" onclick="openPasillosMenu()"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item">Nuestras marcas</button>
+    <button class="plp-pleca-item">Prime</button>
+    <button class="plp-pleca-item">Promociones</button>
+    <button class="plp-pleca-item">Vive Saludable</button>
+    <button class="plp-pleca-item">Mascotas</button>
+  </nav>
+</header>
+
+<!-- ══ HOMEPAGE ══ -->
+<main class="home-main">
+
+  <section class="home-categories" aria-label="Categorías destacadas">
+    <button type="button" class="home-cat-arrow home-cat-arrow--prev" onclick="homeCatScroll(-1)" aria-label="Anterior">
+      <span class="msi" aria-hidden="true">chevron_left</span>
+    </button>
+    <div class="home-cat-row" id="homeCatRow">
+      <a class="home-cat-tile" href="plp.html"><img src="assets/Shortcut1.webp" alt="Frutas y Verduras"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut2.webp" alt="Carnes y Mariscos"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut3.webp" alt="Temporadas"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut4.webp" alt="Mascotas"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut5.webp" alt="Vinos y Licores"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut6.webp" alt="Deli, Lácteos y Congelados"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut7.webp" alt="Belleza"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut8.webp" alt="HEB Babies"></a>
+      <a class="home-cat-tile" href="#"><img src="assets/Shortcut9.webp" alt="Cuidando tu salud"></a>
+    </div>
+    <button type="button" class="home-cat-arrow home-cat-arrow--next" onclick="homeCatScroll(1)" aria-label="Siguiente">
+      <span class="msi" aria-hidden="true">chevron_right</span>
+    </button>
+  </section>
+
+  <section class="home-hero" aria-label="Destacados">
+    <div class="home-hero-slider" id="homeHeroSlider">
+      <div class="home-hero-slides">
+        <a class="home-hero-slide active" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero1.webp">
+            <img src="assets/Hero1-web.jpg" alt="Verano Loco H-E-B: las promos más locas del año" decoding="async">
+          </picture>
+        </a>
+        <a class="home-hero-slide" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero2.webp">
+            <img src="assets/Hero2.webp" alt="Vive la pasión con Herdez" decoding="async">
+          </picture>
+        </a>
+        <a class="home-hero-slide" href="#">
+          <picture>
+            <source media="(max-width: 1199px)" srcset="assets/mhero3.webp">
+            <img src="assets/Hero3.webp" alt="Lo mejor para regresar a clases hoy y mañana también" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <button type="button" class="home-hero-arrow home-hero-arrow--prev" onclick="homeHeroGo(-1)" aria-label="Anterior">
+        <span class="msi" aria-hidden="true">chevron_left</span>
+      </button>
+      <button type="button" class="home-hero-arrow home-hero-arrow--next" onclick="homeHeroGo(1)" aria-label="Siguiente">
+        <span class="msi" aria-hidden="true">chevron_right</span>
+      </button>
+      <div class="home-hero-controls">
+        <div class="home-hero-dots" id="homeHeroDots"></div>
+        <button type="button" class="home-hero-playpause" id="homeHeroPlayPause" onclick="homeHeroTogglePlay()" aria-label="Pausar">
+          <span class="msi msi-fill" aria-hidden="true">pause</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="home-hero-fixed">
+      <a class="home-hero-banner" href="#">
+        <img src="assets/midhero.webp" alt="3x2 en todos los detergentes o suavizantes líquidos">
+      </a>
+      <div class="home-hero-modules">
+        <a class="home-hero-module" href="#">
+          <img src="assets/midhero2.webp" alt="Gratis una crema corporal Nivea o Lubriderm comprando un tinte para cabello">
+        </a>
+        <a class="home-hero-module" href="#">
+          <img src="assets/midahero3.webp" alt="3x2 en pizzas congeladas">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-carousel" aria-label="Recomendados para ti">
+    <h2 class="home-section-title">Recomendados para ti</h2>
+    <div class="home-carousel-row" id="homeCarousel1"></div>
+  </section>
+
+  <section class="home-coupons" aria-label="Cupones">
+    <h2 class="home-section-title">Cupones</h2>
+    <div class="home-coupon-row">
+      <a class="home-coupon-card" href="#"><img src="assets/cupon1.webp" alt="Ahorra $500 comprando $4,000 o más en tus pedidos en línea. Cupón COPA550"></a>
+      <a class="home-coupon-card" href="#"><img src="assets/cupon2.webp" alt="Ahorra $150 comprando $1,300 o más en tus pedidos en línea. Cupón PENAL150"></a>
+      <a class="home-coupon-card" href="#"><img src="assets/cupon3.webp" alt="Ahorra $300 en 2 compras en línea con un mínimo de $1,500 o más. Cupón HEBGOL300"></a>
+    </div>
+  </section>
+
+  <section class="home-sponsored" aria-label="Contenido patrocinado">
+    <h2 class="home-section-title">Descubre más</h2>
+    <div class="home-sponsored-row">
+      <a class="home-sponsored-tile" href="#">
+        <span class="home-sponsored-tag">Patrocinado</span>
+        <img src="assets/module1.webp" alt="3x2 en vinos de todos los países">
+      </a>
+      <a class="home-sponsored-tile" href="#">
+        <span class="home-sponsored-tag">Patrocinado</span>
+        <img src="assets/module2.webp" alt="5x3 en todos los pañales para bebé">
+      </a>
+      <a class="home-sponsored-tile" href="#">
+        <span class="home-sponsored-tag">Patrocinado</span>
+        <img src="assets/module3.webp" alt="Por cada $100 ahorra $25 en toda la línea de camarones">
+      </a>
+    </div>
+  </section>
+
+  <section class="home-skinny" aria-label="Promoción destacada">
+    <a href="#">
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/mskinny1.webp">
+        <img src="assets/Skinny1.webp" alt="Corona: el extra de México es Mundial">
+      </picture>
+    </a>
+  </section>
+
+  <section class="home-carousel" aria-label="Más vendidos">
+    <h2 class="home-section-title">Más vendidos</h2>
+    <div class="home-carousel-row" id="homeCarousel2"></div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="home-footer">
+  <div class="home-footer-inner">
+    <div class="home-footer-top">
+      <div class="home-footer-newsletter">
+        <h3>Entérate de las ofertas y nuevos lanzamientos</h3>
+        <form class="home-footer-form" onsubmit="return false">
+          <input type="email" class="home-footer-input" placeholder="Ingresa tu correo electrónico" aria-label="Correo electrónico">
+          <button type="submit" class="home-footer-submit">Enviar</button>
+        </form>
+      </div>
+      <div class="home-footer-app">
+        <div class="home-footer-qr"><span class="msi" aria-hidden="true">qr_code_2</span></div>
+        <p>Descarga nuestra app en el siguiente QR y recibe las mejores ofertas</p>
+      </div>
+    </div>
+
+    <div class="home-footer-links">
+      <div class="home-footer-col">
+        <h4>Tienda en línea</h4>
+        <ul>
+          <li><a href="#">Cómo comprar</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Formas de pago</a></li>
+          <li><a href="#">Formas de entrega</a></li>
+          <li><a href="#">Ahorra con tu APP</a></li>
+          <li><a href="#">Membresía HEB Prime</a></li>
+        </ul>
+      </div>
+      <div class="home-footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#">Facturación</a></li>
+          <li><a href="#">Ubica tu tienda</a></li>
+          <li><a href="#">Supertarjeta</a></li>
+          <li><a href="#">Multiservicios</a></li>
+          <li><a href="#">Recompensalud</a></li>
+          <li><a href="#">Asesoría nutricional</a></li>
+          <li><a href="#">Restaurantes</a></li>
+        </ul>
+      </div>
+      <div class="home-footer-col">
+        <h4>HEB México</h4>
+        <ul>
+          <li><a href="#">Sitio corporativo</a></li>
+          <li><a href="#">Estándares de calidad</a></li>
+          <li><a href="#">Publicidad en HEB</a></li>
+          <li><a href="#">Revista celebrar la vida</a></li>
+          <li><a href="#">Trabaja con nosotros</a></li>
+          <li><a href="#">Directorio comercial</a></li>
+          <li><a href="#">Aprendiendo con H-E-B</a></li>
+        </ul>
+      </div>
+      <div class="home-footer-col">
+        <h4>Políticas</h4>
+        <ul>
+          <li><a href="#">Aviso de privacidad</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de devoluciones</a></li>
+          <li><a href="#">Términos y condiciones: cupones y promociones</a></li>
+          <li><a href="#">Promociones bancarias</a></li>
+        </ul>
+      </div>
+      <div class="home-footer-col">
+        <h4>¿Necesitas ayuda de tu pedido?</h4>
+        <ul>
+          <li><a href="mailto:comentarios@hebmex.com">comentarios@hebmex.com</a></li>
+          <li><a href="tel:+528181531223">Llámanos al 81 81531223</a></li>
+          <li><a href="#">Escríbenos por WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="home-footer-bottom">
+      <span class="home-footer-copyright">© 2026 H-E-B México - TODOS LOS DERECHOS RESERVADOS</span>
+      <div class="home-footer-social">
+        <a href="#" aria-label="Instagram"><span class="msi" aria-hidden="true" style="font-size:18px">photo_camera</span></a>
+        <a href="#" aria-label="Facebook"><span class="msi" aria-hidden="true" style="font-size:18px">thumb_up</span></a>
+        <a href="#" aria-label="TikTok"><span class="msi" aria-hidden="true" style="font-size:18px">music_note</span></a>
+        <a href="#" aria-label="YouTube"><span class="msi" aria-hidden="true" style="font-size:18px">play_arrow</span></a>
+        <a href="#" aria-label="Twitter"><span class="msi" aria-hidden="true" style="font-size:18px">chat_bubble</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ MENÚ PASILLOS (mega menú de categorías) ══ -->
+<div class="pasillos-overlay" id="pasillosOverlay" onclick="closePasillosMenu()" hidden></div>
+<div class="pasillos-panel" id="pasillosPanel" hidden role="dialog" aria-modal="true" aria-label="Pasillos">
+  <div class="pasillos-sheet">
+    <div class="pasillos-view" id="pasillosLevel1">
+      <div class="pasillos-header">
+        <h2 class="pasillos-title">Explorar todo</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-list">
+        <button type="button" class="pasillos-pill">Despensa</button>
+        <button type="button" class="pasillos-pill" onclick="showPasillosLevel2()">Frutas y Verduras</button>
+        <button type="button" class="pasillos-pill">Carnes y Pescados</button>
+        <button type="button" class="pasillos-pill">Bebidas y Snacks</button>
+        <button type="button" class="pasillos-pill">Jamones, Quesos y Deli</button>
+        <button type="button" class="pasillos-pill">Pan y Tortillas</button>
+        <button type="button" class="pasillos-pill">Lácteos y Huevo</button>
+        <button type="button" class="pasillos-pill">Vinos, Licores y Cervezas</button>
+        <button type="button" class="pasillos-pill">Alimentos Congelados</button>
+        <button type="button" class="pasillos-pill">Bebés</button>
+        <button type="button" class="pasillos-pill">Cuidado Personal y Belleza</button>
+        <button type="button" class="pasillos-pill">Mascotas</button>
+        <button type="button" class="pasillos-pill">Hogar y Entretenimiento</button>
+        <button type="button" class="pasillos-pill">Limpieza del Hogar</button>
+      </div>
+    </div>
+
+    <div class="pasillos-view" id="pasillosLevel2" hidden>
+      <div class="pasillos-header">
+        <button type="button" class="pasillos-back" onclick="showPasillosLevel1()" aria-label="Regresar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+        </button>
+        <h2 class="pasillos-title">Frutas y Verduras</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-groups">
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">A Granel</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Desinfectantes</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Ensaladas</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Cortada</a>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Enchilada</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_up</span>
+            <span class="pasillos-group-name">Frutas</span>
+            <a class="pasillos-vertodo pasillos-vertodo--active" href="plp.html">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items">
+            <a class="pasillos-item" href="plp.html">HEB Fresh</a>
+            <a class="pasillos-item" href="plp.html">Jugos</a>
+            <a class="pasillos-item" href="plp.html">Nueces y Cacahuates</a>
+            <a class="pasillos-item" href="plp.html">Orgánicos</a>
+            <a class="pasillos-item" href="plp.html">Variedad</a>
+            <a class="pasillos-item" href="plp.html">Vegetales en bolsa</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Verduras</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="plp.js"></script>
+</body>
+</html>

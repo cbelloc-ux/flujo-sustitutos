@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito — HEB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="plp.css">
+  <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="plp-header">
+  <div class="plp-header-top">
+    <button class="plp-icon-btn plp-header-lead-btn" onclick="openPasillosMenu()" aria-label="Menú">
+      <span class="msi" aria-hidden="true">menu</span>
+    </button>
+
+    <a class="plp-logo-link" href="index.html" aria-label="H-E-B">
+      <img class="plp-logo" src="assets/logo-heb-blanco.png" alt="H-E-B">
+    </a>
+
+    <button class="plp-search-bar" aria-label="Buscar en H-E-B">
+      <span>Busca en H-E-B</span>
+      <span class="msi" aria-hidden="true">search</span>
+    </button>
+
+    <div class="plp-search-desktop">
+      <input type="text" placeholder="Busca productos" aria-label="Busca productos">
+      <span class="msi" aria-hidden="true">search</span>
+    </div>
+
+    <div class="plp-header-divider" aria-hidden="true"></div>
+
+    <button class="plp-delivery-pill">
+      <span class="msi" aria-hidden="true">location_on</span>
+      <span class="plp-delivery-text">Recibe en <strong>Zimapán #302, Mitr...</strong></span>
+      <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <div class="plp-header-actions">
+      <button class="plp-account-btn">
+        <span class="msi" aria-hidden="true">person</span>
+        <span>Mi cuenta</span>
+      </button>
+      <a class="plp-cart-btn" href="cart.html">
+        <span class="msi" aria-hidden="true">shopping_cart</span>
+        <span class="plp-cart-price">$0.00</span>
+        <span class="plp-cart-badge">0</span>
+      </a>
+    </div>
+
+    <a class="plp-icon-btn plp-cart-icon-btn" href="cart.html" aria-label="Ir al carrito">
+      <span class="msi" aria-hidden="true">shopping_cart</span>
+      <span class="plp-cart-badge">0</span>
+    </a>
+  </div>
+
+  <button class="plp-delivery-bar">
+    ¿Cómo quieres recibir tu pedido?
+    <span class="msi" aria-hidden="true">keyboard_arrow_down</span>
+  </button>
+
+  <nav class="plp-pleca" aria-label="Categorías">
+    <button class="plp-pleca-item active" onclick="openPasillosMenu()"><span class="msi" aria-hidden="true">border_all</span> Pasillos</button>
+    <button class="plp-pleca-item">Nuestras marcas</button>
+    <button class="plp-pleca-item">Prime</button>
+    <button class="plp-pleca-item">Promociones</button>
+    <button class="plp-pleca-item">Vive Saludable</button>
+    <button class="plp-pleca-item">Mascotas</button>
+  </nav>
+</header>
+
+<!-- ══ PAGE ══ -->
+<main class="page-wrap">
+
+  <!-- ── Left: Cart ── -->
+  <section class="cart-main">
+
+    <div class="cart-head">
+      <button class="back-btn" aria-label="Regresar" onclick="location.href='plp.html'">
+        <span class="msi" aria-hidden="true">arrow_back</span>
+      </button>
+      <h1 class="cart-title">Carrito <span class="cart-count">(0 productos)</span></h1>
+      <button class="vaciar-btn" onclick="clearCart()">
+        <span class="vaciar-label">Vaciar carrito</span>
+        <span class="msi msi-fill" aria-hidden="true" style="font-size:20px">delete</span>
+      </button>
+    </div>
+
+    <div id="cartItemsList" class="cart-items-list"></div>
+
+    <!-- Substitute global toggle (mobile/tablet: al final de la lista de productos) -->
+    <div class="toggle-card toggle-card--mobile">
+      <div class="toggle-header">
+        <div class="toggle-icon">
+          <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
+        </div>
+        <div class="toggle-content">
+          <div class="toggle-title">
+            Permitir sustitutos
+            <span class="info-tooltip-wrap">
+              <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
+              <div class="info-tooltip" hidden>
+                <div class="info-tooltip-arrow"></div>
+                <div class="info-tooltip-header">
+                  <span>¿Cómo funcionan los sustitutos?</span>
+                  <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
+                    <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
+                  </button>
+                </div>
+                <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
+              </div>
+            </span>
+          </div>
+          <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        </div>
+      </div>
+      <div class="toggle-segment" role="group" aria-label="¿Qué prefieres si un producto se agota?">
+        <button type="button" class="toggle-segment-btn" data-choice="contact" onclick="requestAllowSubstitutes(true)">
+          <span class="msi msi-fill" aria-hidden="true">chat</span>
+          Contactarme
+          <span class="toggle-segment-radio" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="toggle-segment-btn" data-choice="none" onclick="requestAllowSubstitutes(false)">
+          <span class="msi" aria-hidden="true">block</span>
+          No reemplazar
+          <span class="toggle-segment-radio" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cart-empty" id="cartEmptyState" hidden>
+      <span class="msi" aria-hidden="true" style="font-size:40px; color:#b6ad98">shopping_cart</span>
+      <p>Tu carrito está vacío.</p>
+      <a class="pago-btn" href="plp.html">Ver productos</a>
+    </div>
+
+  </section>
+
+  <!-- ── Right: Summary ── -->
+  <aside class="sidebar">
+
+    <div class="summary-card">
+      <h2 class="summary-title">Resumen de compra</h2>
+
+      <div class="savings-highlight">
+        <span class="savings-label">Ahorro:</span>
+        <span class="savings-value" id="cartSavingsValue">$0.00</span>
+      </div>
+
+      <div class="cupones-row" role="button" tabindex="0">
+        <span class="msi msi-fill" aria-hidden="true" style="color:#007db3">confirmation_number</span>
+        <span class="cupones-label">Cupones disponibles</span>
+        <span class="msi" aria-hidden="true" style="font-size:18px; color:#007db3">chevron_right</span>
+      </div>
+
+      <div class="sum-lines">
+        <div class="sum-line">
+          <span class="lbl">Subtotal</span>
+          <span class="val" id="cartSubtotalValue">$0.00</span>
+        </div>
+        <div class="sum-line promo">
+          <button class="lbl promo-lbl">
+            Ahorro en promociones
+            <span class="msi" aria-hidden="true" style="font-size:14px">expand_more</span>
+          </button>
+          <span class="val green-val" id="cartPromoSavings">$0.00</span>
+        </div>
+        <div class="sum-line">
+          <span class="lbl">Gastos de envío</span>
+          <span class="val envio-val">
+            <span class="strike">$50.00</span>
+            <span class="free">$0.00</span>
+          </span>
+        </div>
+        <div class="sum-line total-line">
+          <span class="lbl total-lbl">Total</span>
+          <span class="val total-val" id="cartTotalValue">$0.00</span>
+        </div>
+      </div>
+
+      <button class="pago-btn">Proceder al pago</button>
+    </div>
+
+    <!-- Substitute global toggle (desktop: below Resumen de compra) -->
+    <div class="toggle-card toggle-card--desktop">
+      <div class="toggle-header">
+        <div class="toggle-icon">
+          <span class="msi" aria-hidden="true" style="font-size:26px; color:#007db3">cached</span>
+        </div>
+        <div class="toggle-content">
+          <div class="toggle-title">
+            Permitir sustitutos
+            <span class="info-tooltip-wrap">
+              <button type="button" class="msi msi-fill info-icon" aria-label="¿Cómo funcionan los sustitutos?" aria-expanded="false" onclick="toggleInfoTooltip(this)">info</button>
+              <div class="info-tooltip" hidden>
+                <div class="info-tooltip-arrow"></div>
+                <div class="info-tooltip-header">
+                  <span>¿Cómo funcionan los sustitutos?</span>
+                  <button type="button" class="info-tooltip-close" aria-label="Cerrar" onclick="closeInfoTooltip(this)">
+                    <span class="msi" aria-hidden="true" style="font-size:14px">close</span>
+                  </button>
+                </div>
+                <p class="info-tooltip-body">Si un producto se acaba antes de recolectarlo, lo remplazamos por tu alternativa preferida, sin demoras ni sorpresas.</p>
+              </div>
+            </span>
+          </div>
+          <div class="toggle-desc">2 de sus productos admiten sustitutos.</div>
+        </div>
+      </div>
+      <div class="toggle-segment" role="group" aria-label="¿Qué prefieres si un producto se agota?">
+        <button type="button" class="toggle-segment-btn" data-choice="contact" onclick="requestAllowSubstitutes(true)">
+          <span class="msi msi-fill" aria-hidden="true">chat</span>
+          Contactarme
+          <span class="toggle-segment-radio" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="toggle-segment-btn" data-choice="none" onclick="requestAllowSubstitutes(false)">
+          <span class="msi" aria-hidden="true">block</span>
+          No reemplazar
+          <span class="toggle-segment-radio" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+  </aside>
+
+</main>
+
+<!-- ══ MOBILE: bottom bar + savings sheet ══ -->
+<div class="cart-bottom-bar" id="cartBottomBar">
+  <div class="cart-bottom-row">
+    <button type="button" class="cart-ahorro-link" onclick="openSavingsSheet()">
+      Ahorro: <span id="cartAhorroBar">$0.00</span>
+      <span class="msi" aria-hidden="true" style="font-size:16px">chevron_right</span>
+    </button>
+    <span class="cart-bottom-subtotal">Subtotal: <b id="cartSubtotalBar">$0.00</b></span>
+  </div>
+  <button class="pago-btn cart-bottom-pago">Continuar con el pago</button>
+</div>
+
+<div class="plp-overlay" id="savingsOverlay" onclick="closeSavingsSheet()" hidden></div>
+<div class="savings-sheet" id="savingsSheet" hidden role="dialog" aria-modal="true" aria-label="Desglose de ahorro">
+  <button type="button" class="cart-ahorro-link savings-sheet-title" onclick="closeSavingsSheet()">
+    Ahorro: <span id="cartAhorroSheetTitle">$0.00</span>
+    <span class="msi" aria-hidden="true" style="font-size:16px">chevron_right</span>
+  </button>
+
+  <div id="savingsBreakdown"></div>
+
+  <button type="button" class="savings-close" onclick="closeSavingsSheet()">Cerrar</button>
+</div>
+
+<!-- ══ Advertencia: el toggle general reemplaza los sustitutos ya definidos por producto ══ -->
+<div class="plp-overlay" id="allowSubOverlay" onclick="closeAllowSubstitutesWarning()" hidden></div>
+<div class="confirm-dialog" id="allowSubDialog" hidden role="alertdialog" aria-modal="true" aria-labelledby="allowSubDialogTitle">
+  <span class="msi msi-fill confirm-dialog-icon" aria-hidden="true">warning</span>
+  <h3 class="confirm-dialog-title" id="allowSubDialogTitle">¿Cambiar tu preferencia de sustitutos?</h3>
+  <p class="confirm-dialog-body">Los productos que ya tienen un sustituto definido lo perderán y se actualizarán a esta nueva preferencia.</p>
+  <div class="confirm-dialog-actions">
+    <button type="button" class="confirm-dialog-btn confirm-dialog-btn--ghost" onclick="closeAllowSubstitutesWarning()">Cancelar</button>
+    <button type="button" class="confirm-dialog-btn confirm-dialog-btn--primary" onclick="confirmAllowSubstitutesChange()">Sí, continuar</button>
+  </div>
+</div>
+
+<!-- ══ SUSTITUTE MODAL (compartido con PLP/PDP) ══ -->
+<div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
+<div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
+  <div class="plp-modal-sheet">
+    <div class="plp-modal-header">
+      <button type="button" class="plp-modal-back" id="subBack" onclick="closeSearchScreen()" aria-label="Regresar" hidden>
+        <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+      </button>
+      <h2 class="plp-modal-title" id="subModalTitle">Sustitutos</h2>
+      <button type="button" class="plp-modal-close" onclick="closeSubstituteModal()" aria-label="Cerrar">
+        <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <p class="plp-summary-label">Dinos qué prefieres si se agota este producto:</p>
+    <div class="plp-selection-summary" id="subOriginSummary" hidden></div>
+
+    <div class="plp-modal-body">
+      <div class="plp-modal-view" id="subMainScreen">
+        <div class="plp-promo-panel" id="subPromoPanel" hidden>
+          <h3 class="plp-promo-title">Mantén tu promoción con estos sustitutos</h3>
+          <div class="plp-promo-row" id="subPromoCarousel"></div>
+        </div>
+
+        <div class="plp-similar">
+          <h3 class="plp-similar-title">Elige un producto o una opción</h3>
+          <button type="button" class="plp-carousel-nav plp-carousel-nav-prev" id="subCarouselPrev" aria-label="Anterior" hidden>‹</button>
+          <div class="plp-similar-row" id="subCarousel"></div>
+          <button type="button" class="plp-carousel-nav plp-carousel-nav-next" id="subCarouselNext" aria-label="Siguiente" hidden>›</button>
+        </div>
+      </div>
+
+      <div class="plp-modal-view" id="subSearchScreen" hidden>
+        <div class="plp-search-input-wrap">
+          <span class="msi" aria-hidden="true" style="font-size:16px; color:#655f52">search</span>
+          <input type="text" id="subSearchInput" class="plp-search-input" placeholder="Busca cualquier producto para sustituir" oninput="renderSearchGrid()">
+          <button type="button" class="plp-search-clear" onclick="clearSubSearch()" aria-label="Limpiar búsqueda">
+            <span class="msi" aria-hidden="true" style="font-size:14px; color:#655f52">close</span>
+          </button>
+        </div>
+        <div class="plp-search-grid" id="subSearchGrid"></div>
+      </div>
+    </div>
+
+    <p class="plp-summary-label" id="subSelectionLabel" hidden>Si se agota enviaremos:</p>
+    <div class="plp-selection-summary" id="subSelectionSummary" hidden></div>
+
+    <div class="plp-modal-footer">
+      <p id="subFooterNote">Se te cobrará el precio del artículo que recibas.</p>
+      <button type="button" class="plp-modal-save" id="subSave" onclick="saveSelection()" disabled>Guardar selección</button>
+    </div>
+  </div>
+</div>
+
+<div class="plp-toast" id="subToast" role="status" aria-live="polite">
+  <span class="msi msi-fill" aria-hidden="true" style="font-size:20px; color:#2a9f47">check_circle</span>
+  <span>Sustituto guardado con éxito.</span>
+</div>
+
+<!-- ══ MENÚ PASILLOS (mega menú de categorías) ══ -->
+<div class="pasillos-overlay" id="pasillosOverlay" onclick="closePasillosMenu()" hidden></div>
+<div class="pasillos-panel" id="pasillosPanel" hidden role="dialog" aria-modal="true" aria-label="Pasillos">
+  <div class="pasillos-sheet">
+    <div class="pasillos-view" id="pasillosLevel1">
+      <div class="pasillos-header">
+        <h2 class="pasillos-title">Explorar todo</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-list">
+        <button type="button" class="pasillos-pill">Despensa</button>
+        <button type="button" class="pasillos-pill" onclick="showPasillosLevel2()">Frutas y Verduras</button>
+        <button type="button" class="pasillos-pill">Carnes y Pescados</button>
+        <button type="button" class="pasillos-pill">Bebidas y Snacks</button>
+        <button type="button" class="pasillos-pill">Jamones, Quesos y Deli</button>
+        <button type="button" class="pasillos-pill">Pan y Tortillas</button>
+        <button type="button" class="pasillos-pill">Lácteos y Huevo</button>
+        <button type="button" class="pasillos-pill">Vinos, Licores y Cervezas</button>
+        <button type="button" class="pasillos-pill">Alimentos Congelados</button>
+        <button type="button" class="pasillos-pill">Bebés</button>
+        <button type="button" class="pasillos-pill">Cuidado Personal y Belleza</button>
+        <button type="button" class="pasillos-pill">Mascotas</button>
+        <button type="button" class="pasillos-pill">Hogar y Entretenimiento</button>
+        <button type="button" class="pasillos-pill">Limpieza del Hogar</button>
+      </div>
+    </div>
+
+    <div class="pasillos-view" id="pasillosLevel2" hidden>
+      <div class="pasillos-header">
+        <button type="button" class="pasillos-back" onclick="showPasillosLevel1()" aria-label="Regresar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">arrow_back</span>
+        </button>
+        <h2 class="pasillos-title">Frutas y Verduras</h2>
+        <button type="button" class="pasillos-close" onclick="closePasillosMenu()" aria-label="Cerrar">
+          <span class="msi" aria-hidden="true" style="font-size:18px">close</span>
+        </button>
+      </div>
+      <div class="pasillos-groups">
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">A Granel</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Desinfectantes</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Ensaladas</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Cortada</a>
+            <a class="pasillos-item" href="#" onclick="event.preventDefault()">Fruta Enchilada</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_up</span>
+            <span class="pasillos-group-name">Frutas</span>
+            <a class="pasillos-vertodo pasillos-vertodo--active" href="plp.html">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items">
+            <a class="pasillos-item" href="plp.html">HEB Fresh</a>
+            <a class="pasillos-item" href="plp.html">Jugos</a>
+            <a class="pasillos-item" href="plp.html">Nueces y Cacahuates</a>
+            <a class="pasillos-item" href="plp.html">Orgánicos</a>
+            <a class="pasillos-item" href="plp.html">Variedad</a>
+            <a class="pasillos-item" href="plp.html">Vegetales en bolsa</a>
+          </div>
+        </div>
+
+        <div class="pasillos-group">
+          <button type="button" class="pasillos-group-header" onclick="togglePasillosGroup(this)">
+            <span class="msi pasillos-group-chevron" aria-hidden="true">keyboard_arrow_down</span>
+            <span class="pasillos-group-name">Verduras</span>
+            <a class="pasillos-vertodo" href="#" onclick="event.preventDefault()">Ver todo</a>
+          </button>
+          <div class="pasillos-group-items" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="plp.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>
