@@ -241,7 +241,7 @@ function cartLineHtml(item) {
 function renderSubstituteNoticeHeader(id) {
   const selection = savedSubstitutes[id];
   if (selection && selection.type === 'product' && selection.badgePink) {
-    return `<div class="sub-notice-badge">${selection.badgePink}</div>`;
+    return `<span class="sub-notice-badge">${selection.badgePink}</span>`;
   }
   return '';
 }
