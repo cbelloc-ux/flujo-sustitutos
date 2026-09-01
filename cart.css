@@ -46,11 +46,15 @@
 }
 
 .sub-notice-badge {
-  display: block;
-  color: #e75480;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  background: #e75480;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 }
 
 .cart-empty {
@@ -81,8 +85,24 @@
   text-align: left;
   font-family: var(--fn);
   transition: background .12s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .sub-notice:hover { background: #e2ddd0; }
+
+.sub-notice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sub-notice-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .sub-notice-media {
   flex-shrink: 0;
