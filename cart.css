@@ -94,10 +94,8 @@
 .sub-notice:hover { background: #e2ddd0; }
 
 .sub-notice-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
   flex: 1;
+  display: block;
 }
 
 .sub-notice-label {
