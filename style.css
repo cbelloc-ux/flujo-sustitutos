@@ -307,7 +307,7 @@ body {
   font-size: 14px;
   font-weight: 700;
   color: var(--ink);
-  display: block;
+  display: inline;
   margin-bottom: 2px;
   line-height: 18px;
 }
