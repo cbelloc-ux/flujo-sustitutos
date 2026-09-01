@@ -193,6 +193,7 @@ body {
   gap: 12px;
   align-items: flex-start;
   box-shadow: 0 1px 3px rgba(34,31,25,.07);
+  position: relative;
 }
 
 .product-img-wrap {
