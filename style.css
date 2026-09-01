@@ -307,8 +307,9 @@ body {
   font-size: 14px;
   font-weight: 700;
   color: var(--ink);
-  display: inline;
-  margin-bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   line-height: 18px;
 }
 .sub-notice-desc {

@@ -84,7 +84,7 @@ function renderCartNotice(id) {
   if (label) {
     if (selection.type === 'product') {
       media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
-      title.innerHTML = renderSubstituteNoticeHeader(id) + '¿Qué enviamos si se agota?';
+      title.innerHTML = '¿Qué enviamos si se agota?' + renderSubstituteNoticeHeader(id);
       desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
       return;
     }
