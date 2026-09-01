@@ -196,6 +196,21 @@ body {
   position: relative;
 }
 
+.product-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.product-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
 .product-img-wrap {
   width: 80px;
   height: 80px;

@@ -206,24 +206,28 @@ function cartLineHtml(item) {
   return `
     <div class="product-card" data-product-id="${id}" data-promotion="${product.badgePink ? 'promoted' : 'regular'}">
       ${combolocoLabel}
-      <div class="product-img-wrap">
-        <img src="${product.img}" alt="${product.name}">
-      </div>
-      <div class="product-info">
-        <div class="product-name">${product.name}</div>
-        <div class="stepper">
-          <button class="st-btn" onclick="changeQty('${id}',-1)" aria-label="${qty === 1 ? 'Quitar del carrito' : 'Disminuir'}">${leftIcon}</button>
-          <span class="st-val" data-unit="${product.unit}">${qty} ${unitLabel(product)}</span>
-          <button class="st-btn" onclick="changeQty('${id}',1)" aria-label="Aumentar">+</button>
+      <div class="product-card-left">
+        <div class="product-img-wrap">
+          <img src="${product.img}" alt="${product.name}">
+        </div>
+        <div class="product-info">
+          <div class="product-name">${product.name}</div>
+          <div class="stepper">
+            <button class="st-btn" onclick="changeQty('${id}',-1)" aria-label="${qty === 1 ? 'Quitar del carrito' : 'Disminuir'}">${leftIcon}</button>
+            <span class="st-val" data-unit="${product.unit}">${qty} ${unitLabel(product)}</span>
+            <button class="st-btn" onclick="changeQty('${id}',1)" aria-label="Aumentar">+</button>
+          </div>
         </div>
       </div>
-      <div class="price-col">
-        <span class="price-main">${money(lineTotal)}</span>
-        <span class="price-unit">${product.price} / Pza</span>
+      <div class="product-card-right">
+        <div class="price-col">
+          <span class="price-main">${money(lineTotal)}</span>
+          <span class="price-unit">${product.price} / Pza</span>
+        </div>
+        <button class="dots-btn" aria-label="Más opciones">
+          <span class="msi" aria-hidden="true">more_horiz</span>
+        </button>
       </div>
-      <button class="dots-btn" aria-label="Más opciones">
-        <span class="msi" aria-hidden="true">more_horiz</span>
-      </button>
       ${eligible ? `
         <button type="button" class="sub-notice" id="cartNotice-${id}" onclick="openCartSubstitute('${id}')">
           <div class="sub-notice-media" id="cartNoticeMedia-${id}"></div>
