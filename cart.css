@@ -48,7 +48,8 @@
 }
 
 .sub-notice-badge {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background: #f8e8f2;
   color: #d9238d;
   font-size: 12px;
