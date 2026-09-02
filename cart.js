@@ -73,6 +73,8 @@ function openCartSubstitute(id) {
 function renderCartNotice(id) {
   const media = document.getElementById('cartNoticeMedia-' + id);
   const title = document.getElementById('cartNoticeTitle-' + id);
+  const badge = document.getElementById('cartNoticeBadge-' + id);
+  const productTitle = document.getElementById('cartNoticeProductTitle-' + id);
   const desc = document.getElementById('cartNoticeDesc-' + id);
   const notice = document.getElementById('cartNotice-' + id);
   if (!notice) return;
@@ -84,12 +86,16 @@ function renderCartNotice(id) {
   if (label) {
     if (selection.type === 'product') {
       media.innerHTML = `<img src="${label.img}" alt="${label.title}">`;
-      title.innerHTML = '¿Qué enviamos si se agota?' + renderSubstituteNoticeHeader(id);
-      desc.innerHTML = `${label.title} · ${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
+      title.textContent = '¿Qué enviamos si se agota?';
+      badge.innerHTML = selection.badgePink ? `${selection.badgePink}` : '';
+      productTitle.textContent = label.title;
+      desc.innerHTML = `${label.qty} pza · <s>${money(label.totalPriceOld)}</s> <b>${money(label.totalPrice)}</b>`;
       return;
     }
     media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_NOTICE_ICONS[selection.type]}</div>`;
     title.textContent = '¿Qué enviamos si se agota?';
+    badge.textContent = '';
+    productTitle.textContent = '';
     desc.textContent = label.desc;
     return;
   }
@@ -97,12 +103,16 @@ function renderCartNotice(id) {
   if (allowSubstitutes === false) {
     media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_BLOCK}</div>`;
     title.textContent = '¿Qué enviamos si se agota?';
+    badge.textContent = '';
+    productTitle.textContent = '';
     desc.textContent = 'No quiero sustituto';
     return;
   }
 
   media.innerHTML = `<div class="sub-notice-icon-wrap">${CART_ICON_CACHED}</div>`;
   title.textContent = '¿Qué enviamos si se agota?';
+  badge.textContent = '';
+  productTitle.textContent = '';
   desc.textContent = 'Si no contesto, que el recolector elija por mi un producto similar en precio y características.';
 }
 
@@ -229,6 +239,8 @@ function cartLineHtml(item) {
           <div class="sub-notice-media" id="cartNoticeMedia-${id}"></div>
           <div class="sub-notice-text">
             <span class="sub-notice-label" id="cartNoticeTitle-${id}"></span>
+            <span class="sub-notice-badge" id="cartNoticeBadge-${id}"></span>
+            <span class="sub-notice-product-title" id="cartNoticeProductTitle-${id}"></span>
             <span class="sub-notice-desc" id="cartNoticeDesc-${id}"></span>
           </div>
           <span class="cambiar-btn" id="cartNoticeCta-${id}">Cambiar</span>

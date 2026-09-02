@@ -308,10 +308,16 @@ body {
   font-size: 12px;
   font-weight: 700;
   color: var(--ink);
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
+  display: block;
   line-height: 16px;
+}
+.sub-notice-product-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+  line-height: 18px;
+  margin-top: 6px;
 }
 .sub-notice-desc {
   font-size: 11px;

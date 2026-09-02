@@ -49,13 +49,15 @@
 
 .sub-notice-badge {
   display: inline-block;
-  background: #e75480;
-  color: white;
+  background: #f8e8f2;
+  color: #d9238d;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   padding: 4px 8px;
-  border-radius: 4px;
-  margin-left: 8px;
+  border-radius: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   white-space: nowrap;
 }
 
