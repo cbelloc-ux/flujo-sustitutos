@@ -187,18 +187,18 @@ body {
 .product-card {
   background: var(--surface);
   border-radius: 24px;
-  padding: 16px;
+  padding: 12px;
   display: grid;
-  grid-template-columns: 80px 1fr auto auto;
-  gap: 12px;
+  grid-template-columns: 60px 1fr auto auto;
+  gap: 10px;
   align-items: flex-start;
   box-shadow: 0 1px 3px rgba(34,31,25,.07);
   position: relative;
 }
 
 .product-img-wrap {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
   background: var(--bg);
   border-radius: 10px;
@@ -211,11 +211,11 @@ body {
 .product-info { flex: 1; min-width: 0; }
 
 .product-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 18px;
   color: var(--ink);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 /* Stepper */
@@ -224,7 +224,7 @@ body {
   align-items: center;
   background: var(--subtle);
   border: none;
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
 }
 .st-btn {
@@ -232,9 +232,9 @@ body {
   border: none;
   cursor: pointer;
   color: var(--red);
-  width: 36px;
-  height: 32px;
-  font-size: 20px;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -245,37 +245,37 @@ body {
 }
 .st-btn:hover { background: rgba(34,31,25,.06); }
 .st-val {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
-  padding: 0 6px;
-  min-width: 56px;
+  padding: 0 4px;
+  min-width: 40px;
   text-align: center;
   user-select: none;
   color: var(--ink);
-  line-height: 18px;
+  line-height: 16px;
 }
 
 .price-col {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 2px;
   flex-shrink: 0;
-  padding-top: 2px;
+  padding-top: 0;
 }
 .price-main {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   color: var(--ink);
-  line-height: 20px;
+  line-height: 18px;
 }
 .price-unit {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
-  line-height: 16px;
+  line-height: 14px;
 }
 
 .dots-btn {
@@ -295,30 +295,30 @@ body {
 
 /* Substitute notice */
 .sub-notice {
-  flex-basis: 100%;
+  grid-column: 1 / -1;
   background: var(--subtle);
-  border-radius: 16px;
-  padding: 10px 14px;
+  border-radius: 12px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 .sub-notice-text { flex: 1; min-width: 0; }
 .sub-notice-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--ink);
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  line-height: 18px;
+  gap: 0px;
+  line-height: 16px;
 }
 .sub-notice-desc {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: var(--ink-2);
   display: block;
-  line-height: 16px;
+  line-height: 14px;
 }
 .cambiar-btn {
   flex-shrink: 0;
