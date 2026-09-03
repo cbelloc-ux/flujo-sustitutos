@@ -91,6 +91,7 @@ const PLP_CATALOG = (() => {
     const price = category.base + ((i * 5) % 25);
     const hasPromo = i % 2 === 0; // 50% de productos tienen "Llévate producto Gratis"
     const hasLowStock = i % 5 === 0; // 20% de productos tienen "Quedan pocos"
+    const comingSoon = i % 7 === 0; // ~14% de productos están "Disponible pronto"
 
     // Crear nombre con variante
     let productName = category.name;
@@ -107,6 +108,7 @@ const PLP_CATALOG = (() => {
       img: category.img,
       badgePink: hasPromo ? 'Llévate producto Gratis' : null,
       badgeGray: hasLowStock ? 'Quedan pocos' : null,
+      comingSoon: comingSoon,
     });
     productIdx++;
   }
@@ -894,6 +896,10 @@ function plpCardHtml(p) {
         <button class="plp-addlist-btn" aria-label="Agregar a lista">
           ${ICON_ADD_TO_LIST}
         </button>
+        ${p.comingSoon ? `<span class="plp-coming-soon">
+          <span class="msi" aria-hidden="true" style="font-size:16px;">schedule</span>
+          Disponible pronto
+        </span>` : ''}
         <div class="${ctaWrapClass(p)}" id="cta-${p.id}">${ctaHtml(p)}</div>
       </div>
       <div class="plp-card-body">
