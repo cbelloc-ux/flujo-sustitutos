@@ -98,7 +98,7 @@ const PLP_CATALOG = (() => {
       productName = category.name + ' ' + suffix;
     }
 
-    const comingSoon = category.name.includes('Manzana Verde Granny Smith'); // Solo Manzana Verde Granny Smith está "Disponible pronto"
+    const comingSoon = (i % 300 === 1); // Solo el segundo producto de cada ciclo (Manzana Verde Granny Smith) está "Disponible pronto"
 
     items.push({
       id: 'p' + productIdx,
