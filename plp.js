@@ -897,11 +897,11 @@ function plpCardHtml(p) {
         <button class="plp-addlist-btn" aria-label="Agregar a lista">
           ${ICON_ADD_TO_LIST}
         </button>
-        ${p.comingSoon ? `<span class="plp-coming-soon">
-          <span class="msi" aria-hidden="true" style="font-size:16px;">schedule</span>
+        ${p.comingSoon ? `<button type="button" class="plp-coming-soon" aria-label="Disponible pronto">
+          <span class="msi msi-fill" aria-hidden="true" style="font-size:14px;">schedule</span>
           Disponible pronto
-        </span>` : ''}
-        <div class="${ctaWrapClass(p)}" id="cta-${p.id}" ${p.comingSoon ? 'hidden' : ''}>${ctaHtml(p)}</div>
+        </button>` : ''}
+        ${!p.comingSoon ? `<div class="${ctaWrapClass(p)}" id="cta-${p.id}">${ctaHtml(p)}</div>` : ''}
       </div>
       <div class="plp-card-body">
         <div class="plp-price-block">
