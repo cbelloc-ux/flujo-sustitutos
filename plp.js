@@ -91,13 +91,14 @@ const PLP_CATALOG = (() => {
     const price = category.base + ((i * 5) % 25);
     const hasPromo = i % 2 === 0; // 50% de productos tienen "Llévate producto Gratis"
     const hasLowStock = i % 5 === 0; // 20% de productos tienen "Quedan pocos"
-    const comingSoon = i % 7 === 0; // ~14% de productos están "Disponible pronto"
 
     // Crear nombre con variante
     let productName = category.name;
     if (suffix && !category.name.includes(suffix)) {
       productName = category.name + ' ' + suffix;
     }
+
+    const comingSoon = category.name.includes('Manzana Verde Granny Smith'); // Solo Manzana Verde Granny Smith está "Disponible pronto"
 
     items.push({
       id: 'p' + productIdx,
@@ -890,7 +891,7 @@ function renderCardCta(id) {
 function plpCardHtml(p) {
   const eligible = isSubstituteEligible(p);
   return `
-    <article class="plp-card" data-product-id="${p.id}">
+    <article class="plp-card ${p.comingSoon ? 'coming-soon-disabled' : ''}" data-product-id="${p.id}">
       <div class="plp-card-media">
         <a href="pdp.html?id=${p.id}" aria-label="Ver detalle de ${p.name}"><img class="plp-card-img" src="${p.img}" alt="${p.name}"></a>
         <button class="plp-addlist-btn" aria-label="Agregar a lista">
@@ -900,7 +901,7 @@ function plpCardHtml(p) {
           <span class="msi" aria-hidden="true" style="font-size:16px;">schedule</span>
           Disponible pronto
         </span>` : ''}
-        <div class="${ctaWrapClass(p)}" id="cta-${p.id}">${ctaHtml(p)}</div>
+        <div class="${ctaWrapClass(p)}" id="cta-${p.id}" ${p.comingSoon ? 'hidden' : ''}>${ctaHtml(p)}</div>
       </div>
       <div class="plp-card-body">
         <div class="plp-price-block">

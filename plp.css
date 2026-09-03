@@ -668,6 +668,11 @@
   line-height: 1;
 }
 
+.plp-card.coming-soon-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .plp-card-name {
   font-size: 16px;
   color: var(--ink);
