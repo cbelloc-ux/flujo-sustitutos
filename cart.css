@@ -23,8 +23,9 @@
 
 
 .cart-product-status {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #e75480;
   display: flex;
   align-items: center;
