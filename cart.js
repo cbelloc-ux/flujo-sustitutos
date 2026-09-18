@@ -338,7 +338,298 @@ function renderCartPage() {
   renderSavingsBreakdown(items);
 }
 
+/* ══ Tutorial Onboarding ══ */
+let tutorialCurrentStep = 1;
+let tutorialTargetProductId = null;
+let tutorialInProgress = false;
+
+const TUTORIAL_STEPS = [
+  {
+    title: 'Aquí eliges qué pasa si este producto se agota',
+    desc: 'Los productos con este aviso pueden quedarse sin stock antes de armar tu pedido. Toca "Cambiar" para decidir tu preferencia.',
+    target: 'product-card',
+    btnText: 'Siguiente'
+  },
+  {
+    title: 'Elige tu sustituto favorito',
+    desc: 'Busca un producto específico, o deja que nosotros decidamos por ti.',
+    target: 'modal',
+    btnText: 'Siguiente'
+  },
+  {
+    title: 'Controla todos tus sustitutos a la vez',
+    desc: 'Aplica una misma preferencia a todos los productos elegibles de tu carrito de un solo tap. Tus elecciones individuales no se pierden a menos que confirmes el cambio.',
+    target: 'toggle-card',
+    btnText: 'Entendido'
+  }
+];
+
+function maybeShowTutorial() {
+  const hasEligibleProducts = cartItems().some(item => isSubstituteEligible(item.product));
+
+  if (hasEligibleProducts && !tutorialInProgress) {
+    tutorialInProgress = true;
+    tutorialCurrentStep = 1;
+    showTutorialStep();
+  }
+}
+
+function showTutorialStep() {
+  const step = TUTORIAL_STEPS[tutorialCurrentStep - 1];
+  console.log('showTutorialStep: step', tutorialCurrentStep, 'target:', step.target);
+
+  const overlay = document.getElementById('tutorialOverlay');
+  const spotlight = document.getElementById('tutorialSpotlight');
+  const tipCard = document.getElementById('tutorialTipCard');
+  const nextBtn = document.getElementById('tutorialNextBtn');
+
+  overlay.hidden = false;
+  spotlight.hidden = false;
+  tipCard.hidden = false;
+
+  // Bloquear scroll al mostrar el tutorial
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('tutorialStep').textContent = `Paso ${tutorialCurrentStep} de 3`;
+  document.getElementById('tutorialTitle').textContent = step.title;
+  document.getElementById('tutorialDesc').textContent = step.desc;
+  nextBtn.textContent = step.btnText;
+
+  const dotsContainer = document.getElementById('tutorialDots');
+  dotsContainer.innerHTML = '';
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'tutorial-dot' + (i === tutorialCurrentStep ? ' active' : '');
+    dotsContainer.appendChild(dot);
+  }
+
+  // Mantener overlay visible en TODOS los pasos para bloquear clicks
+  overlay.hidden = false;
+
+  if (step.target === 'product-card') {
+    highlightFirstEligibleProduct();
+    positionTipCard(step.target);
+  } else if (step.target === 'modal') {
+    const firstEligible = cartItems().find(item => isSubstituteEligible(item.product));
+    if (firstEligible) {
+      tutorialTargetProductId = firstEligible.id;
+      openSubstituteModal(firstEligible.id);
+      setTimeout(() => {
+        highlightModalContent();
+        positionTipCard(step.target);
+        // Bloquear interacción en el modal durante el tutorial (sin oscurecerlo: el spotlight ya lo deja visible)
+        const modal = document.getElementById('subModal');
+        if (modal) {
+          modal.style.pointerEvents = 'none';
+        }
+      }, 300);
+    }
+  } else if (step.target === 'toggle-card') {
+    highlightToggleCard();
+    if (window.innerWidth < 768) {
+      scrollToElement('.toggle-card');
+    }
+    positionTipCard(step.target);
+  }
+}
+
+function setSpotlightRect(el, padding = 4) {
+  const rect = el.getBoundingClientRect();
+  const spotlight = document.getElementById('tutorialSpotlight');
+  const radius = window.getComputedStyle(el).borderRadius || '14px';
+
+  spotlight.style.left = (rect.left - padding) + 'px';
+  spotlight.style.top = (rect.top - padding) + 'px';
+  spotlight.style.width = (rect.width + padding * 2) + 'px';
+  spotlight.style.height = (rect.height + padding * 2) + 'px';
+  spotlight.style.borderRadius = radius;
+
+  return rect;
+}
+
+function highlightFirstEligibleProduct() {
+  const items = cartItems().filter(item => isSubstituteEligible(item.product));
+  if (items.length === 0) return;
+
+  const productCard = document.querySelector(`.product-card[data-product-id="${items[0].id}"]`);
+  if (productCard) {
+    setSpotlightRect(productCard);
+  }
+}
+
+function highlightModalContent() {
+  const modal = document.getElementById('subModal');
+  if (modal && !modal.hidden) {
+    const contentArea = modal.querySelector('.sub-modal-content') || modal;
+    if (contentArea) {
+      setSpotlightRect(contentArea);
+    }
+  }
+}
+
+function highlightToggleCard() {
+  let toggleCard;
+  if (window.innerWidth >= 768) {
+    toggleCard = document.querySelector('.toggle-card--desktop');
+  } else {
+    toggleCard = document.querySelector('.toggle-card--mobile');
+  }
+
+  if (toggleCard) {
+    setSpotlightRect(toggleCard);
+  }
+}
+
+function scrollToElement(selector) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function positionTipCard(target) {
+  const tipCard = document.getElementById('tutorialTipCard');
+  console.log('positionTipCard called with target:', target);
+
+  if (target === 'product-card') {
+    console.log('Positioning for product-card');
+    const items = cartItems().filter(item => isSubstituteEligible(item.product));
+    if (items.length > 0) {
+      const productCard = document.querySelector(`.product-card[data-product-id="${items[0].id}"]`);
+      if (productCard) {
+        const rect = productCard.getBoundingClientRect();
+        tipCard.style.top = (rect.bottom + 16) + 'px';
+        tipCard.style.left = '50%';
+        tipCard.style.transform = 'translateX(-50%)';
+        tipCard.style.right = 'auto';
+        tipCard.style.bottom = 'auto';
+        tipCard.style.width = 'auto';
+        tipCard.style.maxWidth = '360px';
+      }
+    }
+  } else if (target === 'modal') {
+    const modal = document.getElementById('subModal');
+    if (modal) {
+      const rect = modal.getBoundingClientRect();
+      const tipCardHeight = 180; // altura aproximada del tip-card
+      let topValue;
+
+      // Verificar si hay espacio debajo del modal
+      const spaceBelow = window.innerHeight - rect.bottom;
+
+      if (window.innerWidth < 768) {
+        // Mobile: posicionar más abajo pero dentro del viewport
+        if (spaceBelow > tipCardHeight + 20) {
+          topValue = rect.bottom + 20;
+        } else {
+          // Si no hay espacio abajo, posicionar arriba del modal
+          topValue = Math.max(20, rect.top - tipCardHeight - 20);
+        }
+      } else {
+        // Desktop: posicionar debajo si hay espacio, si no, arriba
+        if (spaceBelow > tipCardHeight + 20) {
+          topValue = rect.bottom + 20;
+        } else {
+          topValue = Math.max(20, rect.top - tipCardHeight - 20);
+        }
+      }
+
+      tipCard.style.top = topValue + 'px';
+      tipCard.style.left = '50%';
+      tipCard.style.transform = 'translateX(-50%)';
+      tipCard.style.right = 'auto';
+      tipCard.style.bottom = 'auto';
+      tipCard.style.width = 'auto';
+      tipCard.style.maxWidth = '360px';
+    }
+  } else if (target === 'toggle-card') {
+    // Select visible toggle-card based on viewport
+    let toggleCard;
+    if (window.innerWidth >= 768) {
+      toggleCard = document.querySelector('.toggle-card--desktop');
+    } else {
+      toggleCard = document.querySelector('.toggle-card--mobile');
+    }
+
+    if (!toggleCard) return;
+
+    const rect = toggleCard.getBoundingClientRect();
+
+    // Reset inset constraints
+    tipCard.style.inset = 'auto';
+    tipCard.style.top = '';
+    tipCard.style.left = '';
+    tipCard.style.right = '';
+    tipCard.style.bottom = '';
+
+    // Set positioning
+    tipCard.style.position = 'fixed';
+    tipCard.style.width = 'auto';
+    tipCard.style.maxWidth = '360px';
+    tipCard.style.left = '50%';
+    tipCard.style.transform = 'translateX(-50%)';
+
+    let topValue;
+    const tipCardHeight = 180;
+
+    if (window.innerWidth >= 768) {
+      // Desktop: posicionar encima pero permitiendo visibilidad del componente
+      topValue = Math.max(20, rect.top - tipCardHeight - 80);
+    } else {
+      // Mobile: posicionar encima permitiendo visibilidad del componente
+      topValue = Math.max(20, rect.top - tipCardHeight - 70);
+    }
+
+    tipCard.style.top = topValue + 'px';
+  }
+}
+
+function nextTutorialStep() {
+  if (tutorialCurrentStep === 2) {
+    closeSubstituteModal();
+  }
+
+  tutorialCurrentStep++;
+  if (tutorialCurrentStep > 3) {
+    completeTutorial();
+  } else {
+    showTutorialStep();
+  }
+}
+
+function skipTutorial() {
+  completeTutorial();
+}
+
+function completeTutorial() {
+  const overlay = document.getElementById('tutorialOverlay');
+  const spotlight = document.getElementById('tutorialSpotlight');
+  const tipCard = document.getElementById('tutorialTipCard');
+  const modal = document.getElementById('subModal');
+
+  overlay.hidden = true;
+  spotlight.hidden = true;
+  tipCard.hidden = true;
+
+  tutorialInProgress = false;
+  tutorialCurrentStep = 1;
+  tutorialTargetProductId = null;
+
+  // Desbloquear scroll al completar el tutorial
+  document.body.style.overflow = '';
+
+  // Restaurar interacción en el modal
+  if (modal) {
+    modal.style.pointerEvents = '';
+  }
+
+  if (!modal.hidden) {
+    closeSubstituteModal();
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   syncToggleUI();
   renderCartPage();
+  maybeShowTutorial();
 });

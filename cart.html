@@ -419,6 +419,22 @@
   </div>
 </div>
 
+<!-- ══ TUTORIAL ONBOARDING (3 pasos) ══ -->
+<div class="tutorial-overlay" id="tutorialOverlay" hidden></div>
+<div class="tutorial-spotlight" id="tutorialSpotlight" hidden></div>
+<div class="tutorial-tip-card" id="tutorialTipCard" role="dialog" aria-modal="true" hidden>
+  <div class="tutorial-tip-step" id="tutorialStep"></div>
+  <div class="tutorial-tip-title" id="tutorialTitle"></div>
+  <div class="tutorial-tip-desc" id="tutorialDesc"></div>
+  <div class="tutorial-tip-foot">
+    <div class="tutorial-tip-dots" id="tutorialDots"></div>
+    <div class="tutorial-tip-actions">
+      <button type="button" class="tutorial-skip-btn" onclick="skipTutorial()">Saltar</button>
+      <button type="button" class="tutorial-next-btn" id="tutorialNextBtn" onclick="nextTutorialStep()">Siguiente</button>
+    </div>
+  </div>
+</div>
+
 <script src="plp.js"></script>
 <script src="cart.js"></script>
 </body>
