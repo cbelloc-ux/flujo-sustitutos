@@ -632,4 +632,18 @@ document.addEventListener('DOMContentLoaded', () => {
   syncToggleUI();
   renderCartPage();
   maybeShowTutorial();
+
+  // Agregar listener al ícono de información para mostrar el tutorial
+  const infoIcons = document.querySelectorAll('.info-icon');
+  infoIcons.forEach(icon => {
+    // Remover el onclick original
+    icon.removeAttribute('onclick');
+
+    // Agregar listener para mostrar solo el tutorial
+    icon.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      maybeShowTutorial();
+    });
+  });
 });
