@@ -166,6 +166,37 @@ function closeInfoTooltip(btn) {
   wrap.querySelector('.info-icon').setAttribute('aria-expanded', 'false');
 }
 
+function showUnselectedSubstitutesConfirmation() {
+  const overlay = document.getElementById('unselectedSubsOverlay');
+  const dialog = document.getElementById('unselectedSubsDialog');
+  overlay.hidden = false;
+  dialog.hidden = false;
+  void overlay.offsetHeight;
+  overlay.classList.add('open');
+}
+
+function closeUnselectedSubstitutesConfirmation() {
+  const overlay = document.getElementById('unselectedSubsOverlay');
+  const dialog = document.getElementById('unselectedSubsDialog');
+  overlay.classList.remove('open');
+  overlay.hidden = true;
+  dialog.hidden = true;
+}
+
+function proceedToCheckout() {
+  closeUnselectedSubstitutesConfirmation();
+  // Redirigir al checkout (por ahora solo cerramos el dialog)
+  console.log('Proceeding to checkout');
+}
+
+function openSubstitutesFromConfirmation() {
+  closeUnselectedSubstitutesConfirmation();
+  const firstEligible = cartItems().find(item => isSubstituteEligible(item.product));
+  if (firstEligible) {
+    openSubstituteModal(firstEligible.id);
+  }
+}
+
 document.addEventListener('click', (e) => {
   if (e.target.closest('.info-tooltip-wrap')) return;
   document.querySelectorAll('.info-tooltip:not([hidden])').forEach(t => {
@@ -352,7 +383,7 @@ const TUTORIAL_STEPS = [
   },
   {
     title: 'Elige tu sustituto favorito',
-    desc: 'Busca un producto específico, o deja que nosotros decidamos por ti.',
+    desc: 'Busca un producto específico o indica que nuestro picker te contacte al momento de recolectar tus productos.',
     target: 'modal',
     btnText: 'Siguiente'
   },
@@ -633,17 +664,45 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCartPage();
   maybeShowTutorial();
 
+  // Si hay productos elegibles para sustitutos, establecer "Contactarme" como default
+  const eligibleItems = cartItems().filter(item => isSubstituteEligible(item.product));
+  if (eligibleItems.length > 0 && allowSubstitutes === null) {
+    setAllowSubstitutes(true);  // true = "Contactarme"
+  }
+
   // Agregar listener al ícono de información para mostrar el tutorial
   const infoIcons = document.querySelectorAll('.info-icon');
   infoIcons.forEach(icon => {
     // Remover el onclick original
     icon.removeAttribute('onclick');
 
-    // Agregar listener para mostrar solo el tutorial
+    // Agregar listener para mostrar solo el tutorial (con capture phase)
     icon.addEventListener('click', function(e) {
+      console.log('Info icon clicked');
       e.preventDefault();
       e.stopPropagation();
       maybeShowTutorial();
-    });
+    }, true);  // capture phase
   });
+
+  // Event delegation para botones de pago
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.pago-btn')) {
+      const eligibleItems = cartItems().filter(item => isSubstituteEligible(item.product));
+
+      if (eligibleItems.length > 0) {
+        // Mostrar dialog si hay productos elegibles con el tipo 'contact' (sin modificación individual)
+        const hasUnmodifiedItems = eligibleItems.some(item =>
+          savedSubstitutes[item.id] && savedSubstitutes[item.id].type === 'contact'
+        );
+
+        if (hasUnmodifiedItems) {
+          e.preventDefault();
+          e.stopPropagation();
+          showUnselectedSubstitutesConfirmation();
+          return false;
+        }
+      }
+    }
+  }, true);  // Usar capture phase para ejecutar antes que otros listeners
 });

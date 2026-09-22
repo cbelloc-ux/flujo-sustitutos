@@ -268,6 +268,17 @@
   </div>
 </div>
 
+<!-- Dialog: Productos sin seleccionar opción de sustituto -->
+<div class="plp-overlay" id="unselectedSubsOverlay" onclick="closeUnselectedSubstitutesConfirmation()" hidden></div>
+<div class="confirm-dialog" id="unselectedSubsDialog" hidden role="alertdialog" aria-modal="true" aria-labelledby="unselectedSubsTitle">
+  <h3 class="confirm-dialog-title" id="unselectedSubsTitle">Productos elegibles para sustitutos</h3>
+  <p class="confirm-dialog-body">Llevas productos elegibles para sustitutos y no has seleccionado una opción para sustituir. ¿Deseas elegir un sustituto?</p>
+  <div class="confirm-dialog-actions">
+    <button type="button" class="confirm-dialog-btn confirm-dialog-btn--ghost" onclick="proceedToCheckout()">Proceder al pago</button>
+    <button type="button" class="confirm-dialog-btn confirm-dialog-btn--primary" onclick="openSubstitutesFromConfirmation()">Elegir sustituto</button>
+  </div>
+</div>
+
 <!-- ══ SUSTITUTE MODAL (compartido con PLP/PDP) ══ -->
 <div class="plp-overlay" id="subOverlay" onclick="closeSubstituteModal()" hidden></div>
 <div class="plp-modal" id="subModal" hidden role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
